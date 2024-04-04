@@ -1,0 +1,148 @@
+$body-background-color-start: #023E8A;
+$body-background-color-end: #90E0EF;
+
+
+body {
+  background: linear-gradient(to right, $body-background-color-start 50%, $body-background-color-end 50%);
+  overflow: hidden;
+}
+
+.centeredContentLeft{
+    position: absolute;
+    top: 40%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+    color: #90E0EF;
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    width: 10%;
+   
+   img {
+    
+    display: block;
+  width: 90%; 
+  height: 90%; 
+  margin-top: 10%; 
+  margin-left: 70%; 
+  margin-right: auto; 
+   }
+
+}
+
+.formContainer {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    position: absolute;
+    overflow: hidden;
+    right: -25px; 
+    overflow: hidden;
+  }
+
+  
+  
+  
+  .formWrapper {
+    padding: 20px 90px;
+    margin-right: 100px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    
+   
+      
+    
+  
+    .logo {
+      color: #023E8A;
+      font-weight: bold;
+      font-size: 54px;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+  
+      .inputWrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+  
+        label {
+          color: #023E8A;
+          font-weight: bold;
+          font-size: 20px;
+          width: 150px; 
+        }
+  
+        input {
+          flex: 1;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          font-size: 20px;
+          color: green;
+          &:focus {
+            outline: none;
+          } 
+        }
+      }
+
+
+      .avatarInput {
+        display: flex;
+        align-items: center;
+      
+        span {
+          margin-right: 55%; 
+          font-size: 20px;
+          color: #023E8A;
+          font-weight: bold;
+        }
+      
+        img {
+          width: 50px; 
+          height: 50px; 
+        }
+      }
+      
+  
+      button {
+        background-color: #023E8A;
+        color: #90E0EF;
+        padding: 15px;
+        font-weight: bold;
+        border: none;
+        border-radius: 90px;
+        margin-top: 25px;
+        margin-left: 35px;
+        cursor: pointer;
+        width: 300px;
+
+      }
+    }
+  
+    p {
+      color: #023E8A;
+      font-size: 15px;
+      margin-top: 10px;
+  
+      button {
+        background-color: transparent;
+        color: #023E8A;
+        padding: 10px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+  
+  
