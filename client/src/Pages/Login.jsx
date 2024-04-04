@@ -45,7 +45,7 @@ const Login = () => {
         minLength='6'
         required
       />
-      <button type='submit'>Login</button>
+      <button className="submit" type='submit'>Login</button>
     </form>
   );
 };

@@ -33,8 +33,9 @@ const Registration = () => {
   };
 
   return (
-    <form onSubmit={e => onSubmit(e)}>
-      <input
+    <form className="login" onSubmit={e => onSubmit(e)}>
+      <input 
+        className='setup'
         type='text'
         placeholder='Username'
         name='username'
@@ -42,7 +43,11 @@ const Registration = () => {
         onChange={e => onChange(e)}
         required
       />
+      {/* <div className=''>
+        Password
+      </div> */}
       <input
+        className='setup'
         type='password'
         placeholder='Password'
         name='password'
@@ -52,6 +57,7 @@ const Registration = () => {
         required
       />
       <input
+        className='setup'
         type='password'
         placeholder='Confirm Password'
         name='confirmPassword'
@@ -60,7 +66,7 @@ const Registration = () => {
         minLength='6'
         required
       />
-      <button type='submit'>Register</button>
+      <button className="submit" type='submit'>Register</button>
     </form>
   );
 };
