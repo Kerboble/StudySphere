@@ -5,9 +5,6 @@ const bodyParser = require('body-parser'); // Middleware for parsing request bod
 const cors = require('cors'); // Middleware for enabling CORS
 const jwt = require('jsonwebtoken');
 
-
-
-
 const app = express(); // Creating an Express application
 app.use(cors()); // Using CORS middleware to enable cross-origin requests
 app.use(bodyParser.json()); // Using bodyParser middleware to parse JSON request bodies
@@ -28,8 +25,6 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema); // Creating a User model based on the UserSchema
 
-console.log(User)
-
 // User Registration
 app.post('/register', async (req, res) => {
   try {
@@ -48,7 +43,6 @@ app.post('/register', async (req, res) => {
   }
 });
 
-
 // Revised generateAccessToken function with longer expiry time
 function generateAccessToken(user) {
     const payload = {
@@ -56,7 +50,7 @@ function generateAccessToken(user) {
         username: user.username // Add any other necessary fields here
     };
     return jwt.sign(payload, "secret_value", { expiresIn: '30s' }); // Expires in 15 minutes
-};
+}
 
 // Revised /login endpoint with refreshToken
 app.post('/login', async (req, res) => {
@@ -99,9 +93,6 @@ app.post('/refresh-token', async (req, res) => {
         res.status(401).send('Invalid refresh token');
     }
 });
-
-  
-
 
 const PORT = process.env.PORT || 4000; // Define port for the server to listen on
 app.listen(PORT, () => {
