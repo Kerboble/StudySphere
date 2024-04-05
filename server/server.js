@@ -60,7 +60,12 @@ app.post('/login', async (req, res) => {
       return res.status(401).send('Invalid password');
     }
     const accessToken = jwt.sign({ id: user._id, username: user.username }, 'secret_value');
-    res.json({ accessToken: accessToken });
+    res.json({ 
+      id: user._id,
+      username: user.username,
+      accessToken: accessToken,
+      msg : "user has logged on"
+    });
   } catch (error) {
     console.error('Error logging in:', error); // Log login error
     res.status(500).send('Error logging in'); // Send error response
