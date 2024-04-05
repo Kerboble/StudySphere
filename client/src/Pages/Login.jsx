@@ -18,7 +18,7 @@ const Login = () => {
   const onSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/login', { username, password });
+      const res = await axios.post('http://localhost:4000/login', { username, password });
       console.log(res.data); // Handle successful login
       navigate("/home"); // Redirect to home page after successful login
     } catch (err) {
