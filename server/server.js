@@ -3,6 +3,10 @@ const mongoose = require('mongoose'); // Importing Mongoose for MongoDB interact
 const bcrypt = require('bcryptjs'); // Importing bcrypt for password hashing
 const bodyParser = require('body-parser'); // Middleware for parsing request bodies
 const cors = require('cors'); // Middleware for enabling CORS
+const jwt = require('jsonwebtoken');
+const authToken = require('./authMiddleware');
+
+
 
 const app = express(); // Creating an Express application
 app.use(cors()); // Using CORS middleware to enable cross-origin requests
@@ -42,6 +46,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
+
 // User Login
 app.post('/login', async (req, res) => {
   try {
@@ -54,12 +59,14 @@ app.post('/login', async (req, res) => {
     if (!validPassword) { // If password is invalid, return error
       return res.status(401).send('Invalid password');
     }
-    res.status(200).send('Login successful'); // Send success response
+    const accessToken = jwt.sign({ id: user._id, username: user.username }, 'secret_value');
+    res.json({ accessToken: accessToken });
   } catch (error) {
     console.error('Error logging in:', error); // Log login error
     res.status(500).send('Error logging in'); // Send error response
   }
 });
+
 
 const PORT = process.env.PORT || 3000; // Define port for the server to listen on
 app.listen(PORT, () => {
