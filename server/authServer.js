@@ -5,6 +5,7 @@ const bodyParser = require('body-parser'); // Middleware for parsing request bod
 const cors = require('cors'); // Middleware for enabling CORS
 const jwt = require('jsonwebtoken');
 
+
 const app = express(); // Creating an Express application
 app.use(cors()); // Using CORS middleware to enable cross-origin requests
 app.use(bodyParser.json()); // Using bodyParser middleware to parse JSON request bodies
@@ -21,6 +22,7 @@ mongoose.connect('mongodb+srv://frontendfiends:6lCbNr0xOdhPlIYw@studysphere.efmn
 const UserSchema = new mongoose.Schema({
   username: String, // Define username field as String
   password: String, // Define password field as String
+  refreshToken: { type: String }
 });
 
 const User = mongoose.model('User', UserSchema); // Creating a User model based on the UserSchema
@@ -28,13 +30,13 @@ const User = mongoose.model('User', UserSchema); // Creating a User model based 
 // User Registration
 app.post('/register', async (req, res) => {
   try {
-    const { username, password } = req.body; // Extract username and password from request body
+    const { username, password, refreshToken } = req.body; // Extract username and password from request body
     const existingUser = await User.findOne({ username }); // Check if user already exists in the database
     if (existingUser) { // If user already exists, return error
       return res.status(400).send('User already exists');
     }
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
-    const newUser = new User({ username, password: hashedPassword }); // Create a new User document
+    const newUser = new User({ username, password: hashedPassword, refreshToken}); // Create a new User document
     await newUser.save(); // Save the new user to the database
     res.status(201).send('User registered successfully'); // Send success response
   } catch (error) {

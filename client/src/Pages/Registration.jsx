@@ -7,7 +7,8 @@ const Registration = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    refreshToken: ''
   });
 
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Registration = () => {
       console.error('Passwords do not match');
     } else {
       try {
-        const res = await axios.post('http://localhost:4000/register', { username, password });
+        const res = await axios.post('http://localhost:4000/register', { username, password, refreshToken});
         console.log(res.data); // Handle successful registration
         navigate("/login"); // Redirect to login page after successful registration
       } catch (err) {
