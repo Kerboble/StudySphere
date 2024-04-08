@@ -33,39 +33,50 @@ body {
 }
 
 .centeredContentLeft{
+    // transform: translate(-50%, -50%);
     position: absolute;
-    top: 40%;
-    left: 15%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
     color: $body-background-color-6;
-    font-size: 100px;
+    font-size: 12vw;
     font-weight: bold;
     text-align: center;
-    display: block;
-    width: 10%;
+    max-width: 30vw;
+    margin-top: auto;
    
    img {
-    display: block;
-    width: 90%; 
-    height: 90%; 
-    margin-top: 10%; 
-    margin-left: 70%; 
-    margin-right: auto; 
+    display: flex;
+    justify-content: center;
+    width: 50%; 
+    height: 50%; 
+    // margin-top: 10%; 
+    // margin-left: 70%; 
+    // margin-right: auto; 
    }
 
 }
-
+form {
+  max-width: 40vw;
+}
 .formContainer {
     height: 100vh;
-    width: 48vw;
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
     overflow: hidden;
-    right: -1px; 
+    right: -1px;
     overflow: hidden;
+    margin-right: 0.5rem;
+    margin-left: 1.5rem;
     @include tablet{
+      display: flex;
+      justify-content: center;
+    }
+    @include mobile {
       display: flex;
       justify-content: center;
     }
@@ -146,8 +157,7 @@ body {
         margin-top: 25px;
         margin-left: 35px;
         cursor: pointer;
-        width: 300px;
-
+        max-width: 30vw;
       }
     }
   
