@@ -7,14 +7,13 @@ const Registration = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    confirmPassword: '',
-    refreshToken: ''
+    confirmPassword: ''
   });
 
   console.log("registration")
   const navigate = useNavigate();
 
-  const { username, password, confirmPassword, refreshToken} = formData;
+  const { username, password, confirmPassword} = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });

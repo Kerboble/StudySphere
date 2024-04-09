@@ -22,7 +22,7 @@ mongoose.connect('mongodb+srv://frontendfiends:6lCbNr0xOdhPlIYw@studysphere.efmn
 const UserSchema = new mongoose.Schema({
   username: String, // Define username field as String
   password: String, // Define password field as String
-  refreshToken: { type: String }
+  refreshToken: { type: String, default: '' }
 });
 
 const User = mongoose.model('User', UserSchema); // Creating a User model based on the UserSchema
@@ -49,10 +49,10 @@ app.post('/register', async (req, res) => {
 function generateAccessToken(user) {
     const payload = {
         id: user._id,
-        username: user.username // Add any other necessary fields here
+        username: user.username 
     };
-    return jwt.sign(payload, "secret_value", { expiresIn: '30s' }); // Expires in 15 minutes
-}
+    return jwt.sign(payload, "secret_value", { expiresIn: '15s' }); // Expires in 15 minutes
+};
 
 
 // Revised /login endpoint with refreshToken

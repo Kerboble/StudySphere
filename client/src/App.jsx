@@ -4,7 +4,7 @@ import Registration from './Pages/Registration';
 import Login from './Pages/Login';
 import Home from './Pages/Home';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { AuthContext } from '../authContext';
+import { AuthContext } from './context/authContext';
 
 const App = () => {
   const { currentUser } = useContext(AuthContext);
@@ -13,7 +13,6 @@ const App = () => {
     if (!currentUser) {
       return <Navigate to="/login" />;
     }
-
     return children;
   };
 
