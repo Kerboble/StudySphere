@@ -54,6 +54,7 @@ function generateAccessToken(user) {
     return jwt.sign(payload, "secret_value", { expiresIn: '30s' }); // Expires in 15 minutes
 }
 
+
 // Revised /login endpoint with refreshToken
 app.post('/login', async (req, res) => {
     try {
@@ -69,7 +70,7 @@ app.post('/login', async (req, res) => {
         const accessToken = generateAccessToken(user.toObject());
         const refreshToken = jwt.sign({ id: user._id }, "secret_value"); // Only store user id in refresh token
         await User.updateOne({ _id: user._id }, { $set: { refreshToken: refreshToken } }); // Update refreshToken field
-        res.json({ accessToken, refreshToken });
+        res.json({ accessToken, refreshToken, user });
     } catch (error) {
         console.error('Error logging in:', error);
         res.status(500).send('Error logging in');
@@ -84,6 +85,7 @@ app.post('/refresh-token', async (req, res) => {
     }
     try {
         const decoded = jwt.verify(refreshToken, "secret_value");
+        console.log(decoded)
         const user = await User.findById(decoded.id);
         if (!user) {
             return res.status(404).send('User not found');
