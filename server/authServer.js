@@ -22,7 +22,9 @@ mongoose.connect('mongodb+srv://frontendfiends:6lCbNr0xOdhPlIYw@studysphere.efmn
 const UserSchema = new mongoose.Schema({
   username: String, // Define username field as String
   password: String, // Define password field as String
-  refreshToken: { type: String, default: '' }
+  refreshToken: { type: String, default: '' },
+  email: String,
+  phoneNumber: String
 });
 
 const User = mongoose.model('User', UserSchema); // Creating a User model based on the UserSchema
@@ -30,13 +32,13 @@ const User = mongoose.model('User', UserSchema); // Creating a User model based 
 // User Registration
 app.post('/register', async (req, res) => {
   try {
-    const { username, password, refreshToken } = req.body; // Extract username and password from request body
-    const existingUser = await User.findOne({ username }); // Check if user already exists in the database
+    const { username, email,  phoneNumber, password, refreshToken } = req.body; // Extract username and password from request body
+    const existingUser = await User.findOne({ email }); // Check if user already exists in the database
     if (existingUser) { // If user already exists, return error
       return res.status(400).send('User already exists');
     }
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
-    const newUser = new User({ username, password: hashedPassword, refreshToken}); // Create a new User document
+    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken}); // Create a new User document
     await newUser.save(); // Save the new user to the database
     res.status(201).send('User registered successfully'); // Send success response
   } catch (error) {

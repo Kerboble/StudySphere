@@ -32,6 +32,14 @@ body {
   width: 100vw;
 }
 
+.avatar-logo{
+  cursor: pointer;
+};
+
+.register-logo{
+  height: 10vh;
+}
+
 .centeredContentLeft{
     // transform: translate(-50%, -50%);
     position: absolute;
@@ -50,8 +58,7 @@ body {
    img {
     display: flex;
     justify-content: center;
-    width: 50%; 
-    height: 50%; 
+     height: 20vh;
     // margin-top: 10%; 
     // margin-left: 70%; 
     // margin-right: auto; 
@@ -106,6 +113,7 @@ form {
         display: flex;
         align-items: center;
         gap: 10px;
+        padding-right: 20px;
   
         label {
           color: $body-background-color-start;

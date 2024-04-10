@@ -1,5 +1,5 @@
 import React from 'react';
-import Sphere from "../img/icons8-sphere-51.png"
+import Sphere from "../img/globe (2).png"
 
 const SphereComponent = () => {
   return (
