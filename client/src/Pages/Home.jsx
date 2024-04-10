@@ -1,5 +1,5 @@
 // Home.js
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/authContext';
 import { checkAndRenewToken } from '../utilities/checkToken';
 import axios from 'axios'
@@ -14,22 +14,24 @@ function Home() {
     localStorage.setItem('refreshToken', null);
   };
 
+  const[showToken, setShowToken] = useState('')
   const test = async () => {
     await checkAndRenewToken();
     const accessToken = localStorage.getItem('accessToken');
     try {
-      console.log('hello');
       const res = await axios.get('http://localhost:3000/test', {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
       console.log(res.data);
+      setShowToken(accessToken)
     } catch (error) {
       console.error(error);
     }
   };
 
+  console.log(localStorage.getItem("accessToken"))
 
 
   return (
@@ -39,6 +41,7 @@ function Home() {
       </h1>
       <button className='log-out-btn' onClick={logout}> log out</button>
       <button onClick={test}>test</button>
+      <h3>accessToken: {showToken}</h3>
     </>
   );
 }

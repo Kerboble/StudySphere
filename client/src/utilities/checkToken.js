@@ -18,7 +18,7 @@ export async function checkAndRenewToken() {
   
     if (decodedToken.exp < currentTime) {
       // Access token has expired, renew it
-      console.log('TOKEN WAS EXPIRED, NEW TOKEN IS GENERATED')
+      console.log('TOKEN WAS EXPIRED, A NEW TOKEN WAS GENERATED')
       const res = await axios.post('http://localhost:4000/refresh-token', { refreshToken });
       const newAccessToken = res.data.accessToken;
       localStorage.setItem('accessToken', newAccessToken);
