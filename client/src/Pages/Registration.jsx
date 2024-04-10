@@ -16,16 +16,27 @@ const Registration = () => {
     confirmPassword: ''
   });
 
-  const [fileName, setFileName] = useState('');
+  const [avatar, setAvatar] = useState('');
 
 
   console.log("registration")
   const navigate = useNavigate();
 
   const { username, email, phoneNumber, password, confirmPassword } = formData;
+  
 
-  const onChange = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    if (e.target.name === 'file') {
+      setFormData({ ...formData, avatarPic: e.target.files[0] });
+      setAvatar(e.target.files[0].name);
+      console.log(formData.avatarPic)
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
+
+  
+    
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -43,7 +54,7 @@ const Registration = () => {
   };
 
   return (
-    <div>
+    <div className='register-container'>
       <SphereComponent />
   
       <div className='formContainer'>
@@ -75,16 +86,16 @@ const Registration = () => {
               type="file"
               id="file"
               onChange={(e) => {
-                setFileName(e.target.files[0].name);
+                setAvatar(e.target.files[0].name);
                 // Add any other file handling logic here
               }}
               style={{ display: 'none', cursor: 'pointer' }}
             />
             <label htmlFor='file' className='avatarInput'>
-              <img src={Add} alt='Add avatar' className='avatar-logo'/>
-              <input type='file' id='file' style={{ display: 'none', cursor: 'pointer' }} />
+              <img src={Add} alt='Add avatar' className='avatar-logo' />
+              <input type='file' id='avatarPic' style={{ display: 'none', cursor: 'pointer' }} name="avatarPic" onClick={e => onChange(e)}/>
             </label>
-            {fileName && <p>Selected file: {fileName}</p>}
+            {avatar && <p>Selected file: {avatar}</p>}
             <button type='submit'>Register</button>
           </form>
           <p>

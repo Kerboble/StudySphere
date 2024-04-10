@@ -26,35 +26,47 @@ $body-background-color-end: #CAF0F8;
 }
 
 body {
-  background: linear-gradient(to right, $body-background-color-start 50%, $body-background-color-6 50%);
+  padding: 0;
+  margin: 0;
   overflow: hidden;
-  height: 100vh;
-  width: 100vw;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .avatar-logo{
   cursor: pointer;
+  
 };
 
 .register-logo{
   height: 10vh;
 }
 
+.register-container, .login-container {
+  background: linear-gradient(to right, $body-background-color-start 50%, $body-background-color-6 50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  height: 100vh;
+  width: 100vw;
+  gap: 20vw;
+
+}
+
 .centeredContentLeft{
     // transform: translate(-50%, -50%);
-    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
     color: $body-background-color-6;
-    font-size: 12vw;
+    font-size: 8.5em;
     font-weight: bold;
     text-align: center;
     max-width: 30vw;
     margin-top: auto;
-   
+    height: 100vh;
    img {
     display: flex;
     justify-content: center;
@@ -73,11 +85,10 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
     overflow: hidden;
     right: -1px;
     overflow: hidden;
-    margin-right: 0.5rem;
+    margin-right: 4.5rem;
     margin-left: 1.5rem;
     @include tablet{
       display: flex;

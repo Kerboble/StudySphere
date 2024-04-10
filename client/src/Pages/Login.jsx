@@ -35,8 +35,10 @@ const Login = (props) => {
     }
   };
 
+  
+
   return (
-    <div>
+    <div className='login-container'>
       <SphereComponent/>
 
       <div className='formContainer'>
@@ -70,7 +72,7 @@ const Login = (props) => {
             <button type='submit'>Login</button>
           </form>
           <p>
-          <button onClick={() => navigate("/")}>Sign up here</button> 
+          <button onClick={() => navigate("/")}>Signup here</button> 
             <button>Forgot password</button>
           </p>
         </div>
