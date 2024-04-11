@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Sphere from "../img/globe.png"
 import Add from "../img/gallery (1).png"
 import SphereComponent from '../components/SideSphere.jsx';
+import defaultProfilePicture from "../img/user(1).png"
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -87,7 +88,8 @@ const Registration = () => {
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={e => onChange(e)} minLength='6' required />
             </div>
-            <label htmlFor='file' className='avatarInput'>
+            <div className='avatar-container'>
+            <label htmlFor='file' className='avatar-input'>
               <img src={Add} alt='Add avatar' className='avatar-logo' />
               <input
                 type="file"
@@ -97,7 +99,8 @@ const Registration = () => {
                 style={{ display: 'none', cursor: 'pointer' }}
               />
             </label>
-            {avatar == '' || avatar == null ? "" : <img  width={100} height={100} src={avatar}/>}
+            {avatar == '' || avatar == null ? <img  className="selected-avatar-image" width={100} height={100} src={defaultProfilePicture}/>: <img  className="selected-avatar-image" width={100} height={100} src={avatar}/>}
+            </div>
             <button type='submit'>Register</button>
           </form>
           <p>
