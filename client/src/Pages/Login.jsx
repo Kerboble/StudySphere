@@ -45,7 +45,6 @@ const Login = (props) => {
       </div>
       <div className='formContainer'>
         <div className='formWrapper'>
-          <img src={Sphere} alt="Sphere" className='register-logo'/> 
           <span className='logo'>Welcome!</span>
           <form onSubmit={e => onSubmit(e)}>
             <div className="inputWrapper">

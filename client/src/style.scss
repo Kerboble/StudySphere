@@ -34,6 +34,8 @@ $body-background-color-end: #CAF0F8;
   }
 }
 
+
+
 body::-webkit-scrollbar {
   display: none;
 }
@@ -68,11 +70,12 @@ body {
   display: flex;
   height: 100vh;
   width: 100vw;
+  flex-direction: column;
 
   .centeredContentLeft{
     // transform: translate(-50%, -50%);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
@@ -86,7 +89,19 @@ body {
     margin: 0;
     padding: 0;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 5px 10px;
-    border-radius: 0px 20px 20px 0px;
+    border-radius: 0px 0px 20px 20px;
+
+
+
+    .big-sphere {
+      height: 5vh;
+      margin-left: 20px;
+      animation: 
+    bounce2 800ms
+          alternate infinite
+          cubic-bezier(.5, .5, .5, 0.5);
+
+    }
   
     
    img {
@@ -101,10 +116,6 @@ body {
 }
 
   @include tablet {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
     overflow: scroll;
 
     .centeredContentLeft {
@@ -126,8 +137,9 @@ body {
       }
       
       .app-title {
-        font-size: 5vh;
-        padding: 20px;
+        font-size: 10vh;
+        font-size: 10vw;
+        padding: 10px;
       }
     }
 
@@ -164,7 +176,7 @@ form {
   max-width: 40vw;
 }
 .formContainer {
-    flex: 1;
+    flex: 3;
     display: flex;
     align-items: center;
     justify-content: center;
