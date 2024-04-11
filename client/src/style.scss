@@ -25,6 +25,15 @@ $body-background-color-end: #CAF0F8;
   }
 }
 
+@keyframes bounce2 {
+  from {
+    transform: translateY(5);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
 body::-webkit-scrollbar {
   display: none;
 }
@@ -76,6 +85,8 @@ body {
     flex: 1;
     margin: 0;
     padding: 0;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 5px 10px;
+    border-radius: 0px 20px 20px 0px;
   
     
    img {
@@ -103,9 +114,15 @@ body {
       margin-bottom: 20px;
       box-shadow: rgba(0, 0, 0, 0.18) 0px 5px 10px;
       flex: 1;
+      flex-direction: row;
       
       .big-sphere {
-        display: none;
+        height: 3vh;
+        animation: 
+      bounce2 800ms
+            alternate infinite
+            cubic-bezier(.5, .5, .5, 0.5);
+
       }
       
       .app-title {
@@ -118,6 +135,12 @@ body {
       flex: 3;
       width: 100%;
 
+    }
+  }
+
+  @include mobile{
+    .centeredContentLeft{
+      display: none;
     }
   }
 
