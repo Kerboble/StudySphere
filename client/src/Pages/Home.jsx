@@ -7,7 +7,6 @@ import axios from 'axios'
 function Home() {
   const { currentUser, setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
   const avatar = currentUser.profilePicture;
-  console.log(currentUser.profilePicture);
   const logout = () => {
     setIsLoggedIn(false);
     setCurrentUser(null);
@@ -25,7 +24,6 @@ function Home() {
           Authorization: `Bearer ${accessToken}`
         }
       });
-      console.log(res.data);
       setShowToken(accessToken)
     } catch (error) {
       console.error(error);

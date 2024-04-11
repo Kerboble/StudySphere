@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthContext } from './context/authContext';
 
 const App = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, setIsLoggedIn } = useContext(AuthContext);
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {

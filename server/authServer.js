@@ -4,14 +4,16 @@ const bcrypt = require('bcryptjs'); // Importing bcrypt for password hashing
 const bodyParser = require('body-parser'); // Middleware for parsing request bodies
 const cors = require('cors'); // Middleware for enabling CORS
 const jwt = require('jsonwebtoken');
+const authenticateToken = require('./middleware/authMiddleware');
+
 
 
 const app = express(); // Creating an Express application
 app.use(cors()); // Using CORS middleware to enable cross-origin requests
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' })); //had to increase the payload amount to accommodate the size of avatar photos
 
 // Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://frontendfiends:6lCbNr0xOdhPlIYw@studysphere.efmnucf.mongodb.net/?retryWrites=true&w=majority&appName=StudySphere', {
+mongoose.connect('mongodb+srv://frontendfiends:BVT123@studysphere.efmnucf.mongodb.net/?retryWrites=true&w=majority&appName=StudySphere', {
   useNewUrlParser: true, // MongoDB connection options
   useUnifiedTopology: true,
 })
@@ -47,6 +49,23 @@ app.post('/register', async (req, res) => {
     res.status(500).send('Error registering user'); // Send error response
   }
 });
+
+//when user refreshes userAuth will check for refresh token/ update one if necessary and then return user data
+app.post('/userData', authenticateToken, async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    const user = await User.findOne({ refreshToken });
+    console.log(user)
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    res.send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 // Revised generateAccessToken function with longer expiry time
 function generateAccessToken(user) {
