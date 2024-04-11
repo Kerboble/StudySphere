@@ -14,7 +14,7 @@ $body-background-color-end: #CAF0F8;
 }
 
 @mixin tablet {
-  @media screen and (max-width: 963px){
+  @media screen and (max-width: 1095px){
     @content;
   }
 }
@@ -25,11 +25,30 @@ $body-background-color-end: #CAF0F8;
   }
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+body {
+  scrollbar-width: none;  /* For Firefox */
+}
+
+
 body {
   padding: 0;
   margin: 0;
-  overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  width: 100vw;
+  background-color: #ADE8F4;
+  overflow: hidden;
 }
 
 .register-logo{
@@ -37,31 +56,28 @@ body {
 }
 
 .register-container, .login-container {
-  background: linear-gradient(to right, $body-background-color-start 50%, $body-background-color-6 50%);
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
   height: 100vh;
   width: 100vw;
-  gap: 20vw;
 
-}
-
-.centeredContentLeft{
+  .centeredContentLeft{
     // transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
-    color: $body-background-color-6;
+    background-color: #023E8A;
     font-size: 8.5em;
     font-weight: bold;
     text-align: center;
-    max-width: 30vw;
-    margin-top: auto;
     height: 100vh;
+    color: #ADE8F4;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+  
+    
    img {
     display: flex;
     justify-content: center;
@@ -72,26 +88,76 @@ body {
    }
 
 }
+
+  @include tablet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    overflow: scroll;
+
+    .centeredContentLeft {
+      display: flex;
+      justify-content: center;
+      border-radius: 0px 0px 20px 20px;
+      margin-bottom: 20px;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 5px 10px;
+      flex: 1;
+      
+      .big-sphere {
+        display: none;
+      }
+      
+      .app-title {
+        font-size: 5vh;
+        padding: 20px;
+      }
+    }
+
+    .formContainer {
+      flex: 3;
+      width: 100%;
+
+    }
+  }
+
+  input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    background-color: $body-background-color-end !important;
+    color: $body-background-color-start;
+    &:focus {
+      outline: none;
+    } 
+    &::placeholder{
+      color: #023E8A;
+    }
+  }
+}
+
 form {
   max-width: 40vw;
 }
 .formContainer {
-    height: 100vh;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    right: -1px;
-    overflow: hidden;
-    margin-right: 4.5rem;
-    margin-left: 1.5rem;
-    @include tablet{
-      display: flex;
-      justify-content: center;
-    }
-    @include mobile {
-      display: flex;
-      justify-content: center;
+    background-color: #ADE8F4;
+    margin-top: 10px;
+    padding: 0;
+
+    button {
+      background-color: $body-background-color-start;
+      color: $body-background-color-5;
+      padding: 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 90px;
+      cursor: pointer;
+      min-width: 250px;
     }
   }  
   .formWrapper {
@@ -108,16 +174,18 @@ form {
       color: $body-background-color-start;
       font-weight: bold;
       font-size: 54px;
-    }
+    };
   
     form {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 15px;
   
       .inputWrapper {
         display: flex;
-        align-items: center;
+        justify-content: center;
+        align-content: center;
         gap: 10px;
         padding-right: 20px;
   
@@ -127,20 +195,7 @@ form {
           font-size: 20px;
           width: 150px; 
         }
-  
-        input {
-          flex: 1;
-          padding: 10px;
-          border: none;
-          border-radius: 5px;
-          font-size: 20px;
-          background-color: $body-background-color-end !important;
-          color: $body-background-color-start;
-          &:focus {
-            outline: none;
-          } 
-        }
-      }
+      };
 
       .avatar-container {
         display: flex;
@@ -172,23 +227,8 @@ form {
           color: $body-background-color-start;
           font-weight: bold;
         }
-      
-
       }
       
-  
-      button {
-        background-color: $body-background-color-start;
-        color: $body-background-color-5;
-        padding: 15px;
-        font-weight: bold;
-        border: none;
-        border-radius: 90px;
-        margin-top: 25px;
-        margin-left: 35px;
-        cursor: pointer;
-        max-width: 30vw;
-      }
     }
   
     p {

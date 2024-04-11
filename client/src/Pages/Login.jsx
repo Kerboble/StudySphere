@@ -2,9 +2,9 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import SphereComponent from '../components/SideSphere.jsx';
-import Sphere from "../img/globe.png"
+import Sphere from "../img/globe(2).png"
 import { AuthContext } from '../context/authContext';
+import BigSphere from "../img/globe(1).png"
 
 const Login = (props) => {
   const [formData, setFormData] = useState({
@@ -39,15 +39,16 @@ const Login = (props) => {
 
   return (
     <div className='login-container'>
-      <SphereComponent/>
-
+      <div className='centeredContentLeft'> 
+        <span className='app-title'> Study Sphere</span>
+        <img src={BigSphere} alt="Sphere" className='big-sphere'/> 
+      </div>
       <div className='formContainer'>
         <div className='formWrapper'>
           <img src={Sphere} alt="Sphere" className='register-logo'/> 
           <span className='logo'>Welcome!</span>
           <form onSubmit={e => onSubmit(e)}>
             <div className="inputWrapper">
-              <label htmlFor="username">Username</label>
               <input
                 type="text"
                 id="username"
@@ -55,10 +56,10 @@ const Login = (props) => {
                 value={username}
                 onChange={e => onChange(e)}
                 required
+                placeholder='Username'
               />
             </div>
             <div className="inputWrapper">
-              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
@@ -67,6 +68,7 @@ const Login = (props) => {
                 onChange={e => onChange(e)}
                 minLength='6'
                 required
+                placeholder='Password'
               />
             </div>
             <button type='submit'>Login</button>

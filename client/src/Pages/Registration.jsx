@@ -3,10 +3,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Sphere from "../img/globe.png"
-import Add from "../img/gallery (1).png"
-import SphereComponent from '../components/SideSphere.jsx';
+import Sphere from "../img/globe(2).png"
 import defaultProfilePicture from "../img/user(1).png"
+import BigSphere from "../img/globe(1).png"
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -61,32 +60,29 @@ const Registration = () => {
 
   return (
     <div className='register-container'>
-      <SphereComponent />
-  
+       <div className='centeredContentLeft'> 
+        <span className='app-title'> Study Sphere</span>
+        <img src={BigSphere} alt="Sphere" className='big-sphere'/> 
+      </div>
       <div className='formContainer'>
         <div className='formWrapper'>
           <img src={Sphere} alt="Sphere" className='register-logo'/>
           <span className='logo'>Register</span>
           <form onSubmit={e => onSubmit(e)}>
             <div className="inputWrapper">
-              <label htmlFor="firstName">Username</label>
-              <input type="text" id="userName" name="username" value={username} onChange={e => onChange(e)} required />
+              <input type="text" id="userName" name="username" value={username} onChange={e => onChange(e)} required  placeholder='Username'/>
             </div>
             <div className="inputWrapper">
-              <label htmlFor="email">Email Address</label>
-              <input type="email" id="email" name="email" value={email} onChange={e => onChange(e)} required />
+              <input type="email" id="email" name="email" value={email} onChange={e => onChange(e)} required placeholder='Email'/>
             </div>
             <div className="inputWrapper">
-              <label htmlFor="phoneNumber">Phone Number</label>
-              <input type="tel" id="phoneNumber" name="phoneNumber" value={phoneNumber} onChange={e => onChange(e)} required />
+              <input type="tel" id="phoneNumber" name="phoneNumber" value={phoneNumber} onChange={e => onChange(e)} required placeholder='Phone Number'/>
             </div>
             <div className="inputWrapper">
-              <label htmlFor="password">Password</label>
-              <input type="password" id="password" name="password" value={password} onChange={e => onChange(e)} minLength='6' required />
+              <input type="password" id="password" name="password" value={password} onChange={e => onChange(e)} minLength='6' required placeholder='Password'/>
             </div>
             <div className="inputWrapper">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={e => onChange(e)} minLength='6' required />
+              <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={e => onChange(e)} minLength='6' required placeholder='Confirm Password'/>
             </div>
             <div className='avatar-container'>
             <label htmlFor='file' className='avatar-input'>
@@ -100,8 +96,8 @@ const Registration = () => {
               />
             </label>
             </div>
-            <button type='submit'>Register</button>
           </form>
+          <button type='submit'>Register</button>
           <p>
             Already have an account? {' '}
             <button onClick={() => navigate("/login")}>Login</button>
