@@ -13,26 +13,22 @@ const Registration = () => {
     email: '',
     phoneNumber: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    profilePicture:''
   });
 
+  console.log(formData.profilePicture)
   const [avatar, setAvatar] = useState('');
 
 
   console.log("registration")
   const navigate = useNavigate();
 
-  const { username, email, phoneNumber, password, confirmPassword } = formData;
+  const { username, email, phoneNumber, password, confirmPassword, profilePicture } = formData;
   
 
   const onChange = (e) => {
-    if (e.target.name === 'file') {
-      setFormData({ ...formData, avatarPic: e.target.files[0] });
-      setAvatar(e.target.files[0].name);
-      console.log(formData.avatarPic)
-    } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
   };
 
   
@@ -44,13 +40,22 @@ const Registration = () => {
       console.error('Passwords do not match');
     } else {
       try {
-        const res = await axios.post('http://localhost:4000/register', { username, email, phoneNumber, password });
+        const res = await axios.post('http://localhost:4000/register', { username, email, phoneNumber, password, profilePicture });
         console.log(res.data); // Handle successful registration
         navigate("/login"); // Redirect to login page after successful registration
       } catch (err) {
         console.error('Registration error:', err.response.data);
       }
     }
+  };
+
+  const onFileChange = (e) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFormData({ ...formData, profilePicture: reader.result });
+      setAvatar(reader.result)
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   return (
@@ -82,20 +87,17 @@ const Registration = () => {
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={e => onChange(e)} minLength='6' required />
             </div>
-            <input
-              type="file"
-              id="file"
-              onChange={(e) => {
-                setAvatar(e.target.files[0].name);
-                // Add any other file handling logic here
-              }}
-              style={{ display: 'none', cursor: 'pointer' }}
-            />
             <label htmlFor='file' className='avatarInput'>
               <img src={Add} alt='Add avatar' className='avatar-logo' />
-              <input type='file' id='avatarPic' style={{ display: 'none', cursor: 'pointer' }} name="avatarPic" onClick={e => onChange(e)}/>
+              <input
+                type="file"
+                id="file"
+                name="profilePicture"
+                onChange={onFileChange}
+                style={{ display: 'none', cursor: 'pointer' }}
+              />
             </label>
-            {avatar && <p>Selected file: {avatar}</p>}
+            {avatar == '' || avatar == null ? "" : <img  width={100} height={100} src={avatar}/>}
             <button type='submit'>Register</button>
           </form>
           <p>

@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs'); // Importing bcrypt for password hashing
 const bodyParser = require('body-parser'); // Middleware for parsing request bodies
 const cors = require('cors'); // Middleware for enabling CORS
 const jwt = require('jsonwebtoken');
-const authenticateToken = require('./authMiddleware');
+const authenticateToken = require('./middleware/authMiddleware');
 
 const app = express(); // Creating an Express application
 app.use(cors()); // Using CORS middleware to enable cross-origin requests

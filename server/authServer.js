@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 const app = express(); // Creating an Express application
 app.use(cors()); // Using CORS middleware to enable cross-origin requests
-app.use(bodyParser.json()); // Using bodyParser middleware to parse JSON request bodies
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // Connect to MongoDB Atlas
 mongoose.connect('mongodb+srv://frontendfiends:6lCbNr0xOdhPlIYw@studysphere.efmnucf.mongodb.net/?retryWrites=true&w=majority&appName=StudySphere', {
@@ -24,7 +24,8 @@ const UserSchema = new mongoose.Schema({
   password: String, // Define password field as String
   refreshToken: { type: String, default: '' },
   email: String,
-  phoneNumber: String
+  phoneNumber: String,
+  profilePicture: String
 });
 
 const User = mongoose.model('User', UserSchema); // Creating a User model based on the UserSchema
@@ -32,13 +33,13 @@ const User = mongoose.model('User', UserSchema); // Creating a User model based 
 // User Registration
 app.post('/register', async (req, res) => {
   try {
-    const { username, email,  phoneNumber, password, refreshToken } = req.body; // Extract username and password from request body
+    const { username, email,  phoneNumber, password, refreshToken, profilePicture} = req.body;
     const existingUser = await User.findOne({ email }); // Check if user already exists in the database
     if (existingUser) { // If user already exists, return error
       return res.status(400).send('User already exists');
     }
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
-    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken}); // Create a new User document
+    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture}); // Create a new User document
     await newUser.save(); // Save the new user to the database
     res.status(201).send('User registered successfully'); // Send success response
   } catch (error) {
@@ -53,7 +54,7 @@ function generateAccessToken(user) {
         id: user._id,
         username: user.username 
     };
-    return jwt.sign(payload, "secret_value", { expiresIn: '15s' }); // Expires in 15 minutes
+    return jwt.sign(payload, "secret_value", { expiresIn: '15min' }); // Expires in 15 minutes
 };
 
 

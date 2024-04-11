@@ -6,7 +6,8 @@ import axios from 'axios'
 
 function Home() {
   const { currentUser, setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
-  console.log(currentUser);
+  const avatar = currentUser.profilePicture;
+  console.log(currentUser.profilePicture);
   const logout = () => {
     setIsLoggedIn(false);
     setCurrentUser(null);
@@ -38,6 +39,7 @@ function Home() {
     <>
       <h1>
         {currentUser ? `Welcome, ${currentUser.username}` : 'Welcome'}
+        {avatar == '' || avatar == null ? "" : <img  width={100} height={100} src={avatar}/>}
       </h1>
       <button className='log-out-btn' onClick={logout}> log out</button>
       <button onClick={test}>test</button>
