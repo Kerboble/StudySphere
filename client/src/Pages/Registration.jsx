@@ -90,7 +90,7 @@ const Registration = () => {
             </div>
             <div className='avatar-container'>
             <label htmlFor='file' className='avatar-input'>
-              <img src={Add} alt='Add avatar' className='avatar-logo' />
+            {avatar == '' || avatar == null ? <img  className="selected-avatar-image" width={100} height={100} src={defaultProfilePicture}/>: <img  className="selected-avatar-image" width={100} height={100} src={avatar}/>}
               <input
                 type="file"
                 id="file"
@@ -99,7 +99,6 @@ const Registration = () => {
                 style={{ display: 'none', cursor: 'pointer' }}
               />
             </label>
-            {avatar == '' || avatar == null ? <img  className="selected-avatar-image" width={100} height={100} src={defaultProfilePicture}/>: <img  className="selected-avatar-image" width={100} height={100} src={avatar}/>}
             </div>
             <button type='submit'>Register</button>
           </form>
