@@ -102,16 +102,6 @@ body {
           cubic-bezier(.5, .5, .5, 0.5);
 
     }
-  
-    
-   img {
-    display: flex;
-    justify-content: center;
-     height: 20vh;
-    // margin-top: 10%; 
-    // margin-left: 70%; 
-    // margin-right: auto; 
-   }
 
 }
 
@@ -128,7 +118,7 @@ body {
       flex-direction: row;
       
       .big-sphere {
-        height: 3vh;
+        height: 3rem;
         animation: 
       bounce2 800ms
             alternate infinite
