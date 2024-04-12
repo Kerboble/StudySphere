@@ -36,7 +36,7 @@ const Login = (props) => {
       setTimeout(() => {
         navigate("/home");
         setLoading(false)
-      }, 6000);
+      }, 2000);
           } catch (err) {
       console.error('Login error:', err.response.data);
     }
@@ -52,10 +52,12 @@ const Login = (props) => {
       </div>
       <div className='formContainer'>
         {loading ? (
-          <Loading />
+          <div className='loading-login'>
+            <Loading />
+            <p style={{color:'blue', fontWeight:'bold'}}>Logging you in....</p>
+          </div>
         ) : (
           <div className='formWrapper'>
-            <img src={Sphere} alt="Sphere" className='register-logo'/> 
             <span className='logo'>Welcome!</span>
             <form onSubmit={e => onSubmit(e)}>
               <div className="inputWrapper">

@@ -66,6 +66,18 @@ body {
   height: 10vh;
 }
 
+.loading-login{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+  h1{
+    padding: 0;
+    margin: 0;
+  }
+}
+
 .register-container, .login-container {
   display: flex;
   height: 100vh;

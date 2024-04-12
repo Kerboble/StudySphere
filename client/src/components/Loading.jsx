@@ -5,9 +5,10 @@ quantum.register()
 function loading() {
   return (
     <l-quantum
-  size="45"
-  speed="1.75" 
-  color="blue" 
+  size="100"
+  speed="6.00" 
+  color="white"
+  border="none" 
 ></l-quantum>
   )
 }
