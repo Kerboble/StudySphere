@@ -15,7 +15,7 @@ const Login = (props) => {
     password: '',
   });
 
-  const { setCurrentUser } = useContext(AuthContext); // Use the AuthContext here
+  const { setIsLoggedIn } = useContext(AuthContext); // Use the AuthContext here
 
   const { username, password } = formData;
   const navigate = useNavigate();
@@ -23,24 +23,26 @@ const Login = (props) => {
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
-    e.preventDefault();
-    try {
-      const res = await axios.post('http://localhost:4000/login', { username, password });
-      const { accessToken, refreshToken, user } = res.data;
-      // Store access token in localStorage
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-      setCurrentUser(user); // Set the currentUser using the context
-      setLoading(true)
-      setTimeout(() => {
-        navigate("/home");
-        setLoading(false)
-      }, 2000);
-          } catch (err) {
-      console.error('Login error:', err.response.data);
-    }
-  };
+    const onSubmit = async e => {
+      e.preventDefault();
+      try {
+        const res = await axios.post('http://localhost:4000/login', { username, password });
+        const { accessToken, refreshToken, user } = res.data;
+        // Store access token and user data in localStorage
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        setLoading(true);
+        setIsLoggedIn(true)
+        setTimeout(() => {
+          navigate("/home");
+          setLoading(false);
+        }, 2000);
+      } catch (err) {
+        console.error('Login error:', err.response.data);
+      }
+    };
+    
 
   
 

@@ -4,17 +4,19 @@ const AuthContext = createContext();
 import { checkAndRenewToken } from '../utilities/checkToken';
 
 const AuthProvider = ({ children }) => {
-  const localCurrentUser = localStorage.getItem('currentUser');
-  const [currentUser, setCurrentUser] = useState(localCurrentUser ? JSON.parse(localCurrentUser) : null);
+  const existingUser = localStorage.getItem('currentUser')
+  const [currentUser, setCurrentUser] = useState(existingUser ? existingUser : null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const localRefreshToken = localStorage.getItem('refreshToken');
-  console.log('hello')
 
   useEffect(() => {
     const fetchData = async () => {
-      if (currentUser !== null) {
+      let user = JSON.parse(localStorage.getItem('currentUser'));
+      if (user) {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
       } else {
-        //await checkAndRenewToken();
+        await checkAndRenewToken();
         const accessToken = localStorage.getItem('accessToken');
         try {
           const res = await axios.post('http://localhost:4000/userData', { refreshToken: localRefreshToken }, {
@@ -24,6 +26,7 @@ const AuthProvider = ({ children }) => {
           });
           setCurrentUser(res.data);
           localStorage.setItem('currentUser', JSON.stringify(res.data));
+          setIsLoggedIn(true);
         } catch (error) {
           console.error(error);
         }
@@ -31,7 +34,7 @@ const AuthProvider = ({ children }) => {
     };
 
     fetchData();
-  }, []);
+  }, [existingUser]);
 
   return (
     <AuthContext.Provider value={{ currentUser, setCurrentUser, setIsLoggedIn }}>
