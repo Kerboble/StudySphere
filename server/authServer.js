@@ -36,9 +36,15 @@ const User = mongoose.model('User', UserSchema); // Creating a User model based 
 app.post('/register', async (req, res) => {
   try {
     const { username, email,  phoneNumber, password, refreshToken, profilePicture} = req.body;
+    const duplicateUser = await User.findOne({username});
+    
+    //check for usernames in use
+    if(duplicateUser) {
+      return res.status(400).send('username already in use')}
+
     const existingUser = await User.findOne({ email }); // Check if user already exists in the database
     if (existingUser) { // If user already exists, return error
-      return res.status(400).send('User already exists');
+      return res.status(400).send('Email already exists');
     }
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
     const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture}); // Create a new User document

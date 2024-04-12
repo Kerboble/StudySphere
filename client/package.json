@@ -16,8 +16,10 @@
     "ldrs": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-password-strength-bar": "^0.4.1",
     "react-router-dom": "^6.22.3",
-    "sass": "^1.74.1"
+    "sass": "^1.74.1",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

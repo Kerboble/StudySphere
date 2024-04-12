@@ -52,3 +52,10 @@ function Home() {
 }
 
 export default Home;
+
+const passwordStrengthStyle = {
+  color:"blue",
+  fontFamily:"arial",
+  fontWeight:"bold",
+  fontSize:"20px"
+}

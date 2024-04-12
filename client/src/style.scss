@@ -34,6 +34,9 @@ $body-background-color-end: #CAF0F8;
   }
 }
 
+p {
+  margin-top: 5px;
+}
 
 
 body::-webkit-scrollbar {
@@ -85,6 +88,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-content: center;
+
+  .login-button{
+    margin-right: 20px;
+  }
 
   .centeredContentLeft{
     // transform: translate(-50%, -50%);
@@ -230,6 +237,8 @@ form {
         justify-content: center;
         align-content: center;
         text-wrap: nowrap;
+        color: #023E8A;
+        font-family: bold;
       }
 
   
