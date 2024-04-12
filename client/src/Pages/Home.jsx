@@ -14,6 +14,7 @@ function Home() {
     setCurrentUser(null);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('currentUser')
   };
 
   const[showToken, setShowToken] = useState('')
