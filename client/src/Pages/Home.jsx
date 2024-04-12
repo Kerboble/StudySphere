@@ -7,11 +7,13 @@ import axios from 'axios'
 function Home() {
   const { currentUser, setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
   const avatar = currentUser.profilePicture;
+
   const logout = () => {
+    console.log("logged out")
     setIsLoggedIn(false);
     setCurrentUser(null);
-    localStorage.setItem('accessToken', null);
-    localStorage.setItem('refreshToken', null);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   };
 
   const[showToken, setShowToken] = useState('')

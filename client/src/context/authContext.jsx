@@ -12,9 +12,8 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       if (currentUser !== null) {
-        setIsLoggedIn(true);
       } else {
-        await checkAndRenewToken();
+        //await checkAndRenewToken();
         const accessToken = localStorage.getItem('accessToken');
         try {
           const res = await axios.post('http://localhost:4000/userData', { refreshToken: localRefreshToken }, {
@@ -22,13 +21,10 @@ const AuthProvider = ({ children }) => {
               Authorization: `Bearer ${accessToken}`
             }
           });
-          console.log(res.data)
-          setIsLoggedIn(true)
           setCurrentUser(res.data);
           localStorage.setItem('currentUser', JSON.stringify(res.data));
         } catch (error) {
           console.error(error);
-          setIsLoggedIn(false)
         }
       }
     };
