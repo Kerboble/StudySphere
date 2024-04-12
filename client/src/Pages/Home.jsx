@@ -42,7 +42,7 @@ function Home() {
         {currentUser ? `Welcome, ${currentUser.username}` : 'Welcome'}
         {avatar == '' || avatar == null ? "" : <img  width={100} height={100} src={avatar}/>}
       </h1>
-      <button className='log-out-btn' onClick={logout}> log out</button>
+      <button className='log-out-btn' onClick={() => logout()}> log out</button>
       <button onClick={test}>test</button>
       <h3>accessToken: {showToken}</h3>
     </>
