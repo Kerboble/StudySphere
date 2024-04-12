@@ -4,6 +4,7 @@ import { AuthContext } from '../context/authContext';
 import { checkAndRenewToken } from '../utilities/checkToken';
 import axios from 'axios'
 
+
 function Home() {
   const { currentUser, setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
   const avatar = currentUser.profilePicture;
