@@ -73,7 +73,7 @@ function generateAccessToken(user) {
         id: user._id,
         username: user.username 
     };
-    return jwt.sign(payload, "secret_value", { expiresIn: '15min' }); // Expires in 15 minutes
+    return jwt.sign(payload, "secret_value", { expiresIn: '60min' }); // Expires in 15 minutes
 };
 
 

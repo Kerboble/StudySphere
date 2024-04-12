@@ -5,15 +5,13 @@ import { checkAndRenewToken } from '../utilities/checkToken';
 
 const AuthProvider = ({ children }) => {
   const existingUser = localStorage.getItem('currentUser')
-  const [currentUser, setCurrentUser] = useState(existingUser ? existingUser : null);
+  const [currentUser, setCurrentUser] = useState(existingUser ? JSON.parse(existingUser) : null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const localRefreshToken = localStorage.getItem('refreshToken');
 
   useEffect(() => {
     const fetchData = async () => {
-      let user = JSON.parse(localStorage.getItem('currentUser'));
-      if (user) {
-        setCurrentUser(user);
+      if (currentUser !== null) {
         setIsLoggedIn(true);
       } else {
         await checkAndRenewToken();

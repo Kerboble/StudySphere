@@ -7,7 +7,7 @@ function loading() {
     <l-quantum
   size="100"
   speed="6.00" 
-  color="white"
+  color="blue"
   border="none" 
 ></l-quantum>
   )
