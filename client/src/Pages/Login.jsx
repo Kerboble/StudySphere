@@ -85,8 +85,8 @@ const Login = (props) => {
                   placeholder='Password'
                 />
               </div>
+              <button className="login-button" type='submit'>Login</button>
             </form>
-            <button className="login-button" type='submit'>Login</button>
             <p>
               <button onClick={() => navigate("/")}>Signup here</button> 
               <button>Forgot password</button>
