@@ -27,7 +27,8 @@ const UserSchema = new mongoose.Schema({
   refreshToken: { type: String, default: '' },
   email: String,
   phoneNumber: String,
-  profilePicture: String
+  profilePicture: String,
+  role:{type: String, default:'student'}
 });
 
 const User = mongoose.model('User', UserSchema); // Creating a User model based on the UserSchema
@@ -143,22 +144,34 @@ app.post('/checkUsername', async (req, res) => {
   }
 });
 
-//check username availability 
-app.post('/emailAvailability', async (req, res) => {
-  console.log('email ping')
+//gets users for SuperAdmins 
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+//this endpoint will allow us to pass in a user to make a super admin
+app.post('/make-super-admin', async (req, res) => {
   try {
     const { email } = req.body;
-    const checkEmailAvailability = await User.findOne({ email });
-    if (checkEmailAvailability) {
-      res.send(false);
+    const user = await User.findOne({ email });
+    if (user) {
+      await User.updateOne({ email }, { $set: { role: 'SuperAdmin' } });
+      res.status(201).send('User has been upgraded to SuperAdmin');
     } else {
-      res.send(true);
+      res.status(404).send('User not found');
     }
   } catch (error) {
-    console.error('Error checking username availability:', error);
+    console.error(error);
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 
 const PORT = process.env.PORT || 4000; // Define port for the server to listen on
