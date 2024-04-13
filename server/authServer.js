@@ -126,6 +126,41 @@ app.post('/refresh-token', async (req, res) => {
     }
 });
 
+//check username availability 
+app.post('/checkUsername', async (req, res) => {
+  console.log('ping')
+  try {
+    const { username } = req.body;
+    const checkUsernameAvailability = await User.findOne({ username });
+    if (checkUsernameAvailability) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
+  } catch (error) {
+    console.error('Error checking username availability:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+//check username availability 
+app.post('/emailAvailability', async (req, res) => {
+  console.log('email ping')
+  try {
+    const { email } = req.body;
+    const checkEmailAvailability = await User.findOne({ email });
+    if (checkEmailAvailability) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
+  } catch (error) {
+    console.error('Error checking username availability:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 const PORT = process.env.PORT || 4000; // Define port for the server to listen on
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`); // Log server start message

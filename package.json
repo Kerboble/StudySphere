@@ -1,0 +1,12 @@
+{
+  "name": "studysphere",
+  "version": "1.0.0",
+  "description": "All in one LMS application to mimic an in-person classroom as close as possible.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"cd client && npm i && npm run dev\" \"cd server && node server.js\" \"cd server && node authServer.js\""
+  },
+  "author": "",
+  "license": "ISC"
+}

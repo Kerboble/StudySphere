@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/authContext';
 import { checkAndRenewToken } from '../utilities/checkToken';
 import axios from 'axios'
+import Loading from '../components/Loading';
 
 
 function Home() {

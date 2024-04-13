@@ -34,6 +34,23 @@ $body-background-color-end: #CAF0F8;
   }
 }
 
+
+.formWrapper form {
+  transition: height 0.5s, opacity 0.5s;
+}
+
+.formWrapper form.shrink {
+  height: 0;
+  opacity: 0;
+  padding: 0;
+}
+
+.formWrapper form.visible {
+  height: auto;
+  opacity: 1;
+}
+
+
 p {
   margin-top: 5px;
 }
@@ -67,6 +84,26 @@ body {
 
 .register-logo{
   height: 10vh;
+}
+
+.username-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .thumbs-up, .thumbs-down{
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    left: 280px;
+    top: -11.7px;
+  }
+
+  .thumbs-down {
+    top: 5px;
+  }
 }
 
 .loading-login{
@@ -227,7 +264,7 @@ form {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap:30px;
 
       p{
         margin-left: 65px;
@@ -248,6 +285,8 @@ form {
         align-content: center;
         gap: 10px;
         padding-right: 20px;
+
+        
       };
 
       .avatar-container {

@@ -1,15 +1,15 @@
 import React from 'react'
-import { quantum } from 'ldrs'
-quantum.register()
+import { helix } from 'ldrs'
+helix.register()
 
 function loading() {
   return (
-    <l-quantum
-  size="100"
-  speed="6.00" 
-  color="blue"
+    <l-helix
+  size="130"
+  speed="2.00" 
+  color="#023E8A"
   border="none" 
-></l-quantum>
+></l-helix>
   )
 }
 
