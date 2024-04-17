@@ -5,6 +5,8 @@ import Login from './Pages/Login';
 import Home from './Pages/Home';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthContext } from './context/authContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const App = () => {
   const { currentUser, setIsLoggedIn } = useContext(AuthContext);

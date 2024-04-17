@@ -156,13 +156,13 @@ app.get('/users', async (req, res) => {
 });
 
 //this endpoint will allow us to pass in a user to make a super admin
-app.post('/make-super-admin', async (req, res) => {
+app.post('/set-role', async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, role } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      await User.updateOne({ email }, { $set: { role: 'SuperAdmin' } });
-      res.status(201).send('User has been upgraded to SuperAdmin');
+      await User.updateOne({ email }, { $set: { role: role } });
+      res.status(201).send(`user role has been changed to ${role} `);
     } else {
       res.status(404).send('User not found');
     }
@@ -171,6 +171,32 @@ app.post('/make-super-admin', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+app.post('/delete-user', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    // If user doesn't exist, return error
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    // Delete the user document
+    await user.deleteOne();
+
+    // Respond with success message
+    res.status(200).send('User was successfully deleted');
+  } catch (error) {
+    // Handle errors
+    console.error('Error deleting user:', error);
+    res.status(500).send('An error occurred while deleting the user');
+  }
+});
+
 
 
 
