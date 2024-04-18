@@ -35,6 +35,7 @@ $body-background-color-end: #CAF0F8;
 }
 
 
+
 .formWrapper form {
   transition: height 0.5s, opacity 0.5s;
 }
@@ -254,7 +255,7 @@ form {
     align-items: center;
     justify-content: center;
   
-    .logo {
+    .form-message {
       color: $body-background-color-start;
       font-weight: bold;
       font-size: 45px;
@@ -346,7 +347,8 @@ form {
 .home-container {
   height: 100vh;
   width: 100vw;
-  background-image: radial-gradient(circle, #90e0ef, #a0e4f1, #aee8f4, #bcecf6, #caf0f8);  display: flex;
+  background-image: radial-gradient(circle, #023e8a, #1c6baa, #4f98c4, #8ac4dd, #caf0f8);  
+  display: flex;
   justify-content: center;
   align-items: center; /* Center vertically */
   padding: 20px;
@@ -454,17 +456,12 @@ form {
     padding: 20px;
   }
 
-  .dashboard, .instructors, .student, .cohorts{
-    display: flex;
-    padding: 30px;
-    justify-content: center;
-
     img{
       height: 25px;
       width: 25px;
       margin-right: 10px;
     }
-  };
+
 
 }
 
@@ -492,32 +489,146 @@ form {
 
 
 //admin dashboard 
-.statistics {
+
+.admin-dashboard-header{
   display: flex;
-  flex-direction: row;
-  border: none;
-  height: 100px;
-  width: 200px;
-  border: 1px solid black;
-  border-radius: 5px;
-  justify-content: center;
-  align-content: center;
+  justify-content: space-between;
+  padding: 1rem;
 
-  .info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
-
-  img {
-    height: 40px;
-    width: 40px;
-  }
-
-  p{
-    padding: 0;
-    margin: 0;
+  button{
+    margin: 0.5rem;
+    font-weight: bold;
   }
 }
 
+.admin-dashboard-body .top-portion {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribute items evenly along the main axis */
+  gap: 0.5rem; /* Adjust the gap between items */
+}
+
+.admin-dashboard-body .statistics {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 20px;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  padding: 20px;
+  text-wrap: wrap;
+}
+
+.admin-dashboard-body .stats-picture img {
+  max-width: 100%;
+}
+
+.admin-dashboard-body .statistics .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-dashboard-body .statistics img {
+  height: 40px;
+  width: 40px;
+}
+
+.admin-dashboard-body .statistics p {
+  padding: 0;
+  margin: 0;
+}
+
+
+//admin students component 
+.student-container{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: auto;
+  padding: 30px;
+  
+  input {
+    height: 35px;
+    border: none;
+    width: 200px;
+    background-color: #dfdfdf;
+    border-radius: 9px;
+    text-align: center;
+  }
+
+  button {
+    height: 35px;
+    font-weight: bold;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.students-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.student {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; /* Center the items vertically */
+  text-align: center;
+  
+  strong, p{
+    margin-top: 5px;
+    padding-right: 20px;
+    margin-left:5px;
+  }
+  
+  .student-img{
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+  }
+  
+
+  .student-info{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+}
+
+//modal styling
+
+.modal-body {
+  /* Add your styling here */
+  padding: 20px;
+}
+
+.modal-student-info {
+  /* Example styling for student information */
+  margin-bottom: 20px;
+}
+
+.modal-student-info img {
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.modal-student-info p {
+  margin: 5px 0;
+}
+
+.modal-student-info strong {
+  display: block;
+  margin-bottom: 5px;
+}

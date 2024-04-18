@@ -1,4 +1,4 @@
-import {React, useContext} from 'react'
+import {React, useContext, useState} from 'react'
 import { AuthContext } from '../context/authContext';
 import logo from "../img/globe(2).png"
 import logoutIcon from "../img/right-arrow.png"
@@ -7,10 +7,14 @@ import dashboard2 from "../img/dashboards(2).png"
 import student from "../img/graduation.png"
 import teachers from "../img/seminar.png"
 import cohort from "../img/multiple-users-silhouette.png"
+import { NavLink } from 'react-router-dom';
+
 
 function AdminNavBar() {
 
   const {setCurrentUser, setIsLoggedIn} = useContext(AuthContext)
+  const [active, setActive] =useState(false)
+  
 
   const logout = () => {
     console.log("logged out")
@@ -21,6 +25,35 @@ function AdminNavBar() {
     localStorage.removeItem('currentUser')
   };
 
+  const activeStyles = {
+    fontWeight: "bold",
+    textDecoration: "none",
+    color: "#023e8a",
+    backgroundColor: "rgba(255, 255, 255, 0.555)",
+    height: "45px",
+    borderRadius: "9px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center", 
+    marginTop: "50px",
+    padding: "20px"
+  };
+  
+  const unActiveStyles = {
+    fontWeight: "bold",
+    textDecoration: "none",
+    color: "white",
+    height: "45px",
+    borderRadius: "20px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center", 
+    marginTop: "50px",
+    padding: "20px"
+  };
+
+
+
   return (
     <nav className='side-navbar'>
       <div className='company'>
@@ -28,20 +61,21 @@ function AdminNavBar() {
           <p>StudySphere</p>
       </div>
        <div className='dashboard'>
-        <img src={dashboard} alt="" />
-          <h5>Dashboard</h5>
+          <NavLink
+          to={"admindashboard"}  
+          style={({ isActive }) => isActive ? activeStyles : unActiveStyles}> 
+          <img src={dashboard} alt="" />
+          Dashboard
+          </NavLink>
        </div>
        <div className="instructors">
-          <img src={teachers} alt="" />
-          <h5>Teachers</h5>
+          <NavLink to={"adminsteachers"} style={({ isActive }) => isActive ? activeStyles : unActiveStyles}> <img src={teachers} alt="" />Teachers</NavLink>
        </div>
        <div className="student">
-          <img src={student} alt="" />
-          <h5>Students</h5>
+          <NavLink to={"adminstudents"}  style={({ isActive }) => isActive ? activeStyles : unActiveStyles}> <img src={student} alt="" />Students</NavLink>
        </div>
        <div className="cohorts">
-            <img src={cohort} alt="" />
-          <h5>Cohorts</h5>
+          <NavLink to={"admincohorts"} style={({ isActive }) => isActive ? activeStyles : unActiveStyles}> <img src={cohort} alt="" />Cohorts</NavLink>
        </div>
        <button className='logout-btn' onClick={() => logout()}> <img src={logoutIcon} alt="" />Logout</button>
     </nav>

@@ -93,7 +93,7 @@ const Registration = () => {
       </div>
       <div className='formContainer'>
         <div className='formWrapper'>
-          <span className='logo'>Register</span>
+          <span className='form-message'>Register</span>
           <form onSubmit={e => onSubmit(e)}>
             <div className="inputWrapper username-wrapper">
               <input type="text" id="userName" name="username" value={username} onChange={e => onChange(e)} required  placeholder='Username'/>

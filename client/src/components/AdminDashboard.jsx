@@ -1,56 +1,72 @@
-import Navbar from "./Navbar";
+
 import {React, useContext, useEffect, useState} from 'react'
-import AdminNavbar from "./AdminNavbar";
-import { AuthContext } from "../context/authContext";
-import axios from "axios";
-import student from "../img/online-education.png"
+import student from "../img/reading.png"
+import { useOutletContext } from "react-router-dom";
+import teacher from "../img/teacher.png"
+import cohort from "../img/teamwork.png"
+import event from "../img/event.png"
+import LineGraph from './LineGraph';
+
 
 function AdminDashboard() {
 
-  const currentUser = useContext(AuthContext);
-  console.log(currentUser)
-  const [users, setUsers] = useState('');
-
-  useEffect(() => {
-     async function fetch() {
-      const res = await axios.get("http://localhost:4000/users");
-      try {
-        setUsers(res.data)
-      } catch (error) {
-        console.error(error)
-      } 
-    } 
-    fetch(); 
-  }, [])
-
-  console.log(users.length)
+  const users = useOutletContext();
 
   const students = users ? users.filter(user => user.role === "student") : [];
   const teachers = users ? users.filter(user => user.role === "teacher") : [];
- 
-  
+
+    
 
   return (
     <div className="admin-dashboard">
+      <div className="admin-dashboard-header">
+        <h2>
+          Super Admin Dashboard
+        </h2>
+        <button type="button" class="btn btn-primary">+ New Admission</button>
+      </div>
         <div className="admin-dashboard-body">
-          <div className="statistics">
-            <div className="info">
-              <p>{students.length}</p>
-              <p>Total Students</p>
+          <div className="top-portion">
+            <div className="statistics">
+              <div className="info">
+                <p>{students.length}</p>
+                <p>Total Students</p>
+              </div>
+              <div className="stats-picture">
+                <img  src={student} alt="" />
+              </div>
             </div>
-            <div className="stats-picture">
-              <img  src={student} alt="" />
+            <div className="statistics">
+              <div className="info">
+                <p>{teachers.length}</p>
+                <p>Total Teachers</p>
+              </div>
+              <div className="stats-picture">
+                <img  src={teacher} alt="" />
+              </div>
+            </div>
+            <div className="statistics">
+              <div className="info">
+                <p>0</p>
+                <p>Total Cohorts</p>
+              </div>
+              <div className="stats-picture">
+                <img  src={cohort} alt="" />
+              </div>
+            </div>
+            <div className="statistics">
+              <div className="info">
+                <p>0</p>
+                <p>Total Events</p>
+              </div>
+              <div className="stats-picture">
+                <img  src={event} alt="" />
+              </div>
             </div>
           </div>
-          <div className="statistics">
-            <div className="info">
-              <p>{teachers.length}</p>
-              <p>Total Teachers</p>
-            </div>
-            <div className="stats-picture">
-              <img  src={student} alt="" />
-            </div>
-          </div>
+        </div>
+        <div className="middle-portion" style={{ width: '80%', height: '300px' }}>
+          <LineGraph />
         </div>
     </div>
   )

@@ -10,15 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mui/material": "^5.15.15",
+    "@nivo/bar": "^0.85.1",
+    "@nivo/line": "^0.85.1",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.2",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "ldrs": "^1.0.1",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.2",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-password-strength-bar": "^0.4.1",
     "react-router-dom": "^6.22.3",
+    "recharts": "^2.12.5",
     "sass": "^1.74.1",
     "zxcvbn": "^4.4.2"
   },

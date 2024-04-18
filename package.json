@@ -8,5 +8,10 @@
     "dev": "concurrently \"cd client && npm i && npm run dev\" \"cd server && node server.js\" \"cd server && node authServer.js\""
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@mui/material": "^5.15.15",
+    "@nivo/bar": "^0.85.1",
+    "recharts": "^2.12.5"
+  }
 }

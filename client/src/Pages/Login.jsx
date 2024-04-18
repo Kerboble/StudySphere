@@ -47,7 +47,7 @@ const Login = (props) => {
     // Optionally, you can add a delay before hiding the form completely
     setTimeout(() => {
       setShowForm(false);
-    }, 500); // Adjust the duration as needed
+    }, 1000); // Adjust the duration as needed
   };
 
   return (
@@ -64,7 +64,7 @@ const Login = (props) => {
           </div>
         ) : (
           <div className='formWrapper'>
-            <span className={`logo ${showForm ? "visible" : "shrink"}`}>Welcome!</span>
+            <span className={`form-message ${showForm ? "visible" : "shrink"}`}>Welcome!</span>
             {showForm && (
               <form
                 onSubmit={e => onSubmit(e)}
