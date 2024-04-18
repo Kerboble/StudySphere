@@ -24,6 +24,24 @@ function AdminTeachers() {
         teacher.email.toLowerCase().includes(searchQuery.toLowerCase())
     ).sort((a, b) => a.username.localeCompare(b.username)); 
 
+    const deleteUser = async (email) => {
+        // Prompt the user for confirmation
+        const confirmed = window.confirm(`Are you sure you want to delete the user with email: ${email}?`);
+        
+        // If user confirms, proceed with deletion
+        if (confirmed) {
+            try {
+                const res = await axios.post("http://localhost:4000/delete-user", { email });
+                setShowModal(false)
+                console.log('User has been deleted:', res.data); // Assuming the server responds with a message confirming deletion
+            } catch (error) {
+                console.error('Error deleting user:', error);
+            }
+        } else {
+            console.log('Deletion cancelled by user.');
+        }
+    };
+
     return (
         <div className="student-container">
             <div className='students-header'>
@@ -77,7 +95,10 @@ function AdminTeachers() {
                         </>
                     )}
                     <Button variant="primary">Edit</Button>
-                    <Button onClick={() => test(selectedTeacher.username)} variant="danger">Test</Button>
+                    <Button variant="primary">Edit</Button>
+                    <Button variant="primary">View Cohorts</Button>
+                    <Button variant="primary">Message</Button>
+                    <Button onClick={() => deleteUser(selectedTeacher.email)} variant="danger">Delete</Button>
                 </Modal.Body>
             </Modal>
         </div>

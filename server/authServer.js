@@ -175,19 +175,15 @@ app.post('/set-role', async (req, res) => {
 
 app.post('/delete-user', async (req, res) => {
   const { email } = req.body;
-
   try {
     // Find the user by email
     const user = await User.findOne({ email });
-
     // If user doesn't exist, return error
     if (!user) {
       return res.status(404).send('User not found');
     }
-
     // Delete the user document
     await user.deleteOne();
-
     // Respond with success message
     res.status(200).send('User was successfully deleted');
   } catch (error) {
