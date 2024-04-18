@@ -1,7 +1,6 @@
 // Home.js
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/authContext';
-import { checkAndRenewToken } from '../utilities/checkToken';
 import axios from 'axios'
 import Loading from '../components/Loading';
 import Navbar from '../components/Navbar';
@@ -12,6 +11,7 @@ function Home() {
   const { currentUser, setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
   const [userRole, setUserRole] = useState(currentUser.role)
   const [users, setUsers] = useState('');
+  const [refreshData, setRefreshData] = useState(0)
 
 
 
@@ -25,26 +25,17 @@ function Home() {
         console.error(error);
       }
     };
-
     // Fetch data initially
     fetchData();
+  }, [refreshData]);
+  
+  
+const resetTheData = () => {
+  setRefreshData(refreshData + 1)
+}
 
-    // Set interval to fetch data every 20 seconds
-    const intervalId = setInterval(fetchData, 20000000);
+  console.log(refreshData)
 
-    // Cleanup function to clear interval
-    return () => clearInterval(intervalId);
-  }, []);
-
-
-  const logout = () => {
-    console.log("logged out")
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('currentUser')
-  };
 
   return (
     <div className="home-container">
@@ -52,7 +43,8 @@ function Home() {
         {userRole === 'SuperAdmin' ? <AdminNavBar /> : null}
         <div className="home-body">
           <Navbar />
-          <Outlet context={users} />
+          <button onClick={resetTheData} type="button" className="btn btn-primary">Refresh Data</button>
+          <Outlet context={[users, refreshData]} />
         </div>
       </div>
     </div>

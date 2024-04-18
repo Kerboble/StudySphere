@@ -25,9 +25,10 @@ ChartJS.register(
   Legend
 );
 
-function LineGraph() {
+function LineGraph({refreshData}) {
     const [studentData, setStudentData] = useState([0]); // Initialize with initial value
     const [teacherData, setTeacherData] = useState([0]); // Initialize with initial value
+
   
     const options = {};
     const data = {
@@ -55,7 +56,7 @@ function LineGraph() {
           const res = await axios.get("http://localhost:4000/users");
           const studentsCount = res.data.filter(user => user.role === "student").length;
           const teachersCount = res.data.filter(user => user.role === "teacher").length;
-  
+    
           // Update studentData and teacherData with new values
           setStudentData(prevData => [...prevData, studentsCount]); // Replace old data with new one
           setTeacherData(prevData => [...prevData, teachersCount]); // Replace old data with new one
@@ -63,18 +64,19 @@ function LineGraph() {
           console.error(error);
         }
       };
-  
+    
       // Fetch data initially
       fetchData();
+    },  [refreshData]);
+
+
+    
   
-      // Set interval to fetch data every 20 seconds
-      const intervalId = setInterval(fetchData, 20000000);
-  
-      // Cleanup function to clear interval
-      return () => clearInterval(intervalId);
-    }, []);
-  
-    return <Line options={options} data={data} />;
+    return (
+    <div className='graph'>
+    <Line options={options} data={data} />
+    </div>
+    );
   }
   
   export default LineGraph;

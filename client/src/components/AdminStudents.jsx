@@ -5,7 +5,7 @@ import { Modal, Button } from 'react-bootstrap';
 
 
 function AdminStudents() {
-    const users = useOutletContext();
+    const [users] = useOutletContext();
     const [showModal, setShowModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -73,6 +73,7 @@ function AdminStudents() {
                                 <p>Email:{selectedStudent.email}</p>
                                 <p>Phone Number:{selectedStudent.phoneNumber}</p>
                                 <p>ID:{selectedStudent._id}</p>
+                                <p>Role: {selectedStudent.role}</p>
                             </div>
                         </>
                     )}

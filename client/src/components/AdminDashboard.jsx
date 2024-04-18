@@ -10,12 +10,11 @@ import LineGraph from './LineGraph';
 
 function AdminDashboard() {
 
-  const users = useOutletContext();
+  const [users, refreshData] = useOutletContext();
 
   const students = users ? users.filter(user => user.role === "student") : [];
   const teachers = users ? users.filter(user => user.role === "teacher") : [];
-
-    
+      
 
   return (
     <div className="admin-dashboard">
@@ -23,7 +22,7 @@ function AdminDashboard() {
         <h2>
           Super Admin Dashboard
         </h2>
-        <button type="button" class="btn btn-primary">+ New Admission</button>
+        <button  type="button" className="btn btn-primary">+ New Admission</button>
       </div>
         <div className="admin-dashboard-body">
           <div className="top-portion">
@@ -65,8 +64,10 @@ function AdminDashboard() {
             </div>
           </div>
         </div>
-        <div className="middle-portion" style={{ width: '80%', height: '300px' }}>
-          <LineGraph />
+        <div className="middle-portion" style={{ width: '98%', height: '300px' }}>
+          <LineGraph 
+          refreshData={refreshData}
+          />
         </div>
     </div>
   )
