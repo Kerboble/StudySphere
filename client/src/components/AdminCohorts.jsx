@@ -2,7 +2,7 @@ import React from 'react'
 
 function AdminCohorts() {
   return (
-    <div>AdminCohorts</div>
+    <div>test</div>
   )
 }
 
