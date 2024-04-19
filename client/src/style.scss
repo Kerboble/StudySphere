@@ -569,11 +569,6 @@ form {
     height: 35px;
     font-weight: bold;
   }
-
-  .modal-body {
-    display: flex;
-    flex-direction: row;
-  }
 }
 
 .students-header{
@@ -610,28 +605,90 @@ form {
 
 //modal styling
 
-.modal-body {
-  /* Add your styling here */
-  padding: 20px;
+/* Modal Container */
+.modal-container {
+  display: flex;
+  justify-content: center; /* Center the modal horizontally */
+  align-items: center; /* Center the modal vertically */
+  height: 100vh; /* Take the full height of the viewport */
 }
 
-.modal-student-info {
-  /* Example styling for student information */
+/* Modal Content */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px; /* Set the maximum width of the modal */
+  width: 100%; /* Make the modal responsive */
+}
+
+/* Modal Header */
+.modal-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dee2e6;
   margin-bottom: 20px;
 }
 
-.modal-student-info img {
-  width: 100px; /* Adjust size as needed */
-  height: 100px; /* Adjust size as needed */
-  border-radius: 50%;
-  margin-right: 10px;
+/* Modal Title */
+.modal-title {
+  font-size: 1.25rem;
 }
 
-.modal-student-info p {
-  margin: 5px 0;
+/* Modal Body */
+.modal-body {
+  padding-bottom: 20px;
 }
 
-.modal-student-info strong {
-  display: block;
-  margin-bottom: 5px;
+/* Modal Footer */
+.modal-footer {
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  justify-content: flex-end;
 }
+
+/* Close Button */
+.close-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #6c757d;
+}
+
+.close-button:hover {
+  color: #343a40;
+}
+
+/* Primary Button */
+.primary-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.primary-button:hover {
+  background-color: #0056b3;
+}
+
+/* Secondary Button */
+.secondary-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.secondary-button:hover {
+  background-color: #495057;
+}
+
+
