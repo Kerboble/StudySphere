@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useOutletContext } from "react-router-dom";
-import defaultPhoto from "../img/shark.png";
+import defaultPhoto from '../img/shark.png'
 
 function AdminTeachers() {
     const [users] = useOutletContext();
