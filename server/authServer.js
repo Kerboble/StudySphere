@@ -1,11 +1,32 @@
-const express = require('express'); // Importing Express.js framework
-const mongoose = require('mongoose'); // Importing Mongoose for MongoDB interactions
+const authenticateToken = require('./middleware/authMiddleware');
 const bcrypt = require('bcryptjs'); // Importing bcrypt for password hashing
 const bodyParser = require('body-parser'); // Middleware for parsing request bodies
 const cors = require('cors'); // Middleware for enabling CORS
+const express = require('express'); // Importing Express.js framework
 const jwt = require('jsonwebtoken');
-const authenticateToken = require('./middleware/authMiddleware');
+const mongoose = require('mongoose'); // Importing Mongoose for MongoDB interactions
+const nodemailer = require('nodemailer');
+const twilio = require('twilio');
+require('dotenv').config();
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const verifySid = process.env.TWILIO_VERIFY_SERVICE_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = new twilio(accountSid, authToken);
+
+console.log(client);
+
+
+// Setting up email to send for email verification
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'fiendsauthentication@gmail.com',
+    pass: process.env.EMAIL_PASS
+  }
+})
+
+const EMAIL_SECRET = process.env.EMAIL_SECRET;
 
 
 const app = express(); // Creating an Express application
@@ -13,7 +34,7 @@ app.use(cors()); // Using CORS middleware to enable cross-origin requests
 app.use(bodyParser.json({ limit: '50mb' })); //had to increase the payload amount to accommodate the size of avatar photos
 
 // Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://frontendfiends:BVT123@studysphere.efmnucf.mongodb.net/?retryWrites=true&w=majority&appName=StudySphere', {
+mongoose.connect(process.env.MONGO_LINK, {
   useNewUrlParser: true, // MongoDB connection options
   useUnifiedTopology: true,
 })
@@ -24,35 +45,95 @@ mongoose.connect('mongodb+srv://frontendfiends:BVT123@studysphere.efmnucf.mongod
 const UserSchema = new mongoose.Schema({
   username: String,
   password: String,
-  refreshToken: { type: String, default: '' },
+  refreshToken: { 
+    type: String, 
+    default: '' 
+  },
   email: String,
   phoneNumber: String,
   profilePicture: { 
     type: String,
     default: ''
   },
-  role: { type: String, default: 'student' }
+  role: { 
+    type: String, 
+    default: 'student' 
+  },
+  isEmailConfirmed: { // Whether or not the user has verified their email
+    type: Boolean,
+    default: false
+  }
 });
 
 const User = mongoose.model('User', UserSchema); // Creating a User model based on the UserSchema
+
+// Defining Cohort Schema
+const CohortSchema = new mongoose.Schema({
+  cohortName: String,
+  cohortSubject: String,
+  adminID: String, // Auto set to _id of current user
+  instructorID: String,
+  dateRange: {
+    startDate: Date,
+    endDate: Date
+  },
+  cohortFiles: {
+    readingMaterial: Array,
+    assignments: Array,
+    tests: Array
+  },
+  providerID: String, // Providers are like schools
+  isLive: { // Check if cohort has been approved by us to be live for users
+    type: Boolean, 
+    default: false
+  } 
+})
+
+const Cohort = mongoose.model('Cohort', CohortSchema); // Cohort model like the User model
+
 
 // User Registration
 app.post('/register', async (req, res) => {
   try {
     const { username, email,  phoneNumber, password, refreshToken, profilePicture, role} = req.body;
-    const duplicateUser = await User.findOne({username});
-    
-    //check for usernames in use
-    if(duplicateUser) {
-      return res.status(400).send('username already in use')}
-
-    const existingUser = await User.findOne({ email }); // Check if user already exists in the database
-    if (existingUser) { // If user already exists, return error
-      return res.status(400).send('Email already exists');
+    const existingUser = await User.findOne({
+      $or: [
+          { username: username },
+          { email: email }
+      ]
+  });
+  
+  // Check if the username or email is already in use
+  if (existingUser) {
+    if(existingUser.username === username) {
+      return res.status(400).send('Username is already in use.')}
+    if (existingUser.email === email) { // If user already exists, return error
+      return res.status(400).send('Email is already in use.');
     }
+  }
+  
+    
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
-    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture, role}); // Create a new User document
+    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture, role, isEmailConfirmed}); // Create a new User document
     await newUser.save(); // Save the new user to the database
+
+    // Setting up user for confirmation
+    jwt.sign(
+      {userId: newUser._id.toString()},
+      EMAIL_SECRET,
+      {expiresIn: '1d'}, // Token that expires in a day, special to each user
+      (err, emailToken) =>{
+
+        const url = `http://localhost:5173/confirmation/${emailToken}`; //Creating individualized url for confirmation with custom emailToken
+    
+        transporter.sendMail({
+          to: newUser.email,
+          subject: 'Welcome to Study Sphere!',
+          html: `Click the following link to activate your account to use: <a href='${url}'>${url}</a>`
+        });
+      }
+    );
+
     res.status(201).send('User registered successfully'); // Send success response
   } catch (error) {
     console.error('Error registering user:', error); // Log registration error
@@ -95,6 +176,9 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.status(404).send('User not found');
         }
+        if (!user.isEmailConfirmed) {
+          return res.status(401).send('Please confirm email.') // If you haven't confirmed your email, do it
+        }
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
             return res.status(401).send('Invalid password');
@@ -107,6 +191,23 @@ app.post('/login', async (req, res) => {
         console.error('Error logging in:', error);
         res.status(500).send('Error logging in');
     }
+});
+
+// Creating a cohort in the database
+app.post('/newCohort', async (req, res) => {
+  try {
+    const { cohortName, cohortSubject, adminID, instructorID, dateRange, cohortFiles, providerID, isLive} = req.body;
+    const existingCohort = await Cohort.findOne({ cohortName }); // Check if user already exists in the database
+    if (existingCohort) { // If cohort already exists, return error
+      return res.status(400).send('Cohort already exists');
+    }
+    const newCohort = new Cohort({ cohortName, cohortSubject, adminID, instructorID, dateRange, cohortFiles, providerID, isLive}); // Create a new User document
+    await newCohort.save(); // Save the new cohort to the database
+    res.status(201).send('Cohort successfully created'); // Send success response
+  } catch (error) {
+    console.error('Error creating cohort:', error); // Log registration error
+    res.status(500).send('Error creating cohort'); // Send error response
+  }
 });
 
 // Refresh token endpoint
@@ -129,6 +230,65 @@ app.post('/refresh-token', async (req, res) => {
         res.status(401).send('Invalid refresh token');
     }
 });
+
+app.post('/confirmation', async (req, res) => {
+  try {
+    const { token } = req.body;
+    const decoded = jwt.verify(token, EMAIL_SECRET);
+    console.log('test')
+
+    const user = await User.findByIdAndUpdate(decoded.userId, {isEmailConfirmed: true}, {new: true});
+    
+    if (!user) {
+      return res.status(404).send('User not found.');
+    }
+
+    res.send('Email has been confirmed.');
+  } catch (err) {
+    res.status(400).send('Invalid or expired Token');
+  }
+});
+
+app.post('/verify/start', async (req, res) => {
+  const { to } = req.body; // Extract the phone number from the request body
+ 
+  try {
+     // Initiate the verification process using Twilio's Verify API
+     const verification = await client.verify.v2.services(verifySid)
+       .verifications.create({ to, channel: 'sms' });
+ 
+     // Log the verification object for debugging purposes
+     console.log('Verification object:', verification);
+       // Respond to the client with a success message
+       res.status(200).send({ message: 'Verification code sent.', status: 'success' });
+     } catch (error) {
+     // Log the error for debugging purposes
+     console.error('Error sending verification code:', error);
+ 
+     // Respond to the client with an error message
+     res.status(500).send({ message: 'Error sending verification code', error: error.message });
+  }
+ });
+
+ app.post('/verify/check', async (req, res) => {
+  const { to, code } = req.body;
+  try {
+    const verificationCheck = await client.verify.v2.services(verifySid)
+      .verificationChecks
+      .create({ to, code });
+
+    if (verificationCheck.status === 'approved') {
+      // Verification was successful
+      res.status(200).send({ success: true, message: 'Verification successful' });
+    } else {
+      // Verification failed
+      res.status(400).send({ success: false, message: 'Verification failed. Please try again.' });
+    }
+  } catch (error) {
+    console.error('Verification error:', error);
+    res.status(500).send({ success: false, message: 'Internal server error' });
+  }
+ });
 
 //check username availability 
 app.post('/checkUsername', async (req, res) => {
@@ -155,6 +315,23 @@ app.get('/users', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+//this endpoint will allow us to pass in a user to make a super admin
+app.post('/make-super-admin', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      await User.updateOne({ email }, { $set: { role: 'SuperAdmin' } });
+      res.status(201).send('User has been upgraded to SuperAdmin');
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 });
 
