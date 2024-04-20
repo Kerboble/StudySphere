@@ -6,14 +6,20 @@ import teacher from "../img/teacher.png"
 import cohort from "../img/teamwork.png"
 import event from "../img/event.png"
 import LineGraph from './LineGraph';
+import axios from 'axios';
 
 
 function AdminDashboard() {
 
-  const [users, refreshData] = useOutletContext();
+  const [users, refreshData, cohorts] = useOutletContext();
 
   const students = users ? users.filter(user => user.role === "student") : [];
   const teachers = users ? users.filter(user => user.role === "teacher") : [];
+  
+  
+
+
+  
       
 
   return (
@@ -46,7 +52,7 @@ function AdminDashboard() {
             </div>
             <div className="statistics">
               <div className="info">
-                <p>0</p>
+                <p>{cohorts.length}</p>
                 <p>Total Cohorts</p>
               </div>
               <div className="stats-picture">

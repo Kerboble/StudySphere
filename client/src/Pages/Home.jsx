@@ -12,6 +12,23 @@ function Home() {
   const [userRole, setUserRole] = useState(currentUser.role)
   const [users, setUsers] = useState('');
   const [refreshData, setRefreshData] = useState(0)
+  const [cohorts, setCohorts] = useState([]);
+
+  console.log(cohorts)
+
+  useEffect(() => {
+    // Function to fetch data
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:4000/cohorts");
+        setCohorts(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    // Fetch data initially
+    fetchData();
+  }, [refreshData]);
 
 
 
@@ -44,7 +61,7 @@ const resetTheData = () => {
         <div className="home-body">
           <Navbar />
           <button onClick={resetTheData} type="button" className="btn btn-primary">Refresh Data</button>
-          <Outlet context={[users, refreshData]} />
+          <Outlet context={[users, refreshData, cohorts]} />
         </div>
       </div>
     </div>

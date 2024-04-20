@@ -114,7 +114,7 @@ app.post('/register', async (req, res) => {
   
     
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
-    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture, role, isEmailConfirmed}); // Create a new User document
+    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture, role, isEmailConfirmed:false}); // Create a new User document
     await newUser.save(); // Save the new user to the database
 
     // Setting up user for confirmation
@@ -207,6 +207,17 @@ app.post('/newCohort', async (req, res) => {
   } catch (error) {
     console.error('Error creating cohort:', error); // Log registration error
     res.status(500).send('Error creating cohort'); // Send error response
+  }
+});
+
+//Get cohort 
+app.get('/cohorts', async (req, res) => {
+  try {
+    const cohorts = await Cohort.find();
+    res.json(cohorts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

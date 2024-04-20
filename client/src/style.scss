@@ -692,3 +692,19 @@ form {
 }
 
 
+//admin cohort css
+
+.cohort {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+
+  button{
+    align-self: flex-end;
+  }
+
+  p{
+    display: flex;
+    flex-direction: column;
+  }
+}
