@@ -621,6 +621,7 @@ form {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 500px; /* Set the maximum width of the modal */
   width: 100%; /* Make the modal responsive */
+  gap:20px;
 }
 
 /* Modal Header */
@@ -698,13 +699,17 @@ form {
   display: flex;
   gap: 20px;
   width: 100%;
+  justify-content: space-between;
+  align-items: center; 
 
-  button{
-    align-self: flex-end;
-  }
+  p {
 
-  p{
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
+    width: 100px;
   }
 }
+
+

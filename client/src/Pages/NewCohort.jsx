@@ -79,10 +79,9 @@ const NewCohort = () => {
 
   return (
     <div className='new-cohort-container'>
-      <div className='formContainer'>
+      <div className='modal-content'>
         <div className='formWrapper'>
-          <img src={Sphere} alt="Sphere" className='register-logo'/>
-          <span className='logo'>New Cohort</span>
+          <span >New Cohort</span>
           <form onSubmit={e => onSubmit(e)}>
             <div className="cohort-info">
               <div className="inputWrapper">
@@ -124,7 +123,7 @@ const NewCohort = () => {
                 <label htmlFor="provider">Provider ID:</label>
                 <input type="text" id="providerID" name="providerID" value={providerID} onChange={e => onChange(e)} />
             </div>
-            <button type='submit'>Create Cohort</button>
+            <button className="btn btn-primary" onClick={onSubmit}>Create Cohort</button>
           </form>
         </div>
       </div>

@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@date-io/dayjs": "^3.0.0",
+    "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.15",
+    "@mui/x-date-pickers": "^7.2.0",
     "@nivo/bar": "^0.85.1",
     "@nivo/line": "^0.85.1",
     "axios": "^1.6.8",
@@ -21,6 +24,7 @@
     "ldrs": "^1.0.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
+    "react-calendar": "^4.8.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-password-strength-bar": "^0.4.1",

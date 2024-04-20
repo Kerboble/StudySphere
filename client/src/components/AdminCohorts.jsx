@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useOutletContext } from "react-router-dom";
 import NewCohort from '../Pages/NewCohort';
+import axios from 'axios';
 
 function AdminCohorts() {
     const [users, refreshData, cohorts] = useOutletContext();
@@ -9,6 +10,13 @@ function AdminCohorts() {
     const [showModal, setShowModal] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [newCohortModal, setNewCohortModal] = useState(false);
+
+    const activeCohort = {
+        color:"green"
+    }
+    const inActiveCohort = {
+        color:"red"
+    }
 
     const toggleModal = (cohort) => {
         setShowModal(!showModal);
@@ -23,13 +31,29 @@ function AdminCohorts() {
         cohort.cohortName.toLowerCase().includes(searchQuery.toLowerCase())
     ).sort((a, b) => a.cohortName.localeCompare(b.cohortName));
 
+    const deleteCohort = async (id) => {
+        const confirmed = window.confirm(`Are you sure you want to delete the user with cohort: ${id}?`);
+        if (confirmed) {
+            try {
+                const res = await axios.post("http://localhost:4000/delete-cohort", { id });
+                setShowModal(false);
+                console.log('Cohort has been deleted:', res.data);
+            } catch (error) {
+                console.error('Error deleting cohort:', error);
+            }
+        } else {
+            console.log('Deletion cancelled by user.');
+        }
+
+    };
+
     const displayCohort = filteredCohorts?.map(cohort => (
         <>
             <div className="cohort" key={cohort._id}>
-                <p>Name: {cohort.cohortName}</p>
-                <p>Subject: {cohort.cohortSubject}</p>
-                <p>Instructor: {cohort.instructorID}</p>
-                <p>Cohort Status: {cohort.isLive ? 'active' : 'not active'}</p>
+                <p><strong>Name</strong>{cohort.cohortName}</p>
+                <p><strong>Subject</strong> {cohort.cohortSubject}</p>
+                <p><strong>Instructor</strong>{cohort.instructorID}</p>
+                {cohort.isLive ?  <p style={activeCohort}><strong>inactive</strong> </p>: <p style={inActiveCohort}><strong>inactive</strong> </p>}
                 <div className="actions">
                     <button type="button" className="btn btn-secondary" onClick={() => toggleModal(cohort)}>Actions</button>
                 </div>
@@ -78,7 +102,7 @@ function AdminCohorts() {
                         <Button variant="primary">Edit</Button>
                         <Button variant="primary">Assign Teacher</Button>
                         <Button variant="primary">View Files</Button>
-                        <Button variant="danger">Delete</Button>
+                        <Button onClick={() => deleteCohort(selectedCohort._id)} variant="danger">Delete</Button>
                     </div>
                 </Modal.Body>
             </Modal>

@@ -363,6 +363,25 @@ app.post('/set-role', async (req, res) => {
   }
 });
 
+app.post("/delete-cohort", async(req, res) => {
+  console.log('ping')
+  const {id} = req.body;
+  try {
+    // Validate input: Check if ID is a valid ObjectId, if necessary
+
+    const cohort = await Cohort.findOne({ _id: id });
+    if (!cohort) {
+      return res.status(404).json({ error: "Cohort not found" });
+    }
+
+    await cohort.deleteOne();
+
+    return res.status(200).json({ message: "Cohort successfully deleted" });
+  } catch (error) {
+    console.error("Error deleting cohort:", error);
+    return res.status(500).json({ error: "An error occurred while deleting the cohort" });
+  }
+});
 
 app.post('/delete-user', async (req, res) => {
   const { email } = req.body;

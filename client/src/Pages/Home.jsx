@@ -1,7 +1,6 @@
-// Home.js
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/authContext';
-import axios from 'axios'
+import axios from 'axios';
 import Loading from '../components/Loading';
 import Navbar from '../components/Navbar';
 import AdminNavBar from '../components/AdminNavbar';
@@ -9,16 +8,16 @@ import { Outlet } from 'react-router-dom';
 
 function Home() {
   const { currentUser, setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
-  const [userRole, setUserRole] = useState(currentUser.role)
+  const [userRole, setUserRole] = useState(currentUser.role);
   const [users, setUsers] = useState('');
-  const [refreshData, setRefreshData] = useState(0)
+  const [refreshData, setRefreshData] = useState(0);
   const [cohorts, setCohorts] = useState([]);
 
-  console.log(cohorts)
+  console.log(cohorts);
 
   useEffect(() => {
-    // Function to fetch data
-    const fetchData = async () => {
+    // Fetch cohorts data
+    const fetchCohorts = async () => {
       try {
         const res = await axios.get("http://localhost:4000/cohorts");
         setCohorts(res.data);
@@ -26,15 +25,12 @@ function Home() {
         console.error(error);
       }
     };
-    // Fetch data initially
-    fetchData();
+    fetchCohorts();
   }, [refreshData]);
 
-
-
   useEffect(() => {
-    // Function to fetch data
-    const fetchData = async () => {
+    // Fetch users data
+    const fetchUsers = async () => {
       try {
         const res = await axios.get("http://localhost:4000/users");
         setUsers(res.data);
@@ -42,31 +38,31 @@ function Home() {
         console.error(error);
       }
     };
-    // Fetch data initially
-    fetchData();
+    fetchUsers();
   }, [refreshData]);
-  
-  
-const resetTheData = () => {
-  setRefreshData(refreshData + 1)
-}
 
-  console.log(refreshData)
+  const resetTheData = () => {
+    setRefreshData(refreshData + 1);
+  };
 
+  console.log(refreshData);
 
   return (
     <div className="home-container">
-      <div className='home'>
-        {userRole === 'SuperAdmin' ? <AdminNavBar /> : null}
-        <div className="home-body">
-          <Navbar />
-          <button onClick={resetTheData} type="button" className="btn btn-primary">Refresh Data</button>
-          <Outlet context={[users, refreshData, cohorts]} />
+      {userRole === "SuperAdmin" && (
+        <div className='home'>
+          {userRole === 'SuperAdmin' ? <AdminNavBar /> : null}
+          <div className="home-body">
+            <Navbar />
+            {userRole === 'SuperAdmin' && (
+              <button onClick={resetTheData} type="button" className="btn btn-primary" style={{borderRadius:"0px"}}>Refresh Data</button>
+            )}
+            <Outlet context={[users, refreshData, cohorts]} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
 
 export default Home;
-

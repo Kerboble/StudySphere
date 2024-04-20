@@ -57,8 +57,7 @@ function AdminNavBar() {
   return (
     <nav className='side-navbar'>
       <div className='company'>
-          <img className='logo' src={logo} alt="" />
-          <p>StudySphere</p>
+          <img style={{height:"50px", width:"50px"}} className='logo' src={logo} alt="" />
       </div>
        <div className='dashboard'>
           <NavLink

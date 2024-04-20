@@ -1,6 +1,32 @@
+
 import React, { useState, useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import axios from "axios"; // Import axios for data fetching
+import { useOutletContext } from 'react-router-dom';
+
+// Import necessary Chart.js components
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+} from "chart.js";
+
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 
 function LineGraph({refreshData}) {
     const [studentData, setStudentData] = useState([0]); // Initialize with initial value
@@ -58,7 +84,7 @@ function LineGraph({refreshData}) {
     }, [refreshData]);
 
     return (
-        <div className='graph'>
+        <div className='graph' style={{height:"30vh"}}>
             <Line options={options} data={data} />
         </div>
     );
