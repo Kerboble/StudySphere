@@ -9,6 +9,8 @@ import LineGraph from './LineGraph';
 import axios from 'axios';
 
 
+
+
 function AdminDashboard() {
 
   const [users, refreshData, cohorts] = useOutletContext();
@@ -70,7 +72,7 @@ function AdminDashboard() {
             </div>
           </div>
         </div>
-        <div className="middle-portion" style={{ width: '98%', height: '300px' }}>
+        <div className="middle-portion" style={{ width: '98%', height: '20vh' }}>
           <LineGraph 
           refreshData={refreshData}
           />
