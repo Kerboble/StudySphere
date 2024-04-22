@@ -17,6 +17,7 @@ import Registration from './Pages/Registration';
 import Login from './Pages/Login';
 import Home from './Pages/Home';
 import NewHome from './Pages/philHome';
+import EditCohort from './components/EditCohort';
 
 
 
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="adminstudents" element={<AdminStudents />}/>
             <Route path="adminsteachers" element={<AdminTeachers />}/>
             <Route path="admincohorts" element={<AdminCohorts />}/>
+            <Route path="editCohort" element={<EditCohort />}/>
           </Route>
           <Route path="landing" element={<LandingPage />} />
           <Route path='confirmation/:token' element={<EmailConfirmation />} />

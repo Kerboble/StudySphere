@@ -403,6 +403,39 @@ app.post('/delete-user', async (req, res) => {
   }
 });
 
+//assigning teacher to cohort 
+app.post("/assign-teacher", async (req, res) => {
+  const { teacherID, cohortID } = req.body;
+  try {
+    const cohort = await Cohort.findOne({ _id: cohortID });
+    if (cohort) {
+      await Cohort.updateOne({ _id: cohortID }, { $set: { instructorID: teacherID } });
+      res.status(200).send("Teacher assigned successfully.");
+    } else {
+      res.status(404).send("Cohort not found.");
+    }
+  } catch (error) {
+    console.error("Error assigning teacher:", error);
+    res.status(500).send("Internal server error.");
+  }
+});
+
+
+app.post("/edit-cohort", async (req, res) => {
+  const { cohortName, cohortSubject, startDate, endDate, adminID, instructorID, providerID, isLive, cohortID } = req.body;
+  try {
+    const cohort = await Cohort.findById(cohortID);
+    if (cohort) {
+      await Cohort.updateMany({ _id: cohortID }, { $set: { cohortName: cohortName, cohortSubject:cohortSubject, adminID:adminID, instructorID:instructorID, isLive:isLive, providerID:providerID } });
+      res.status(200).json({ message: "Cohort updated successfully" });
+    } else {
+      res.status(404).json({ message: "Cohort not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 
 

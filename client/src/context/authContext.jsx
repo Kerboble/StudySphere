@@ -1,7 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { checkAndRenewToken } from '../utilities/checkToken'
+
 const AuthContext = createContext();
-import { checkAndRenewToken } from '../utilities/checkToken';
 
 const AuthProvider = ({ children }) => {
   let existingUser = localStorage.getItem('currentUser')

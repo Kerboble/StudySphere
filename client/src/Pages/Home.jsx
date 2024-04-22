@@ -55,7 +55,7 @@ function Home() {
           <div className="home-body">
             <Navbar />
             {userRole === 'SuperAdmin' && (
-              <button onClick={resetTheData} type="button" className="btn btn-primary" style={{borderRadius:"0px"}}>Refresh Data</button>
+              <button onClick={resetTheData} type="button" className="btn btn-primary" style={{borderRadius:"0px", backgroundColor:"#0077B6", border:"none"}}>Refresh Data</button>
             )}
             <Outlet context={[users, refreshData, cohorts]} />
           </div>
