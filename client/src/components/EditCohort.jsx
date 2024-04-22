@@ -31,7 +31,7 @@ function EditCohort() {
 
     try {
         const response = await axios.post("http://localhost:4000/edit-cohort", {
-          cohortName, cohortSubject, adminID, instructorID, providerID, isLive, cohortID 
+          cohortName, cohortSubject, adminID, instructorID, providerID, isLive, cohortID, startDate, endDate
         });
         console.log(response.data); // Assuming the server sends back a response message
     } catch (error) {

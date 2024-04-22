@@ -426,7 +426,7 @@ app.post("/edit-cohort", async (req, res) => {
   try {
     const cohort = await Cohort.findById(cohortID);
     if (cohort) {
-      await Cohort.updateMany({ _id: cohortID }, { $set: { cohortName: cohortName, cohortSubject:cohortSubject, adminID:adminID, instructorID:instructorID, isLive:isLive, providerID:providerID } });
+      await Cohort.updateMany({ _id: cohortID }, { $set: { cohortName: cohortName, cohortSubject:cohortSubject, adminID:adminID, instructorID:instructorID, isLive:isLive, providerID:providerID, dateRange:{startDate:startDate, endDate:endDate}} });
       res.status(200).json({ message: "Cohort updated successfully" });
     } else {
       res.status(404).json({ message: "Cohort not found" });
