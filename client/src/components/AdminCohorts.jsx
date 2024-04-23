@@ -114,6 +114,11 @@ function AdminCohorts() {
         setCohort(selectedCohort)
         navigate("../editCohort")
     };
+
+    const viewFiles = (selectedCohort) => {
+        setCohort(selectedCohort);
+        navigate("../cohortfiles")
+    };
     
 
     return (
@@ -157,7 +162,7 @@ function AdminCohorts() {
                     <div className="modal-footer">
                         <Button onClick={() => editCohort(selectedCohort)} variant="primary">Edit</Button>
                         <Button onClick={assignTeacher} variant="primary">Assign Teacher</Button>
-                        <Button variant="primary">View Files</Button>
+                        <Button onClick={() => viewFiles(selectedCohort)} variant="primary">View Files</Button>
                         <Button onClick={() => deleteCohort(selectedCohort._id)} variant="danger">Delete</Button>
                     </div>
                 </Modal.Body>

@@ -34,6 +34,7 @@ function EditCohort() {
           cohortName, cohortSubject, adminID, instructorID, providerID, isLive, cohortID, startDate, endDate
         });
         console.log(response.data); // Assuming the server sends back a response message
+        Navigate('../admincohorts')
     } catch (error) {
         console.error("An error occurred while updating the cohort:", error);
     }
@@ -83,7 +84,6 @@ function EditCohort() {
         </div>
         <div className="text-center">
           <button type="submit" className="btn btn-primary">Save Changes</button>
-          <button onClick={()=> {Navigate('../admincohorts')}} type="submit" className="btn btn-secondary">Cohorts</button>
         </div>
       </form>
     </div>

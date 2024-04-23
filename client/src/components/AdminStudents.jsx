@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, Navigate, useNavigate} from "react-router-dom";
 import defaultPhoto from "../img/shark.png"
+import { StudentContext } from '../context/studentContext';
 
 function AdminStudents() {
+    const {setStudent} = useContext(StudentContext);
     const [users] = useOutletContext();
     const [showModal, setShowModal] = useState(false);
     const [showAddStudentModal, setShowAddStudentModal] = useState(false); // State for the second modal
@@ -18,7 +20,7 @@ function AdminStudents() {
 
     const students = users ? users.filter(user => user.role === "student") : [];
     const {username, email, password} = formData;
-
+    const Navigate = useNavigate();
     const toggleModal = (student) => {
         setShowModal(!showModal);
         setSelectedStudent(student);
@@ -126,7 +128,10 @@ function AdminStudents() {
                     )}
                     <div className="modal-footer">
                         <Button variant="primary">Edit</Button>
-                        <Button variant="primary">View Cohorts</Button>
+                        <Button onClick={() => {
+                            Navigate('../studentclasses')
+                            setStudent(selectedStudent)
+                            }} variant="primary">View Cohorts</Button>
                         <Button variant="primary">Message</Button>
                         <Button onClick={() => deleteUser(selectedStudent.email)} variant="danger">Delete</Button>
                     </div>

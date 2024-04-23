@@ -86,10 +86,33 @@ const CohortSchema = new mongoose.Schema({
   isLive: { // Check if cohort has been approved by us to be live for users
     type: Boolean, 
     default: false
-  } 
-})
+  },
+  students: Array 
+});
+
 
 const Cohort = mongoose.model('Cohort', CohortSchema); // Cohort model like the User model
+
+// add student to cohort 
+app.post("/add-to-class", async (req, res) => {
+  const { studentId, cohortId } = req.body;
+  console.log(studentId)
+  try {
+      const cohort = await Cohort.findOne({ _id: cohortId });
+      if (cohort) {
+          await Cohort.updateOne({ _id: cohortId }, { $push: { students: studentId } });
+          console.log(cohort)
+          res.status(200).json({ success: true, message: "Student added to cohort successfully." });
+      } else {
+          res.status(404).json({ success: false, message: "Cohort not found." });
+      }
+  } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ success: false, message: "An error occurred while adding the student to the cohort." });
+  }
+});
+
+
 
 
 // User Registration
@@ -426,7 +449,7 @@ app.post("/edit-cohort", async (req, res) => {
   try {
     const cohort = await Cohort.findById(cohortID);
     if (cohort) {
-      await Cohort.updateMany({ _id: cohortID }, { $set: { cohortName: cohortName, cohortSubject:cohortSubject, adminID:adminID, instructorID:instructorID, isLive:isLive, providerID:providerID, dateRange:{startDate:startDate, endDate:endDate}} });
+      await Cohort.updateMany({ _id: cohortID }, { $set: { cohortName, cohortSubject, adminID, instructorID, isLive, providerID, dateRange:{startDate, endDate}} });
       res.status(200).json({ message: "Cohort updated successfully" });
     } else {
       res.status(404).json({ message: "Cohort not found" });
