@@ -1,6 +1,6 @@
 import {React, useContext, useState} from 'react'
 import { AuthContext } from '../context/authContext';
-import logo from "../img/globe(2).png"
+import logo from "../img/globe(1).png"
 import logoutIcon from "../img/right-arrow.png"
 import dashboard from "../img/dashboards(1).png"
 import dashboard2 from "../img/dashboards(2).png"

@@ -87,7 +87,13 @@ const CohortSchema = new mongoose.Schema({
     type: Boolean, 
     default: false
   },
-  students: Array 
+  students: [{
+    student: {
+      id:String,
+      profilePicture:String,
+      username:String
+    }
+  }]
 });
 
 
@@ -95,24 +101,53 @@ const Cohort = mongoose.model('Cohort', CohortSchema); // Cohort model like the 
 
 // add student to cohort 
 app.post("/add-to-class", async (req, res) => {
-  const { studentId, cohortId } = req.body;
-  console.log(studentId)
+  const { studentId, cohortId, profilePicture, username } = req.body;
   try {
-      const cohort = await Cohort.findOne({ _id: cohortId });
-      if (cohort) {
-          await Cohort.updateOne({ _id: cohortId }, { $push: { students: studentId } });
-          console.log(cohort)
-          res.status(200).json({ success: true, message: "Student added to cohort successfully." });
-      } else {
-          res.status(404).json({ success: false, message: "Cohort not found." });
-      }
+    const cohort = await Cohort.findOne({ _id: cohortId });
+    if (cohort) {
+      await Cohort.updateOne(
+        { _id: cohortId },
+        {
+          $push: {
+            students: {
+              student: {
+                id: studentId,
+                profilePicture: profilePicture,
+                username: username
+              }
+            }
+          }
+        }
+      );
+      console.log(cohort);
+      res
+        .status(200)
+        .json({ success: true, message: "Student added to cohort successfully." });
+    } else {
+      res.status(404).json({ success: false, message: "Cohort not found." });
+    }
   } catch (error) {
-      console.error("Error:", error);
-      res.status(500).json({ success: false, message: "An error occurred while adding the student to the cohort." });
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "An error occurred while adding the student to the cohort." });
   }
 });
 
-
+app.post('/get-teacher', async (req, res) => {
+  const { id } = req.body;
+  try {
+    const teacher = await User.findOne({ _id: id });
+    if (teacher) {
+      res.json(teacher);
+    } else {
+      res.status(404).json({ message: 'Teacher not found' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 // User Registration

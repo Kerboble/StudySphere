@@ -7,6 +7,9 @@ function StudentClasses() {
     const { student } = useContext(StudentContext);
     const [users, refreshData, cohorts] = useOutletContext();
     const id = student._id;
+    const profilePicture = student.profilePicture;
+    const username = student.username
+    console.log(username)
 
     const [selectedCohort, setSelectedCohort] = useState(null);
     const listCohorts = cohorts ? cohorts.map(cohort => (
@@ -14,11 +17,13 @@ function StudentClasses() {
     )) : null;
 
     const handleAddToCohort = async () => {
-        console.log(id, selectedCohort);
+        console.log(id, selectedCohort, profilePicture, username);
         try {
             const res = await axios.post("http://localhost:4000/add-to-class", {
                 studentId: id,
-                cohortId: selectedCohort
+                cohortId: selectedCohort,
+                profilePicture,
+                username
             });
             console.log("Response:", res.data);
             closeModal();
@@ -26,24 +31,31 @@ function StudentClasses() {
             console.error("Error:", error);
         }
     };
+    
     const [modalVisible, setModalVisible] = useState(false);
+    
     const openModal = () => {
         setModalVisible(true);
     };
-
+    
     const closeModal = () => {
         setModalVisible(false);
     };
-
-    const showMyCourses = cohorts ? cohorts.map(cohort => {
-        return (
-            cohort.students.includes(id) ? <p>{cohort.cohortName}</p> : null
-        );
-    }) : null;
-    
-    
     
 
+    const showMyCourses = cohorts
+    ? cohorts.map(cohort => {
+        if (cohort.students && Array.isArray(cohort.students)) {
+          const studentIds = cohort.students.map(student => student.id);
+          if (studentIds.includes(id)) {
+            return <p>{cohort.cohortName}</p>;
+          }
+        }
+        return null;
+      })
+    : null;
+  
+    
 
     return (
         <div>

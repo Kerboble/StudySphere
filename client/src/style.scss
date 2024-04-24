@@ -34,6 +34,16 @@ $body-background-color-end: #CAF0F8;
   }
 }
 
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+img{
+  object-fit: cover;
+}
+
 
 
 .formWrapper form {
@@ -352,6 +362,7 @@ form {
   justify-content: center;
   align-items: center; /* Center vertically */
   padding: 20px;
+  overflow: scroll;
 
   .home-body {
     display: flex;
@@ -380,6 +391,7 @@ form {
   align-items: center;
   background-color: white;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+  justify-content: space-between;
 
   input {
     margin: 20px;
@@ -397,7 +409,6 @@ form {
     border-radius: 40px;
     gap: 5px;
     align-items: center;
-    margin-left: auto;
     margin-right: 20px;
 
   .profile-photo {
@@ -712,5 +723,129 @@ form {
     width: 100px;
   }
 }
+
+
+//cohort files
+
+.files-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  gap: 2rem;
+
+  .files-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+
+  .users {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+    padding: 2rem;
+  
+    h3 {
+      display: inline;
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+      text-align: center;
+  
+    }
+
+    .students {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      overflow: scroll;
+      height: 60%; // Set the height of the .students div
+      padding-bottom: 1rem; // Add some padding to the bottom to make space for scrollbar
+      width: 50%;
+      border-radius: 5px;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+
+  
+      &::-webkit-scrollbar {
+        width: 12px;
+      }
+  
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+  
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 6px;
+      }
+  
+      &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+    
+      
+    }
+
+    .teacher{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      height: 60%;
+      width: auto;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      border-radius: 5px;
+      
+      .instructor-photo{
+        height: 300px;
+        width: 300px;
+      }
+
+    }
+  }
+
+  .files {
+    display: flex;
+    flex-direction: column;
+    height: 15rem;
+    width: 15rem;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 2px 2px #004c96;
+    }
+  }
+
+  img {
+    height: 3.688rem;
+    width: 3.688rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .student {
+    display: flex;
+    flex-direction: row;
+    height: 4rem; // Set the height of each student element
+    width: auto;
+    align-items: center;
+    padding: 1.8rem;
+  }
+}
+
+
+
+
+
 
 
