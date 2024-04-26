@@ -6,6 +6,7 @@ import defaultPhoto from '../img/shark.png'
 import { TeacherContext } from '../context/teacherContext';
 import { useNavigate } from 'react-router-dom';
 
+
 function AdminTeachers() {
     const [users] = useOutletContext();
     const [showModal, setShowModal] = useState(false);
@@ -22,6 +23,7 @@ function AdminTeachers() {
     const teachers = users ? users.filter(user => user.role === "teacher") : [];
     const { username, email, password, role } = formData;
     const Navigate = useNavigate();
+    const {setTeacher} = useContext(TeacherContext)
 
     const toggleModal = (teacher) => {
         setShowModal(!showModal);
@@ -56,7 +58,7 @@ function AdminTeachers() {
         const confirmed = window.confirm(`Are you sure you want to delete the user with email: ${email}?`);
         if (confirmed) {
             try {
-                const res = await axios.post("http://localhost:4000/delete-user", { email });
+                const res = await axios.delete("http://localhost:4000/delete-user", { data:{email} });
                 setShowModal(false);
                 console.log('User has been deleted:', res.data);
             } catch (error) {
@@ -68,6 +70,7 @@ function AdminTeachers() {
     };
 
     const teachersPage = (selectedTeacher) => {
+        setTeacher(selectedTeacher)
         localStorage.setItem('teacher', JSON.stringify(selectedTeacher));
         Navigate("../teacherprofile")
     };

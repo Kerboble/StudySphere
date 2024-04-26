@@ -80,7 +80,7 @@ function AdminCohorts() {
         const confirmed = window.confirm(`Are you sure you want to delete the user with cohort: ${id}?`);
         if (confirmed) {
             try {
-                const res = await axios.post("http://localhost:4000/delete-cohort", { id });
+                const res = await axios.delete("http://localhost:4000/delete-cohort", {data:{id}});
                 setShowModal(false);
                 console.log('Cohort has been deleted:', res.data);
             } catch (error) {
@@ -101,6 +101,7 @@ function AdminCohorts() {
         if (confirmed) {
             try {
                 const res = await axios.post("http://localhost:4000/assign-teacher", { teacherID, cohortID });
+                setTeacherModal(false)
                 console.log(res.data);
             } catch (error) {
                 console.error("Error setting teacher to cohort:", error);

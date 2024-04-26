@@ -60,7 +60,7 @@ function StudentProfile() {
                     <img src={defaultCohortPhoto} alt="" />
                     <p>{cohort.cohortName}</p>
                     <ProgressBar striped variant="warning" now={60} style={{marginBottom:"5px"}}/>
-                    <button onClick={() => courseOverView(cohort)} className='btn btn-primary '>Overview</button>
+                    <button onClick={() => courseOverView(cohort)} className='btn btn-primary '>View</button>
                 </div>
             );
           }

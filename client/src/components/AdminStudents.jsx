@@ -58,7 +58,7 @@ function AdminStudents() {
         const confirmed = window.confirm(`Are you sure you want to delete the user with email: ${email}?`);
         if (confirmed) {
             try {
-                const res = await axios.post("http://localhost:4000/delete-user", { email });
+                const res = await axios.delete("http://localhost:4000/delete-user", { data:{email} });
                 setShowModal(false);
                 console.log('User has been deleted:', res.data);
             } catch (error) {

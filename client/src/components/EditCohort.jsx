@@ -28,17 +28,27 @@ function EditCohort() {
   const submit = async (e) => {
     e.preventDefault();
     const cohortID = cohort._id;
-
+  
     try {
-        const response = await axios.post("http://localhost:4000/edit-cohort", {
-          cohortName, cohortSubject, adminID, instructorID, providerID, isLive, cohortID, startDate, endDate
-        });
-        console.log(response.data); // Assuming the server sends back a response message
-        Navigate('../admincohorts')
+      const response = await axios.put("http://localhost:4000/edit-cohort", {
+        cohortName, cohortSubject, adminID, instructorID, providerID, isLive, cohortID, startDate, endDate
+      });
+  
+      console.log(response.data); // Assuming the server sends back a response message
+  
+      // Check if the update was successful
+      if (response.status === 200) {
+        // Navigate to the admin cohorts page
+        Navigate('../admincohorts');
+      } else {
+        // Handle unsuccessful update
+        console.error("Update failed:", response.data.message);
+      }
     } catch (error) {
-        console.error("An error occurred while updating the cohort:", error);
+      console.error("An error occurred while updating the cohort:", error);
     }
-};
+  };
+  
 
 
   return (

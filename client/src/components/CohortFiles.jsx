@@ -9,16 +9,16 @@ import events from "../img/upcoming.png"
 import defaultPhoto from "../img/shark.png"
 import { useNavigate } from 'react-router-dom';
 import { StudentContext } from '../context/studentContext';
-
+import { TeacherContext } from '../context/teacherContext';
 
 
 function CohortFiles() {
   const { cohort, setCohort } = useContext(CohortContext);
-  const [teacher, setTeacher] = useState(null);
+  const [teacher, _setTeacher] = useState(null);
   const Navigate = useNavigate();
   const [refresh, setRefresh] = useState(false)
   const {setStudent} = useContext(StudentContext);
-
+  const {setTeacher} = useContext(TeacherContext)
 
   const readingMaterials = cohort ? cohort.cohortFiles.readingMaterial : null;
   const readingAssignments = cohort ? cohort.cohortFiles.assignments : null;
@@ -30,7 +30,7 @@ function CohortFiles() {
     const fetchTeacher = async () => {
       try {
         const response = await axios.post("http://localhost:4000/get-teacher", { id: teacherID });
-        setTeacher(response.data);
+        _setTeacher(response.data);
       } catch (error) {
         console.error("Error fetching teacher:", error);
       }
@@ -43,21 +43,47 @@ function CohortFiles() {
 
   const removeFromCohort = async (id, cohortID) => {
     try {
-      const response = await axios.post("http://localhost:4000/remove-user", {id, cohortID});
-      localStorage.removeItem('cohort')
+      const response = await axios.delete("http://localhost:4000/remove-user", { data: { id, cohortID } });
+      localStorage.removeItem('cohort');
       setCohort(response.data.cohort);
       localStorage.setItem('cohort', JSON.stringify(response.data.cohort));
     } catch (error) {
       console.error(error);
     }
   };
-
+  
 
   const goToProfile = async (id) => {
-    const res = await axios.post("http://localhost:4000/get-student", {id});
-    setStudent(res.data)
-    localStorage.setItem('student', JSON.stringify(res.data))
-    Navigate('../studentprofile');
+    try {
+        const res = await axios.get("http://localhost:4000/get-user", {
+            params: {
+                id: id
+            }
+        });
+        setStudent(res.data);
+        localStorage.setItem('student', JSON.stringify(res.data));
+        Navigate('../studentprofile');
+    } catch (error) {
+        // Handle errors
+        console.error(error);
+    }
+}
+
+const teachersProfile = async(id) => {
+  localStorage.removeItem('teacher')
+  try {
+    const res = await axios.get("http://localhost:4000/get-user", {
+        params: {
+            id: id
+        }
+    });
+    setTeacher(res.data);
+    localStorage.setItem('teacher', JSON.stringify(res.data));
+    Navigate('../teacherprofile');
+} catch (error) {
+    // Handle errors
+    console.error(error);
+}
 }
 
 const displayReadingMaterials = readingMaterials
@@ -135,7 +161,7 @@ const displayReadingMaterials = readingMaterials
               <p>Email:{teacher.email}</p>
               <p>Phone:{teacher.phoneNumber}</p>
             </div>
-            <button className='btn btn-primary'>Profile</button>
+            <button onClick={() => teachersProfile(teacher._id)} className='btn btn-primary'>Profile</button>
           </div>
         )}
 

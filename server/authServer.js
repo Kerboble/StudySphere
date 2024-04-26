@@ -150,8 +150,9 @@ app.post('/get-teacher', async (req, res) => {
 });
 
 //delete user from cohort based on id
-app.post('/remove-user', async (req, res) => {
-  const { id, cohortID } = req.body; // Extracting id and cohortID from request body
+app.delete('/remove-user', async (req, res) => {
+  const { id, cohortID } = req.body; // Extracting id and cohortID from query parameters
+  console.log()
   try {
     // Use $pull to remove the student from the students array based on their ID
     const updatedCohort = await Cohort.findByIdAndUpdate(cohortID, { $pull: { students: { 'student.id': id } } }, { new: true });
@@ -170,20 +171,24 @@ app.post('/remove-user', async (req, res) => {
 });
 
 //get student data 
-app.post("/get-student", async (req, res) => {
-  console.log('ping')
-  const { id } = req.body;
+app.get("/get-user", async (req, res) => {
+  const { id } = req.query;
+  if (!id) {
+    return res.status(400).json({ success: false, message: "ID parameter is missing." });
+  }
+
   try {
     const student = await User.findOne({ _id: id });
     if (!student) {
-      return res.status(404).json({ success: false, message: "Student not found." });
+      return res.status(404).json({ success: false, message: "user not found." });
     }
     res.json(student);
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ success: false, message: "An error occurred while fetching the student." });
+    res.status(500).json({ success: false, message: "An error occurred while fetching the user." });
   }
 });
+
 
 
 
@@ -456,12 +461,11 @@ app.post('/set-role', async (req, res) => {
   }
 });
 
-app.post("/delete-cohort", async(req, res) => {
+app.delete("/delete-cohort", async(req, res) => {
   console.log('ping')
   const {id} = req.body;
   try {
     // Validate input: Check if ID is a valid ObjectId, if necessary
-
     const cohort = await Cohort.findOne({ _id: id });
     if (!cohort) {
       return res.status(404).json({ error: "Cohort not found" });
@@ -476,7 +480,7 @@ app.post("/delete-cohort", async(req, res) => {
   }
 });
 
-app.post('/delete-user', async (req, res) => {
+app.delete('/delete-user', async (req, res) => {
   const { email } = req.body;
   try {
     // Find the user by email
@@ -514,7 +518,7 @@ app.post("/assign-teacher", async (req, res) => {
 });
 
 
-app.post("/edit-cohort", async (req, res) => {
+app.put("/edit-cohort", async (req, res) => {
   const { cohortName, cohortSubject, startDate, endDate, adminID, instructorID, providerID, isLive, cohortID } = req.body;
   try {
     const cohort = await Cohort.findById(cohortID);

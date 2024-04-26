@@ -60,7 +60,10 @@ function TeacherProfile() {
         </div>
         <div style={{marginTop:"20px"}} className="add-to-cohort">
             <button className='btn btn-secondary'>Edit</button>
-            <button onClick={() => Navigate("../adminsteachers")} className='btn btn-success'>Done</button>
+            <button onClick={() => {
+                localStorage.removeItem('teacher')
+                Navigate(-1)}} 
+                className='btn btn-success'>Done</button>
         </div>
     </div>
     <div className="academic-stats">
