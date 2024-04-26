@@ -726,6 +726,21 @@ form {
 
 
 //cohort files
+.files-header {
+  display: flex;
+  justify-content: space-between; /* Aligns items with space between them */
+  padding: 20px;
+}
+
+.files-header h1 {
+  margin: 0;
+}
+
+.files-header button {
+  align-self: center; /* Aligns button vertically in the center */
+}
+
+
 
 .files-container {
   display: flex;
@@ -733,12 +748,15 @@ form {
   height: 100vh;
   width: 100%;
   gap: 2rem;
+  overflow: scroll;
+
 
   .files-wrapper {
     display: flex;
     justify-content: center;
     gap: 1.25rem;
     flex-wrap: wrap;
+    padding: 10px;
   }
 
 
@@ -748,12 +766,17 @@ form {
     width: 100%;
     gap: 1rem;
     padding: 2rem;
+    height: 80%;
   
     h3 {
       display: inline;
       margin: 0; /* Remove default margin */
       padding: 0; /* Remove default padding */
       text-align: center;
+
+      .done-button{
+        flex-direction: column;
+      }
   
     }
 
@@ -769,6 +792,19 @@ form {
       width: 50%;
       border-radius: 5px;
       box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      padding: 20px;
+
+      .cohort-students {
+        height: 200px;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+        padding: 20px;
+        margin: 0;
+        gap: 2px;
+      }
 
   
       &::-webkit-scrollbar {
@@ -796,7 +832,7 @@ form {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex: 1;
+      flex: 2;
       height: 60%;
       width: auto;
       box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
@@ -810,11 +846,13 @@ form {
     }
   }
 
+  
+
   .files {
     display: flex;
     flex-direction: column;
-    height: 15rem;
-    width: 15rem;
+    height: 12rem;
+    width: 12rem;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
     justify-content: center;
     align-items: center;
@@ -840,12 +878,127 @@ form {
     width: auto;
     align-items: center;
     padding: 1.8rem;
-  }
+  }  
 }
 
 
 
+//student profile
+
+.student-profile-container, .teacher-profile-container {
+  height: 100vh;
+  width: 100%;
+  padding: 45px 5px 45px 45px;
+  display: flex;
+  gap: 40px;
+
+  .student-information, .teacher-information {
+    height: 80vh;
+    width: 37%;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    overflow: auto;
+    
+
+    .top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20PX;
+    }
+
+    .cohorts, .bottom {
+      display: flex;
+      flex-direction: column;
+      justify-self: flex-start;
+      width: 100%;
+      margin-top: 10px;
+
+      p{
+        text-wrap: wrap;
+      }
+
+    }
+
+    img{
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    p{
+      text-wrap: nowrap;
+      padding: 0;
+      margin: 0;
+      color: grey;
+    }
+
+    .add-to-cohort{
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+      height: 100%;
+      
+      button {
+        height: 45px;
+        align-self: flex-end;
+      }
+    }
+
+  }
+
+  .academic-stats {
+    height: 80vh;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    border-radius: 5px;
+    margin-right: 20px;
+    overflow-y: auto;
+    overflow-x:hidden;
+
+    h1{
+      text-align: center;
+    }
+  }
+}
 
 
+//teacher profile 
 
+.display-cohorts {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1em;
+  margin-left: 20px;
+  text-align: center;
+  justify-content: flex-start;
+  justify-content: space-evenly;
+
+
+  .my-cohort {
+    height: 25vh;
+    width: auto;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    align-content: center;
+    border-radius: 5px;
+    padding: 1em;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    img {
+      height: 15vh;
+      width: auto;
+    }
+  }
+}
 

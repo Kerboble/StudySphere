@@ -5,7 +5,6 @@ import { AuthContext } from './context/authContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import EmailConfirmation from './components/UserConfirmation';
-
 import AdminStudents from './components/AdminStudents';
 import AdminDashboard from './components/AdminDashboard';
 import AdminCohorts from './components/AdminCohorts';
@@ -19,7 +18,8 @@ import Home from './Pages/Home';
 import NewHome from './Pages/philHome';
 import EditCohort from './components/EditCohort';
 import CohortFiles from './components/CohortFiles';
-import StudentClasses from './components/StudentClasses';
+import StudentProfile from './components/StudentProfile';
+import TeacherProfile from './components/TeacherProfile';
 
 
 
@@ -46,7 +46,9 @@ const App = () => {
             <Route path="admincohorts" element={<AdminCohorts />}/>
             <Route path="editCohort" element={<EditCohort />}/>
             <Route path="cohortfiles" element={<CohortFiles />}/>
-            <Route path="studentclasses" element={<StudentClasses />}/>
+            <Route path="studentprofile" element={<StudentProfile />}/>
+            <Route path="teacherprofile" element={<TeacherProfile />}/>
+
           </Route>
           <Route path="landing" element={<LandingPage />} />
           <Route path='confirmation/:token' element={<EmailConfirmation />} />

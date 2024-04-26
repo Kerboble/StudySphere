@@ -5,7 +5,8 @@ import axios from 'axios';
 const CohortContext = createContext();
 
 const CohortContextProvider = ({ children }) => {
-    const [cohort, setCohort] = useState(null);
+    const storedCohort = JSON.parse(localStorage.getItem('cohort'));
+    const [cohort, setCohort] = useState(storedCohort ? storedCohort : null);
     return (
         <CohortContext.Provider value={{ cohort, setCohort }}>
             {children}

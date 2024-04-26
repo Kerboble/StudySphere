@@ -14,9 +14,6 @@ const verifySid = process.env.TWILIO_VERIFY_SERVICE_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = new twilio(accountSid, authToken);
 
-console.log(client);
-
-
 // Setting up email to send for email verification
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -104,36 +101,39 @@ app.post("/add-to-class", async (req, res) => {
   const { studentId, cohortId, profilePicture, username } = req.body;
   try {
     const cohort = await Cohort.findOne({ _id: cohortId });
-    if (cohort) {
-      await Cohort.updateOne(
-        { _id: cohortId },
-        {
-          $push: {
-            students: {
-              student: {
-                id: studentId,
-                profilePicture: profilePicture,
-                username: username
-              }
+    if (!cohort) {
+      return res.status(404).json({ success: false, message: "Cohort not found." });
+    }
+
+    const checkIfUserIsInCohort = cohort.students.filter(studentObj => studentObj.student.id === studentId);
+    if (checkIfUserIsInCohort.length > 0) {
+      return res.status(400).json({ message: "User is already a part of this cohort" });
+    }
+
+    await Cohort.updateOne(
+      { _id: cohortId },
+      {
+        $push: {
+          students: {
+            student: {
+              id: studentId,
+              profilePicture: profilePicture,
+              username: username
             }
           }
         }
-      );
-      console.log(cohort);
-      res
-        .status(200)
-        .json({ success: true, message: "Student added to cohort successfully." });
-    } else {
-      res.status(404).json({ success: false, message: "Cohort not found." });
-    }
+      }
+    );
+
+    res.status(200).json({ success: true, message: "Student added to cohort successfully." });
   } catch (error) {
     console.error("Error:", error);
-    res
-      .status(500)
-      .json({ success: false, message: "An error occurred while adding the student to the cohort." });
+    res.status(500).json({ success: false, message: "An error occurred while adding the student to the cohort." });
   }
 });
 
+
+//gets teacher
 app.post('/get-teacher', async (req, res) => {
   const { id } = req.body;
   try {
@@ -148,6 +148,43 @@ app.post('/get-teacher', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+//delete user from cohort based on id
+app.post('/remove-user', async (req, res) => {
+  const { id, cohortID } = req.body; // Extracting id and cohortID from request body
+  try {
+    // Use $pull to remove the student from the students array based on their ID
+    const updatedCohort = await Cohort.findByIdAndUpdate(cohortID, { $pull: { students: { 'student.id': id } } }, { new: true });
+    
+    if (updatedCohort) {
+      console.log('Student removed successfully');
+      res.status(200).json({ message: 'Student removed successfully', cohort: updatedCohort });
+    } else {
+      console.log('Cohort not found');
+      res.status(404).json({ error: 'Cohort not found' });
+    }
+  } catch (error) {
+    console.error('Error removing student:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//get student data 
+app.post("/get-student", async (req, res) => {
+  console.log('ping')
+  const { id } = req.body;
+  try {
+    const student = await User.findOne({ _id: id });
+    if (!student) {
+      return res.status(404).json({ success: false, message: "Student not found." });
+    }
+    res.json(student);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ success: false, message: "An error occurred while fetching the student." });
+  }
+});
+
 
 
 // User Registration
@@ -204,7 +241,6 @@ app.post('/userData', authenticateToken, async (req, res) => {
   try {
     const { refreshToken } = req.body;
     const user = await User.findOne({ refreshToken });
-    console.log(user)
     if (!user) {
       return res.status(404).send('User not found');
     }
@@ -287,7 +323,6 @@ app.post('/refresh-token', async (req, res) => {
     }
     try {
         const decoded = jwt.verify(refreshToken, "secret_value");
-        console.log(decoded)
         const user = await User.findById(decoded.id);
         if (!user) {
             return res.status(404).send('User not found');

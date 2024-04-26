@@ -7,42 +7,24 @@ import books from "../img/books.png"
 import quiz from "../img/megaphone.png"
 import events from "../img/upcoming.png"
 import defaultPhoto from "../img/shark.png"
+import { useNavigate } from 'react-router-dom';
+import { StudentContext } from '../context/studentContext';
 
 
 
 function CohortFiles() {
-  const { cohort } = useContext(CohortContext);
+  const { cohort, setCohort } = useContext(CohortContext);
   const [teacher, setTeacher] = useState(null);
+  const Navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false)
+  const {setStudent} = useContext(StudentContext);
+
 
   const readingMaterials = cohort ? cohort.cohortFiles.readingMaterial : null;
   const readingAssignments = cohort ? cohort.cohortFiles.assignments : null;
   const tests = cohort ? cohort.cohortFiles.tests : null;
   const teacherID = cohort ? cohort.instructorID : null;
 
-  const displayReadingMaterials = readingMaterials
-    ? readingMaterials.map((material, index) => <p key={index}>{material}</p>)
-    : null;
-
-  const displayAssignments = readingAssignments
-    ? readingAssignments.map((assignment, index) => <p key={index}>{assignment}</p>)
-    : null;
-
-  const displayTests = tests
-    ? tests.map((test, index) => <p key={index}>{test}</p>)
-    : null;
-
-  const displayStudents = cohort.students
-    ? cohort.students.map((student, index) => (
-      <>
-      <div className='student' key={student.id}>
-          <img src={student.student.profilePicture || defaultPhoto} alt={`Student ${index + 1}`} />
-          <strong>{student.student.username}</strong>
-          <button className='btn btn-primary btn-sm'>Profile</button>
-        </div>
-        <hr />
-      </>
-      ))
-    : null;
 
   useEffect(() => {
     const fetchTeacher = async () => {
@@ -58,29 +40,74 @@ function CohortFiles() {
     }
   }, [teacherID]);
 
-  console.log(teacher)
+
+  const removeFromCohort = async (id, cohortID) => {
+    try {
+      const response = await axios.post("http://localhost:4000/remove-user", {id, cohortID});
+      localStorage.removeItem('cohort')
+      setCohort(response.data.cohort);
+      localStorage.setItem('cohort', JSON.stringify(response.data.cohort));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  const goToProfile = async (id) => {
+    const res = await axios.post("http://localhost:4000/get-student", {id});
+    setStudent(res.data)
+    localStorage.setItem('student', JSON.stringify(res.data))
+    Navigate('../studentprofile');
+}
+
+const displayReadingMaterials = readingMaterials
+    ? readingMaterials.map((material, index) => <p key={index}>{material}</p>)
+    : null;
+
+  const displayAssignments = readingAssignments
+    ? readingAssignments.map((assignment, index) => <p key={index}>{assignment}</p>)
+    : null;
+
+  const displayTests = tests
+    ? tests.map((test, index) => <p key={index}>{test}</p>)
+    : null;
+
+  const displayStudents = cohort.students
+    ? cohort.students.map((student, index) => (
+      <>
+      <div className='cohort-students' key={student.id}>
+          <img src={student.student.profilePicture || defaultPhoto} alt={`Student ${index + 1}`} />
+          <strong>{student.student.username}</strong>
+          <button onClick={() => goToProfile(student.student.id)} className='btn btn-primary btn-sm'>Profile</button>
+          <button onClick={() => removeFromCohort(student.student.id, cohort._id)} className='btn btn-danger btn-sm' >Remove</button>
+        </div>
+      </>
+      ))
+    : null;
+
 
   return (
     <div>
-      <header>
+      <header className='files-header'>
         <h1 style={{ textAlign: "center", marginTop: "20px" }}>{cohort.cohortName}</h1>
+        <button onClick={() => {Navigate(-1)}} className='btn btn-success btn-sm' style={{width:"100px", height:"35px",alignSelf:"center"}} >Done</button>
       </header>
       <div className='files-container'>
         <div className="files-wrapper">
           <div className='files reading-material'>
             <img src={books} alt="" />
             <h4>Reading Material</h4>
-            {displayReadingMaterials}
+            {displayReadingMaterials.length}
           </div>
           <div className="files assignments">
             <img src={book} alt="" />
             <h4>Assignments</h4>
-            {displayAssignments}
+            {displayAssignments.length}
           </div>
           <div className="files tests">
             <img src={exam} alt="" />
             <h4>Exams</h4>
-            {displayTests}
+            {displayTests.length}
           </div>
           <div className="files quizzes">
             <img src={quiz} alt="" />
@@ -95,9 +122,9 @@ function CohortFiles() {
         </div>
         <div className='users'>
         <div className="students">
-        <h3>Students</h3>
-        <hr />
-          {displayStudents}
+          <h3 style={{color:""}}>Students</h3>
+          <hr style={{width:"95%", textAlign:"center"}}/>
+            {displayStudents}
         </div>
         {teacher && (
           <div className='teacher'>
@@ -111,6 +138,7 @@ function CohortFiles() {
             <button className='btn btn-primary'>Profile</button>
           </div>
         )}
+
         </div>
       </div>
     </div>

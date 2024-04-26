@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useOutletContext } from "react-router-dom";
 import defaultPhoto from '../img/shark.png'
+import { TeacherContext } from '../context/teacherContext';
+import { useNavigate } from 'react-router-dom';
 
 function AdminTeachers() {
     const [users] = useOutletContext();
@@ -19,6 +21,7 @@ function AdminTeachers() {
 
     const teachers = users ? users.filter(user => user.role === "teacher") : [];
     const { username, email, password, role } = formData;
+    const Navigate = useNavigate();
 
     const toggleModal = (teacher) => {
         setShowModal(!showModal);
@@ -62,6 +65,11 @@ function AdminTeachers() {
         } else {
             console.log('Deletion cancelled by user.');
         }
+    };
+
+    const teachersPage = (selectedTeacher) => {
+        localStorage.setItem('teacher', JSON.stringify(selectedTeacher));
+        Navigate("../teacherprofile")
     };
 
     const filteredTeachers = teachers.filter(teacher =>
@@ -120,8 +128,7 @@ function AdminTeachers() {
                         </>
                     )}
                     <div className="modal-footer">
-                        <Button variant="primary">Edit</Button>
-                        <Button variant="primary">View Cohorts</Button>
+                        <Button onClick={() => teachersPage(selectedTeacher)} variant="primary">View Profile</Button>
                         <Button variant="primary">Message</Button>
                         <Button onClick={() => deleteUser(selectedTeacher.email)} variant="danger">Delete</Button>
                     </div>

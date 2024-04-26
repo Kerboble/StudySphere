@@ -127,11 +127,11 @@ function AdminStudents() {
                         </>
                     )}
                     <div className="modal-footer">
-                        <Button variant="primary">Edit</Button>
                         <Button onClick={() => {
-                            Navigate('../studentclasses')
+                            Navigate('../studentprofile')
+                            localStorage.setItem('student', JSON.stringify(selectedStudent))
                             setStudent(selectedStudent)
-                            }} variant="primary">View Cohorts</Button>
+                            }} variant="primary">View Profile</Button>
                         <Button variant="primary">Message</Button>
                         <Button onClick={() => deleteUser(selectedStudent.email)} variant="danger">Delete</Button>
                     </div>

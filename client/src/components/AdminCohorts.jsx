@@ -116,9 +116,14 @@ function AdminCohorts() {
     };
 
     const viewFiles = (selectedCohort) => {
+        const cohortJSON = JSON.stringify(selectedCohort); // Convert selectedCohort to JSON format
+        localStorage.setItem('cohort', cohortJSON);
         setCohort(selectedCohort);
-        navigate("../cohortfiles")
+        navigate("../cohortfiles");
     };
+    
+    
+    
     
 
     return (
