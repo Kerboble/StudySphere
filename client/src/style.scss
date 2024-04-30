@@ -373,13 +373,12 @@ form {
 }
 
 .home {
-  height: 95vh;
-  width: 80vw;
+  height: 100vh;
+  width: 100vw;
   background-color: white;
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  border-radius: 20px;
 }
 
 /* Top navbar */
@@ -1112,56 +1111,64 @@ form {
   }
 }
 
-.selected-post-container {
+
+.selected-post-wrapper {
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-start; /* Align content at the top */
-  padding: 50px;
-  margin: 0;
-  overflow: scroll;
-  
-  input {
-    align-self: center; /* Align input to the center */
+
+  hr {
+    margin: 0;
+    padding: 0;
   }
 
   h1 {
-    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .text-area {
+    width: 50%;
   }
 
   .owner-of-post {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Align content horizontally */
-
+    justify-content: flex-start; /* Align content at the top */
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 0; /* Adjusted margin-top to remove any space */
+    margin-bottom: 20px; /* Add margin to separate from comments */
+    flex: 0 0 auto; /* Fixed height */
+    height: auto; /* Optional: Allow height to adjust based on content */
+  
     img {
       border-radius: 50%;
     }
   }
 
   .comments-container {
-    height: 100vh; /* Adjust as needed */
+    flex: 1; /* Occupy remaining space */
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    margin-top: 20px;
     padding: 20px;
+    overflow-y: auto; /* Allow scrolling if content exceeds container */
+    max-height: 50vh; /* Limit maximum height */
+
     .comment {
-      height: auto;
       width: 80%; /* Adjust as needed */
       display: flex;
       align-items: center;
       box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
       border-radius: 5px;
-      
       padding: 20px;
-      
-
 
       img {
         height: 50px;
@@ -1171,8 +1178,5 @@ form {
     }
   }
 }
-
-
-
 
 
