@@ -357,11 +357,10 @@ form {
 .home-container {
   height: 100vh;
   width: 100vw;
-  background-image: radial-gradient(circle, #023e8a, #1c6baa, #4f98c4, #8ac4dd, #caf0f8);  
   display: flex;
   justify-content: center;
   align-items: center; /* Center vertically */
-  padding: 20px;
+  
   overflow: scroll;
 
   .home-body {
@@ -1002,3 +1001,136 @@ form {
   }
 }
 
+//discussion board
+.discussion-container{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 4rem;
+  height: 100vh;
+  padding: 1rem;
+
+  .discussion-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+    height: 100vh;
+    width: 100%;
+    
+  }
+
+  .post-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 75vh;
+    flex: 2;
+    overflow: scroll;
+    padding: 10px;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+
+    .no-posts {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+      gap: 30px;
+    }
+
+    .empty-image {
+      height: 20vh;
+      width: 20vw;
+      object-fit: contain;
+    }
+    
+  }
+
+  .post-wrapper::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+  .posts{
+    display: flex;
+    padding: 2rem;
+    height: 10vh;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 2px 2px #004c96;
+    }
+  }
+
+  .post-preview{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-wrap: wrap;
+    h3{
+      padding: 0;
+      margin-bottom: 10px;
+    }
+    p{
+      padding: 0;
+      margin: 0;
+      text-wrap: wrap;
+      color: gray;
+    }
+  }
+
+  .posts-owner {
+    flex: 1;
+    height: auto;
+    width: auto;
+    align-self: center;
+  }
+
+  .owner-photo {
+    border-radius: 50%;
+  }
+
+  .replies-preview{
+    align-self: center;
+  }
+
+  .owner-photo{
+   height: 100px;
+   width: 100px;
+  }
+
+  .make-post{
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.selected-post-container{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .comments-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    .comment{
+      height: 20vh;
+      width: 80%;
+      display: flex;
+
+      img{
+        height: 200px;
+        width: 200px;
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { CohortContext } from '../context/cohortContext';
 import axios from 'axios';
 import exam from "../img/exam.png"
 import book from "../img/book.png"
-import books from "../img/books.png"
+import books from "../img/network.png"
 import quiz from "../img/megaphone.png"
 import events from "../img/upcoming.png"
 import defaultPhoto from "../img/shark.png"
@@ -120,9 +120,11 @@ const displayReadingMaterials = readingMaterials
       </header>
       <div className='files-container'>
         <div className="files-wrapper">
-          <div className='files reading-material'>
+          <div className='files reading-material' onClick={()=>{
+            console.log('hello')
+            Navigate('../discussionboard')}}>
             <img src={books} alt="" />
-            <h4>Reading Material</h4>
+            <h4>Discussion Board</h4>
             {displayReadingMaterials.length}
           </div>
           <div className="files assignments">

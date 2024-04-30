@@ -15,6 +15,7 @@ function Home() {
 
   console.log(cohorts);
 
+  //localStorage.clear();
   useEffect(() => {
     // Fetch cohorts data
     const fetchCohorts = async () => {
@@ -45,24 +46,20 @@ function Home() {
     setRefreshData(refreshData + 1);
   };
 
-  console.log(refreshData);
 
   return (
     <div className="home-container">
-      {userRole === "SuperAdmin" && (
-        <div className='home'>
-          {userRole === 'SuperAdmin' ? <AdminNavBar /> : null}
-          <div className="home-body">
-            <Navbar />
-            {userRole === 'SuperAdmin' && (
-              <button onClick={resetTheData} type="button" className="btn btn-primary" style={{borderRadius:"0px", backgroundColor:"#0077B6", border:"none"}}>Refresh Data</button>
-            )}
-            <Outlet context={[users, refreshData, cohorts]} />
-          </div>
+      <div className='home'>
+        <AdminNavBar />
+        <div className="home-body">
+          <Navbar />
+          <button onClick={resetTheData} type="button" className="btn btn-primary" style={{borderRadius:"0px", backgroundColor:"#0077B6", border:"none"}}>Refresh Data</button>
+          <Outlet context={[users, refreshData, cohorts]} />
         </div>
-      )}
+      </div>
     </div>
   );
+  
 }
 
 export default Home;

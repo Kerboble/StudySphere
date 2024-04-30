@@ -20,6 +20,8 @@ import EditCohort from './components/EditCohort';
 import CohortFiles from './components/CohortFiles';
 import StudentProfile from './components/StudentProfile';
 import TeacherProfile from './components/TeacherProfile';
+import DiscussionBoard from './components/DiscussionBoard';
+import Post from './components/Post';
 
 
 
@@ -45,10 +47,12 @@ const App = () => {
             <Route path="adminsteachers" element={<AdminTeachers />}/>
             <Route path="admincohorts" element={<AdminCohorts />}/>
             <Route path="editCohort" element={<EditCohort />}/>
-            <Route path="cohortfiles" element={<CohortFiles />}/>
             <Route path="studentprofile" element={<StudentProfile />}/>
             <Route path="teacherprofile" element={<TeacherProfile />}/>
-
+            <Route path="teacherprofile" element={<TeacherProfile />}/>
+            <Route path="cohortfiles" element={<CohortFiles />}/>
+            <Route path='discussionboard' element={<DiscussionBoard />}/> 
+            <Route path='post' element={<Post />}/> 
           </Route>
           <Route path="landing" element={<LandingPage />} />
           <Route path='confirmation/:token' element={<EmailConfirmation />} />

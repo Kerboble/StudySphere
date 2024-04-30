@@ -28,7 +28,7 @@ const EMAIL_SECRET = process.env.EMAIL_SECRET;
 
 const app = express(); // Creating an Express application
 app.use(cors()); // Using CORS middleware to enable cross-origin requests
-app.use(bodyParser.json({ limit: '50mb' })); //had to increase the payload amount to accommodate the size of avatar photos
+app.use(bodyParser.json({ limit: '100mb' })); //had to increase the payload amount to accommodate the size of avatar photos
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_LINK, {
@@ -93,8 +93,25 @@ const CohortSchema = new mongoose.Schema({
   }]
 });
 
-
 const Cohort = mongoose.model('Cohort', CohortSchema); // Cohort model like the User model
+
+const discussionPostSchema = new mongoose.Schema({
+  title: String,
+  ownerName: String,
+  ownerPicture: String,
+  content: String,
+  comments: [{
+    ownerName: String,
+    ownerPicture: String,
+    content: String
+  }],
+  cohort: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cohort' // Reference to the Cohort model
+  }
+});
+
+const DiscussionPost = mongoose.model('DiscussionPost', discussionPostSchema);
 
 // add student to cohort 
 app.post("/add-to-class", async (req, res) => {
@@ -533,6 +550,94 @@ app.put("/edit-cohort", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+//add post to discussion db but also passing in cohort id
+app.post('/discussion-post', async (req, res) => {
+  const { ownerOfPost, cohortId, ownerOfPostPhoto, postTitle, postContent } = req.body;
+
+  try {
+    // Check if the cohort exists
+    const cohort = await Cohort.findById(cohortId);
+    if (!cohort) {
+      return res.status(404).json({ error: 'Cohort not found' });
+    }
+
+    // Create a new discussion post
+    const newPost = new DiscussionPost({
+      title: postTitle,
+      ownerName: ownerOfPost,
+      ownerPicture: ownerOfPostPhoto,
+      content: postContent,
+      cohort: cohortId // Set the cohort reference
+    });
+   
+    // Save the new post to the database
+    await newPost.save();
+
+    res.status(201).json({ message: 'Post created successfully', post: newPost });
+  } catch (error) {
+    console.error('Error creating post:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+//adds a post to the discussion board of a given cohort
+
+app.get('/discussion-posts', async (req, res) => {
+  const { cohortId } = req.query; // Use req.query to access query parameters
+  
+  try {
+    // Find all discussion posts belonging to the specified cohort
+    const posts = await DiscussionPost.find({ cohort: cohortId });
+
+    if (!posts || posts.length === 0) {
+      return res.status(404).json({ message: 'No posts found for this cohort' });
+    }
+
+    res.status(200).json({ posts });
+  } catch (error) {
+    console.error('Error retrieving posts:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//getting a post 
+app.get('/get-post', async (req, res) => {
+  const {_id} = req.query;
+  try {
+    const post = await DiscussionPost.findById({_id});
+
+    if(post){
+      res.status(200).json({post})
+    }
+  } catch (error) {
+    console.error('Error retrieving posts:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post("/add-comment", async (req, res) => {
+  const { _id, comment, profilePicture, username } = req.body;
+  try {
+    const post = await DiscussionPost.findById(_id);
+    console.log(post)
+    if (post) {
+      await DiscussionPost.updateOne(
+        { _id },
+        { $push: { comments: { content: comment, ownerPicture: profilePicture, ownerName: username } } }
+      );
+      res.status(200).json({post});
+    } else {
+      res.status(404).json({ message: "Post not found" });
+    }
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 
 
