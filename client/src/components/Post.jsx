@@ -53,38 +53,42 @@ function Post() {
         }
     };
 
-    console.log(post)
+    console.log(targetedPost)
 
     return (
         <div className='selected-post-container'>
-            {targetedPost && (
-                <div className='selected-post-wrapper'>
-                    <div>{targetedPost.title}</div>
-                    <div>{targetedPost.content}</div>
-                    <input
-                        type="text"
-                        value={commentText}
-                        onChange={(e) => setCommentText(e.target.value)}
-                    />
-                    <button onClick={handleCommentSubmit}>Add Comment</button>
-                    <div className='comments-container'>
-                      {targetedPost.comments && targetedPost.comments.length > 0 ? (
-                          targetedPost.comments.map(comment => (
-                                <div className='comment'>  
-                                  <img src={comment.ownerPicture} alt="" />
-                                  <p>{comment.ownerName}</p>
-                                  <p key={comment._id}>{comment.content}</p>
-                                </div>
-                          ))
-                      ) : (
-                          <p>No comments yet.</p>
-                          
-                      )}
+          {targetedPost && (
+            <div className='selected-post-wrapper'>
+              <div className='owner-of-post'>
+                <p>{targetedPost.ownerName}</p>
+                <img style={{ height: "200px", width: "200px" }} src={targetedPost.ownerPicture} alt="" />
+              </div>
+              <h1>{targetedPost.title}</h1>
+              <p>{targetedPost.content}</p>
+              <input
+                type="text"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+              />
+              <button onClick={handleCommentSubmit}>Add Comment</button>
+              <div className='comments-container'>
+                {targetedPost.comments && targetedPost.comments.length > 0 ? (
+                  targetedPost.comments.map(comment => (
+                    <div className='comment' key={comment._id}> {/* Moved key to parent div */}
+                      <img src={comment.ownerPicture} alt="" />
+                      <p>{comment.ownerName}</p>
+                      <p>{comment.content}</p>
                     </div>
-                </div>
-            )}
+                  ))
+                ) : (
+                  <p>No comments yet.</p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
-    );
+      );
+      
 }
 
 export default Post;

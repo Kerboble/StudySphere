@@ -14,7 +14,7 @@ function DiscussionBoard() {
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
     const {currentUser} = useContext(AuthContext);
-    const ownerOfPost = currentUser._id
+    const ownerOfPost = currentUser.username
     const cohortId = cohort._id;
     const ownerOfPostPhoto = currentUser.profilePicture;
     const [posts, setPosts] = useState([]);
@@ -67,7 +67,7 @@ function DiscussionBoard() {
                     <div className='post-preview'>
                         <h3>{post.title}</h3>
                         <p>latest reply from user 5 minutes ago</p>
-                        {post.content.length > 20 ? <p>{post.content + '...'}</p> : <p>{post.content}</p>}
+                        {post.content.length > 20 ? <p>{post.content.slice(0, 100) + '...'}</p> : <p>{post.content}</p>}
                     </div>
                     <div className="replies-preview">
                         <div className='user-photos'>

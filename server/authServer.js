@@ -28,7 +28,7 @@ const EMAIL_SECRET = process.env.EMAIL_SECRET;
 
 const app = express(); // Creating an Express application
 app.use(cors()); // Using CORS middleware to enable cross-origin requests
-app.use(bodyParser.json({ limit: '100mb' })); //had to increase the payload amount to accommodate the size of avatar photos
+app.use(bodyParser.json({ limit: '50mb' })); //had to increase the payload amount to accommodate the size of avatar photos
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_LINK, {

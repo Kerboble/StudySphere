@@ -1112,25 +1112,67 @@ form {
   }
 }
 
-.selected-post-container{
+.selected-post-container {
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align content at the top */
+  padding: 50px;
+  margin: 0;
+  overflow: scroll;
+  
+  input {
+    align-self: center; /* Align input to the center */
+  }
 
-  .comments-container {
-    height: 100vh;
+  h1 {
+    text-align: center;
+  }
+
+  .owner-of-post {
     display: flex;
     flex-direction: column;
-    .comment{
-      height: 20vh;
-      width: 80%;
-      display: flex;
+    align-items: center;
+    justify-content: center; /* Align content horizontally */
 
-      img{
-        height: 200px;
-        width: 200px;
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  .comments-container {
+    height: 100vh; /* Adjust as needed */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 20px;
+    .comment {
+      height: auto;
+      width: 80%; /* Adjust as needed */
+      display: flex;
+      align-items: center;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      border-radius: 5px;
+      
+      padding: 20px;
+      
+
+
+      img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
       }
     }
   }
 }
+
+
+
+
+
