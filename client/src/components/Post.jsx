@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { PostContext } from '../context/postContext';
 import { CohortContext } from '../context/cohortContext';
 import axios from 'axios';
@@ -14,6 +14,7 @@ function Post() {
     const [error, setError] = useState(null);
     const [refresh, setRefresh] = useState(false);
     const [isCommenting, setIsCommenting] = useState(false);
+    const commentInputRef = useRef(null); // Create a ref for the textarea element
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -33,6 +34,12 @@ function Post() {
 
         fetchPost();
     }, [refresh]);
+
+    useEffect(() => {
+        if (isCommenting) {
+            commentInputRef.current.focus(); // Focus the textarea when isCommenting becomes true
+        }
+    }, [isCommenting]);
 
     const handleCommentSubmit = async () => {
         try {
@@ -60,7 +67,7 @@ function Post() {
             {targetedPost && (
                 <div className='selected-post-wrapper'>
                     <div className='owner-of-post'>
-                        <img style={{ height: "200px", width: "200px" }} src={currentUser.profilePicture} alt="" />
+                        <img style={{ height: "200px", width: "200px" }} src={targetedPost.ownerPicture} alt="" />
                         <h1>{targetedPost.title}</h1>
                         <p>{targetedPost.content}</p>
                         <hr style={{ width: "90%" }} />
@@ -68,6 +75,7 @@ function Post() {
                     {isCommenting ? (
                         <div className='text-area'>
                             <textarea
+                                ref={commentInputRef} // Set the ref to the textarea element
                                 value={commentText}
                                 onChange={(e) => setCommentText(e.target.value)}
                                 placeholder="Add a comment..."
@@ -80,17 +88,17 @@ function Post() {
                                 }}
                             />
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                <button className='btn btn-danger' onClick={() => setIsCommenting(false)} >Cancel</button>
+                                <button className='btn btn-secondary' onClick={() => setIsCommenting(false)} >Cancel</button>
                                 <button className='btn btn-primary' onClick={handleCommentSubmit} >Submit</button>
                             </div>
                         </div>
                     ) : (
-                        <div>
+                        <div className='text-area'>
                             <input
                                 type="text"
                                 placeholder="Add a comment..."
                                 onClick={() => setIsCommenting(true)}
-                                style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", width: "100%", marginBottom: "10px", cursor:"text" }}
+                                style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", width: "100%", marginBottom: "10px", cursor:"text", textAlign:"center"}}
                             />
                         </div>
                     )}
@@ -98,7 +106,7 @@ function Post() {
                         {targetedPost.comments && targetedPost.comments.length > 0 ? (
                             targetedPost.comments.map(comment => (
                                 <div className='comment' key={comment._id}> {/* Moved key to parent div */}
-                                    <img src={currentUser.profilePicture} alt="" />
+                                    <img src={comment.ownerPicture} alt="" />
                                     <p>{comment.ownerName}</p>
                                     <p>{comment.content}</p>
                                 </div>

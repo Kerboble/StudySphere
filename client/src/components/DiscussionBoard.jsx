@@ -62,7 +62,7 @@ function DiscussionBoard() {
         return (
               <div key={index} className='posts' onClick={() => showPost(post)}>
                     <div className='posts-owner'>
-                        <img className='owner-photo' src={currentUser.profilePicture} alt="" />
+                        <img className='owner-photo' src={post.ownerPicture} alt="" />
                     </div>
                     <div className='post-preview'>
                         <h3>{post.title}</h3>
@@ -95,6 +95,8 @@ function DiscussionBoard() {
         setPostContent('');
         setShowModal(false);
     };
+
+    console.log(posts)
 
   return (
     <div className='discussion-container'>

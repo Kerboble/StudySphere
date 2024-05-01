@@ -7,10 +7,30 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose'); // Importing Mongoose for MongoDB interactions
 const nodemailer = require('nodemailer');
 const twilio = require('twilio');
-
-
-
+const multer = require('multer');
 require('dotenv').config();
+
+const cloudinary = require('cloudinary').v2;
+          
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET 
+});
+
+// Create multer instance with configured storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') // Specify the directory where uploaded files will be stored
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname) // Rename the uploaded file to avoid naming conflicts
+  }
+});
+
+// Create multer instance with configured storage
+const upload = multer({ storage: storage });
+
 
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -105,7 +125,9 @@ const discussionPostSchema = new mongoose.Schema({
   title: String,
   ownerName: String,
   content: String,
+  ownerPicture:String,
   comments: [{
+    ownerPicture: String,
     ownerName: String,
     content: String
   }],
@@ -116,6 +138,20 @@ const discussionPostSchema = new mongoose.Schema({
 });
 
 const DiscussionPost = mongoose.model('DiscussionPost', discussionPostSchema);
+
+
+const photoSchema = new mongoose.Schema({
+  photoPath: String
+});
+
+const Photo = mongoose.model('Photo', photoSchema);
+
+
+
+
+
+
+
 
 
 // add student to cohort 
@@ -213,11 +249,25 @@ app.get("/get-user", async (req, res) => {
 
 
 
+app.post('/upload', upload.single('profilePicture'), async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const photo = new Photo({ photoPath: result.secure_url });
+    await photo.save();
+    res.status(201).json({ message: 'Photo uploaded successfully', photo });
+  } catch (error) {
+    console.error('Error uploading photo:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 // User Registration
-app.post('/register', async (req, res) => {
+app.post('/register', upload.single('profilePicture'), async (req, res) => {
+  console.log('ping')
   try {
-    const { username, email,  phoneNumber, password, refreshToken, profilePicture, role} = req.body;
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const { username, email,  phoneNumber, password, refreshToken, role} = req.body;
     const existingUser = await User.findOne({
       $or: [
           { username: username },
@@ -236,7 +286,7 @@ app.post('/register', async (req, res) => {
   
     
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
-    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture, role, isEmailConfirmed:false}); // Create a new User document
+    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture:result.secure_url, role, isEmailConfirmed:false}); // Create a new User document
     await newUser.save(); // Save the new user to the database
 
     // Setting up user for confirmation
@@ -558,7 +608,7 @@ app.put("/edit-cohort", async (req, res) => {
 
 //add post to discussion db but also passing in cohort id
 app.post('/discussion-post', async (req, res) => {
-  const { ownerOfPost, cohortId, postTitle, postContent } = req.body;
+  const { ownerOfPost, cohortId, postTitle, postContent, ownerOfPostPhoto } = req.body;
 
   try {
     // Check if the cohort exists
@@ -572,7 +622,8 @@ app.post('/discussion-post', async (req, res) => {
       title: postTitle,
       ownerName: ownerOfPost,
       content: postContent,
-      cohort: cohortId // Set the cohort reference
+      cohort: cohortId, // Set the cohort reference
+      ownerPicture: ownerOfPostPhoto
     });
    
     // Save the new post to the database
@@ -629,7 +680,7 @@ app.post("/add-comment", async (req, res) => {
     if (post) {
       await DiscussionPost.updateOne(
         { _id },
-        { $push: { comments: { content: comment, ownerName: username } } }
+        { $push: { comments: { content: comment, ownerName: username, ownerPicture:profilePicture } } }
       );
       res.status(200).json({post});
     } else {
