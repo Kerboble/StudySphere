@@ -41,7 +41,7 @@ function AdminTeachers() {
     const addTeacher = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:4000/register", { username, email, password, role });
+            const res = await axios.post("http://localhost:4000/register-admin", { username, email, password, role });
             alert(`Teacher ${res.data.username} was added`);
         } catch (error) {
             if (error.response) {

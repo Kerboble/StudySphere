@@ -36,8 +36,9 @@ function AdminStudents() {
 
     const addStudent = async (e) => {
         e.preventDefault();
+        console.log('hello')
         try {
-            const res = await axios.post("http://localhost:4000/register", { username, email, password });
+            const res = await axios.post("http://localhost:4000/register-admin", { username, email, password });
             alert(`Student ${res.data.username} was added`);
         } catch (error) {
             if (error.response) {

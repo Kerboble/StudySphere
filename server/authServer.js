@@ -286,7 +286,57 @@ app.post('/register', upload.single('profilePicture'), async (req, res) => {
   
     
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
-    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture:result.secure_url, role, isEmailConfirmed:false}); // Create a new User document
+    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture, role, isEmailConfirmed:true}); // Create a new User document
+    await newUser.save(); // Save the new user to the database
+
+    // Setting up user for confirmation
+    jwt.sign(
+      {userId: newUser._id.toString()},
+      EMAIL_SECRET,
+      {expiresIn: '1d'}, // Token that expires in a day, special to each user
+      (err, emailToken) =>{
+
+        const url = `http://localhost:5173/confirmation/${emailToken}`; //Creating individualized url for confirmation with custom emailToken
+    
+        transporter.sendMail({
+          to: newUser.email,
+          subject: 'Welcome to Study Sphere!',
+          html: `Click the following link to activate your account to use: <a href='${url}'>${url}</a>`
+        });
+      }
+    );
+
+    res.status(201).send('User registered successfully'); // Send success response
+  } catch (error) {
+    console.error('Error registering user:', error); // Log registration error
+    res.status(500).send('Error registering user'); // Send error response
+  }
+});
+
+//admin student add shortcut
+app.post('/register-admin', async (req, res) => {
+  console.log('ping')
+  try {
+    const { username, email,  phoneNumber, password, refreshToken, role} = req.body;
+    const existingUser = await User.findOne({
+      $or: [
+          { username: username },
+          { email: email }
+      ]
+  });
+  
+  // Check if the username or email is already in use
+  if (existingUser) {
+    if(existingUser.username === username) {
+      return res.status(400).send('Username is already in use.')}
+    if (existingUser.email === email) { // If user already exists, return error
+      return res.status(400).send('Email is already in use.');
+    }
+  }
+  
+    
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
+    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken,  role, isEmailConfirmed:true}); // Create a new User document
     await newUser.save(); // Save the new user to the database
 
     // Setting up user for confirmation
