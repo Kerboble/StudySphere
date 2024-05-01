@@ -267,7 +267,7 @@ app.post('/register', upload.single('profilePicture'), async (req, res) => {
   console.log('ping')
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
-    const { username, email,  phoneNumber, password, refreshToken, role} = req.body;
+    const { username, email,  phoneNumber, password, refreshToken, role, profilePicture} = req.body;
     const existingUser = await User.findOne({
       $or: [
           { username: username },
@@ -286,7 +286,7 @@ app.post('/register', upload.single('profilePicture'), async (req, res) => {
   
     
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
-    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture, role, isEmailConfirmed:true}); // Create a new User document
+    const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken, profilePicture:result.secure_url, role, isEmailConfirmed:false}); // Create a new User document
     await newUser.save(); // Save the new user to the database
 
     // Setting up user for confirmation
