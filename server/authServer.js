@@ -126,6 +126,7 @@ const discussionPostSchema = new mongoose.Schema({
   ownerName: String,
   content: String,
   ownerPicture:String,
+  postType: String,
   comments: [{
     ownerPicture: String,
     ownerName: String,
@@ -658,7 +659,7 @@ app.put("/edit-cohort", async (req, res) => {
 
 //add post to discussion db but also passing in cohort id
 app.post('/discussion-post', async (req, res) => {
-  const { ownerOfPost, cohortId, postTitle, postContent, ownerOfPostPhoto } = req.body;
+  const { ownerOfPost, cohortId, postTitle, postContent, ownerOfPostPhoto, postType } = req.body;
 
   try {
     // Check if the cohort exists
@@ -673,10 +674,11 @@ app.post('/discussion-post', async (req, res) => {
       ownerName: ownerOfPost,
       content: postContent,
       cohort: cohortId, // Set the cohort reference
-      ownerPicture: ownerOfPostPhoto
+      ownerPicture: ownerOfPostPhoto,
+      postType: postType
     });
    
-    // Save the new post to the database
+    // Save the new pdsfost to the database
     await newPost.save();
 
     res.status(201).json({ message: 'Post created successfully', post: newPost });

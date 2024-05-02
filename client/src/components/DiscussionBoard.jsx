@@ -7,6 +7,14 @@ import axios from 'axios';
 import empty from "../img/empty.png"
 import { PostContext } from '../context/postContext';
 import { useNavigate } from 'react-router-dom';
+import offTopic from "../img/record-button(1).png"
+import faq from "../img/faq.png"
+import feedback from "../img/Feedback.png"
+import spotlight from "../img/spotlight.png"
+import introductions from "../img/Introductions.png"
+import announcements from "../img/announcements.png"
+import Feedback from 'react-bootstrap/esm/Feedback';
+
 
 function DiscussionBoard() {
     const { cohort, setCohort } = useContext(CohortContext);
@@ -20,6 +28,7 @@ function DiscussionBoard() {
     const [posts, setPosts] = useState([]);
     const [refresh, setRefresh] = useState(0);
     const {setPost } = useContext(PostContext);
+    const [postType, setPostType] = useState('faq');
     const Navigate = useNavigate()
 
 
@@ -70,8 +79,23 @@ function DiscussionBoard() {
                         {post.content.length > 20 ? <p>{post.content.slice(0, 100) + '...'}</p> : <p>{post.content}</p>}
                     </div>
                     <div className="replies-preview">
+                        <div className='post-type'>
+                        {post.postType === "FAQ's" && <img className='type-tag' src={faq} />}
+                        {post.postType === "Feedback" && <img src={feedback} />}
+                        {post.postType === "Off-Topic" && <img src={offTopic} />}
+                        {post.postType === "Introductions" && <img src={introductions} />}
+                        {post.postType === "Announcements" && <img src={announcements} />}
+                        {post.postType === "Member Spotlight" && <img src={spotlight} />}
+                        <p>{post.postType}</p>
+                        </div>
                         <div className='user-photos'>
-                            user photos will go here
+                            {post.comments.length > 0 ? post.comments.slice(0,4).map((comment, index) => {
+                                return(
+                                    <img  src={comment.ownerPicture}/>
+                                )
+                            }): 
+                             <p></p>
+                            } 
                         </div>
                         <div className="comments-count">
                             {post.comments.length} comments
@@ -88,7 +112,7 @@ function DiscussionBoard() {
     </>
 
     const handlePostSubmit = async () => {
-        const res = await axios.post('http://localhost:4000/discussion-post', {ownerOfPost, cohortId, ownerOfPostPhoto, postTitle, postContent})
+        const res = await axios.post('http://localhost:4000/discussion-post', {ownerOfPost, cohortId, ownerOfPostPhoto, postTitle, postContent, postType})
         console.log(res.data)
         setRefresh(refresh + 1)
         setPostTitle('');
@@ -96,7 +120,7 @@ function DiscussionBoard() {
         setShowModal(false);
     };
 
-    console.log(posts)
+    console.log(postType)
 
   return (
     <div className='discussion-container'>
@@ -114,39 +138,83 @@ function DiscussionBoard() {
         <div className="make-post">
             <button onClick={() => handleModalOpen()} className='btn btn-primary'>Start New Discussion</button>
             <hr />
+            <div className='discussion-type' >
+                <div className='type' >
+                    <img src={faq} alt="" />
+                    <p> FAQ's</p>
+                </div>
+                <div className='type' >
+                    <img src={offTopic} alt="" />
+                    <p> Off-Topic Conversation</p>
+                </div>
+                <div className='type' >
+                    <img src={feedback} alt="" />
+                    <p> Feedback</p>
+                </div>
+                <div className='type' >
+                    <img src={spotlight} alt="" />
+                    <p>Member Spotlight</p>
+                </div>
+                <div className='type' >
+                    <img src={introductions} alt="" />
+                    <p> Introductions</p>
+                </div>
+                <div className='type' >
+                    <img src={announcements} alt="" />
+                    <p> Announcements</p>
+                </div> 
+            </div>
         </div>
     </div>
 
-        <Modal className="modal-container" show={showModal} onHide={handleModalClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Start New Discussion</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="modal-content">
-                    <div className="form-group">
-                        <label htmlFor="postTitle">Post Title</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="postTitle"
-                            value={postTitle}
-                            onChange={(e) => setPostTitle(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="postContent">Post Content</label>
-                        <textarea
-                            className="form-control"
-                            id="postContent"
-                            rows="3"
-                            value={postContent}
-                            onChange={(e) => setPostContent(e.target.value)}
-                        ></textarea>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <button className="btn btn-primary" onClick={() => handlePostSubmit()}>Submit</button>
-                </Modal.Footer>
-            </Modal>
+    <Modal className="modal-container" show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+            <Modal.Title>Start New Discussion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="modal-content">
+            <div className="form-group">
+                <label htmlFor="postTitle">Post Title</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="postTitle"
+                    value={postTitle}
+                    onChange={(e) => setPostTitle(e.target.value)}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="postContent">Post Content</label>
+                <textarea
+                    className="form-control"
+                    id="postContent"
+                    rows="3"
+                    value={postContent}
+                    onChange={(e) => setPostContent(e.target.value)}
+                ></textarea>
+            </div>
+            <div className="form-group">
+                <label htmlFor="postType">Select Post Type</label>
+                <select
+                    className="form-control"
+                    id="postType"
+                    value={postType}
+                    onChange={(e) => setPostType(e.target.value)}
+                >
+                    <option value="">--Pick a post type--</option>
+                    <option value="FAQ's">FAQ's</option>
+                    <option value="Off-Topic ">Off-Topic Conversation</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Member Spotlight">Member Spotlight</option>
+                    <option value="Introductions">Introductions</option>
+                    <option value="Announcements">Announcements</option>
+                </select>
+            </div>
+    </Modal.Body>
+    <Modal.Footer>
+        <button className="btn btn-primary" onClick={() => handlePostSubmit()}>Submit</button>
+    </Modal.Footer>
+</Modal>
+
     </div>
   )
 }

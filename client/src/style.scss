@@ -1024,13 +1024,14 @@ form {
     flex-direction: column;
     gap: 20px;
     height: 75vh;
-    flex: 2;
+    flex: 3;
     overflow: scroll;
-    padding: 10px;
+    padding: 20px;
     -ms-overflow-style: none; 
     scrollbar-width: none;  
 
     .no-posts {
+      flex: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1049,7 +1050,7 @@ form {
 
   .post-wrapper::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
-}
+  }
 
   .posts{
     display: flex;
@@ -1062,8 +1063,29 @@ form {
     margin-bottom: 10px;
     justify-content: space-between;
     cursor: pointer;
+    position: relative;
     &:hover {
-      box-shadow: 0 0 2px 2px #004c96;
+     background-color: rgb(240, 240, 240);
+     .post-type {
+      background-color: #7caee0;
+      p{
+        color: white;
+      }
+     }
+    }
+
+
+    .user-photos{
+      display: flex;
+      
+
+      img{
+        height: 40px;
+        width: 40px;
+        border-radius: 30%;
+        border: solid white 1px;
+        
+      }
     }
   }
 
@@ -1097,7 +1119,41 @@ form {
   }
 
   .replies-preview{
+    display: flex;
     align-self: center;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-end;
+
+   .post-type{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    text-align: center;
+    top: -10px;
+    width: 150px;
+    max-height:25px;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    border-radius: 5px;
+    background-color: white;
+    text-wrap: nowrap;
+    gap: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    p{
+      margin: 0;
+      padding: 0;
+      font-size: 0.9em;
+      color: gray;
+      font-weight: 400;
+    }
+
+    img {
+      height: 20px;
+      width: 20px;
+    }
+   }
   }
 
   .owner-photo{
@@ -1109,6 +1165,31 @@ form {
     flex: 1;
     text-align: center;
   }
+
+  .discussion-type {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+
+    .type {
+      display: flex;
+      align-content: center;
+      padding: 5px;
+      gap: 5px;
+    }
+    P{
+      padding: 0;
+      margin: 0;
+    }
+    
+    img{
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
+
 }
 
 
