@@ -8,6 +8,7 @@ const mongoose = require('mongoose'); // Importing Mongoose for MongoDB interact
 const nodemailer = require('nodemailer');
 const twilio = require('twilio');
 const multer = require('multer');
+const { ObjectId } = require('mongodb');
 require('dotenv').config();
 
 const cloudinary = require('cloudinary').v2;
@@ -130,7 +131,12 @@ const discussionPostSchema = new mongoose.Schema({
   comments: [{
     ownerPicture: String,
     ownerName: String,
-    content: String
+    content: String,
+    replies: [{
+      ownerPicture: String,
+      ownerName: String,
+      content: String
+    }]
   }],
   cohort: {
     type: mongoose.Schema.Types.ObjectId,
@@ -728,7 +734,6 @@ app.post("/add-comment", async (req, res) => {
   const { _id, comment, profilePicture, username } = req.body;
   try {
     const post = await DiscussionPost.findById(_id);
-    console.log(post)
     if (post) {
       await DiscussionPost.updateOne(
         { _id },
@@ -743,6 +748,32 @@ app.post("/add-comment", async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.post("/reply", async (req, res) => {
+  const { replierName, replierPicture, _id, commentID, replyContent } = req.body;
+  try {
+    const post = await DiscussionPost.findById(_id);
+    if (post) {
+      // Find the index of the comment within the comments array
+      const commentIndex = post.comments.findIndex(comment => comment._id.toString() === commentID);
+      if (commentIndex !== -1) {
+        // Push the new reply into the replies array of the found comment
+        post.comments[commentIndex].replies.push({ ownerName: replierName, ownerPicture: replierPicture, content:replyContent });
+        // Save the updated post
+        await post.save();
+        res.status(200).json({ post });
+      } else {
+        res.status(404).json({ message: "Comment not found" });
+      }
+    } else {
+      res.status(404).json({ message: "Post not found" });
+    }
+  } catch (error) {
+    console.error('Error adding reply:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 
 

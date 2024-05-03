@@ -1231,33 +1231,56 @@ form {
       border-radius: 50%;
     }
   }
+}
 
-  .comments-container {
-    flex: 1; /* Occupy remaining space */
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    overflow-y: auto; /* Allow scrolling if content exceeds container */
-    max-height: 50vh; /* Limit maximum height */
+.comments-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
-    .comment {
-      width: 80%; /* Adjust as needed */
+  .comment-wrapper{
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    width: 80%;
+    padding: 50px;
+    .comment{
       display: flex;
-      align-items: center;
-      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-      border-radius: 5px;
-      padding: 20px;
+      flex-direction: column;
 
-      img {
+      .comment-owner-info{
+        display: flex;
+        flex-direction: row;
+      }
+
+      button{
+        height: 35px;
+        width: 100px;
+
+      }
+      img{
         height: 50px;
         width: 50px;
         border-radius: 50%;
       }
     }
+
+    .reply{
+      display: flex;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+
+      .reply-owner-info{
+        display: flex;
+        flex-direction: row;
+      }
+
+      img{
+        border-radius: 50%;
+      }
+    }
   }
+ 
 }
 
 

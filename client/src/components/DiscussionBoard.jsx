@@ -82,7 +82,7 @@ function DiscussionBoard() {
                         <div className='post-type'>
                         {post.postType === "FAQ's" && <img className='type-tag' src={faq} />}
                         {post.postType === "Feedback" && <img src={feedback} />}
-                        {post.postType === "Off-Topic" && <img src={offTopic} />}
+                        {post.postType === "Off-Topic " && <img src={offTopic} />}
                         {post.postType === "Introductions" && <img src={introductions} />}
                         {post.postType === "Announcements" && <img src={announcements} />}
                         {post.postType === "Member Spotlight" && <img src={spotlight} />}
@@ -200,7 +200,7 @@ function DiscussionBoard() {
                     value={postType}
                     onChange={(e) => setPostType(e.target.value)}
                 >
-                    <option value="">--Pick a post type--</option>
+                    <option value="">-- Pick a post type --</option>
                     <option value="FAQ's">FAQ's</option>
                     <option value="Off-Topic ">Off-Topic Conversation</option>
                     <option value="Feedback">Feedback</option>

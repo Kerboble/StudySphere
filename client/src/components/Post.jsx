@@ -4,6 +4,8 @@ import { CohortContext } from '../context/cohortContext';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
+import { Modal, Button } from 'react-bootstrap';
+
 
 function Post() {
     const { post } = useContext(PostContext);
@@ -15,6 +17,9 @@ function Post() {
     const [refresh, setRefresh] = useState(false);
     const [isCommenting, setIsCommenting] = useState(false);
     const commentInputRef = useRef(null); // Create a ref for the textarea element
+    const [showModal, setShowModal] = useState(false);
+    const [replyContent, setReplyContent] = useState('');
+
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -60,7 +65,24 @@ function Post() {
         }
     };
 
-    console.log(targetedPost)
+    const replyToComment = async(replierName, replierPicture, postID, commentID) => {
+        try {
+            const res = axios.post("http://localhost:4000/reply", {replierName, replierPicture, _id:postID, commentID, replyContent});
+            handleModalClose()
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    const handleModalOpen = () => {
+        setShowModal(true);
+    };
+
+    const handleModalClose = () => {
+        setShowModal(false);
+    };
+
+    console.log(replyContent)
 
     return (
         <div className='selected-post-container'>
@@ -105,10 +127,46 @@ function Post() {
                     <div className='comments-container'>
                         {targetedPost.comments && targetedPost.comments.length > 0 ? (
                             targetedPost.comments.map(comment => (
-                                <div className='comment' key={comment._id}> {/* Moved key to parent div */}
-                                    <img src={comment.ownerPicture} alt="" />
-                                    <p>{comment.ownerName}</p>
+                                <div className='comment-wrapper' >
+                                    <div className='comment' key={comment._id}> {/* Moved key to parent div */}
+                                    <div className='comment-owner-info'>
+                                        <img src={comment.ownerPicture} alt="" />
+                                        <span>{comment.ownerName}</span>
+                                    </div>
                                     <p>{comment.content}</p>
+                                    <button onClick={handleModalOpen} className='btn btn-secondary'>reply</button>
+                                </div>
+                                    <Modal className="modal-container" show={showModal} onHide={handleModalClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Reply to {comment.ownerName}'s comment</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body className="modal-content">
+                                            <p>{comment.content}</p>
+                                            <textarea name="reply" id="reply" cols="30" rows="10" onChange={(e) => setReplyContent(e.target.value)}></textarea>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <button className="btn btn-primary" onClick={() => replyToComment(currentUser.username, currentUser.profilePicture, targetedPost._id, comment._id)}>Reply</button>
+                                            <button onClick={handleModalClose} className='btn btn-secondary'> Cancel</button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                    <div className='replies'>
+                                        <p>Replies</p>
+                                        {comment.replies.length > 0 ? comment.replies.map(reply => {
+                                            return(
+                                                <div className='reply'>
+                                                    <div className='reply-owner-info'>
+                                                        <img style={{height:"25px", width:"25px"}} src={reply.ownerPicture} alt="" />
+                                                        <span>{reply.ownerName}</span>
+                                                    </div>
+                                                    <p>{reply.content}</p>
+                                                </div>
+                                                
+                                            )
+                                        })
+                                        :
+                                        null
+                                    }
+                                    </div>
                                 </div>
                             ))
                         ) : (
