@@ -153,6 +153,7 @@ function Post() {
                                         <p>Replies</p>
                                         {comment.replies.length > 0 ? comment.replies.map(reply => {
                                             return(
+                                                
                                                 <div className='reply'>
                                                     <div className='reply-owner-info'>
                                                         <img style={{height:"25px", width:"25px"}} src={reply.ownerPicture} alt="" />

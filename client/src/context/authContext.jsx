@@ -9,8 +9,6 @@ const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(existingUser ? JSON.parse(existingUser) : null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const localRefreshToken = localStorage.getItem('refreshToken');
-  console.log(existingUser)
-
   useEffect(() => {
     const fetchData = async () => {
       if (currentUser !== null) {

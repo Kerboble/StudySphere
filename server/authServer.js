@@ -6,7 +6,6 @@ const express = require('express'); // Importing Express.js framework
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose'); // Importing Mongoose for MongoDB interactions
 const nodemailer = require('nodemailer');
-const twilio = require('twilio');
 const multer = require('multer');
 const { ObjectId } = require('mongodb');
 require('dotenv').config();
@@ -32,12 +31,6 @@ const storage = multer.diskStorage({
 // Create multer instance with configured storage
 const upload = multer({ storage: storage });
 
-
-
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const verifySid = process.env.TWILIO_VERIFY_SERVICE_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = new twilio(accountSid, authToken);
 
 // Setting up email to send for email verification
 const transporter = nodemailer.createTransport({
@@ -487,46 +480,6 @@ app.post('/confirmation', async (req, res) => {
   }
 });
 
-app.post('/verify/start', async (req, res) => {
-  const { to } = req.body; // Extract the phone number from the request body
- 
-  try {
-     // Initiate the verification process using Twilio's Verify API
-     const verification = await client.verify.v2.services(verifySid)
-       .verifications.create({ to, channel: 'sms' });
- 
-     // Log the verification object for debugging purposes
-     console.log('Verification object:', verification);
-       // Respond to the client with a success message
-       res.status(200).send({ message: 'Verification code sent.', status: 'success' });
-     } catch (error) {
-     // Log the error for debugging purposes
-     console.error('Error sending verification code:', error);
- 
-     // Respond to the client with an error message
-     res.status(500).send({ message: 'Error sending verification code', error: error.message });
-  }
- });
-
- app.post('/verify/check', async (req, res) => {
-  const { to, code } = req.body;
-  try {
-    const verificationCheck = await client.verify.v2.services(verifySid)
-      .verificationChecks
-      .create({ to, code });
-
-    if (verificationCheck.status === 'approved') {
-      // Verification was successful
-      res.status(200).send({ success: true, message: 'Verification successful' });
-    } else {
-      // Verification failed
-      res.status(400).send({ success: false, message: 'Verification failed. Please try again.' });
-    }
-  } catch (error) {
-    console.error('Verification error:', error);
-    res.status(500).send({ success: false, message: 'Internal server error' });
-  }
- });
 
 //check username availability 
 app.post('/checkUsername', async (req, res) => {
