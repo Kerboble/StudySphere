@@ -1055,7 +1055,7 @@ form {
   .posts{
     display: flex;
     padding: 2rem;
-    height: 10vh;
+    height: auto;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
     border-radius: 10px;
@@ -1064,6 +1064,7 @@ form {
     justify-content: space-between;
     cursor: pointer;
     position: relative;
+    text-wrap: pretty;
     &:hover {
       background-color: rgb(252, 252, 252);
      .post-type {
@@ -1095,10 +1096,12 @@ form {
     flex-direction: column;
     justify-content: center;
     text-wrap: wrap;
-    h3{
+    h3 {
       padding: 0;
       margin-bottom: 10px;
-    }
+      text-wrap: pretty;
+  }
+  
     p{
       padding: 0;
       margin: 0;

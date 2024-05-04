@@ -28,8 +28,7 @@ import Post from './components/Post';
 const App = () => {
   const { currentUser, setIsLoggedIn } = useContext(AuthContext);
   //localStorage.clear()
-  console.log(currentUser.role)
-
+ 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
