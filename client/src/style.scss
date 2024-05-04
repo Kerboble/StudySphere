@@ -1273,7 +1273,7 @@ form {
         align-items: center;
         position: relative;
 
-        button {
+        .reply-btn {
           background-color: transparent;
           border: none;
           &:hover {
@@ -1309,21 +1309,32 @@ form {
     .replies {
       display: flex;
       flex-direction: column;
-      margin-left: 20px;
+      margin-left: 30px;
       padding: 0;
       width: 100%;
+
+      p{
+        color: #004c96;
+        &:hover{
+          cursor: pointer;
+        }
+      }
+
     }
 
     .reply {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       width: 100%;
+      height: auto;
 
       .reply-owner-info {
         display: flex;
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
+        padding-left: 10px;
       }
+
+    
 
       img {
         border-radius: 50%;

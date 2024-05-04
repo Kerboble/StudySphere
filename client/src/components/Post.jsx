@@ -19,7 +19,7 @@ function Post() {
     const commentInputRef = useRef(null); // Create a ref for the textarea element
     const [showModal, setShowModal] = useState(false);
     const [replyContent, setReplyContent] = useState('');
-    const [showReplies, setShowReplies] = useState(false)
+    const [showReplies, setShowReplies] = useState(true)
 
 
     useEffect(() => {
@@ -135,7 +135,7 @@ function Post() {
                                     <div className='comment-content'>
                                         <span>{comment.ownerName}</span>
                                         <p>{comment.content}</p>
-                                        <button onClick={handleModalOpen}>Reply</button>
+                                        <button className='reply-btn' onClick={handleModalOpen}>Reply</button>
                                     </div>
                                     </div>
                                 </div>
@@ -153,15 +153,15 @@ function Post() {
                                         </Modal.Footer>
                                     </Modal>
                                     <div className='replies'>
-                                        <p>Replies</p>
+                                        <p  onClick={() => setShowReplies(!showReplies)}>Replies</p>
                                         { showReplies && comment.replies.length > 0 ? comment.replies.map(reply => {
                                             return(
                                                 <div className='reply'>
+                                                    <img style={{height:"25px", width:"25px"}} src={reply.ownerPicture} alt="" />
                                                     <div className='reply-owner-info'>
-                                                        <img style={{height:"25px", width:"25px"}} src={reply.ownerPicture} alt="" />
-                                                        <span>{reply.ownerName}</span>
+                                                    <span>{reply.ownerName}</span>
+                                                    <p>{reply.content}</p>                                                    
                                                     </div>
-                                                    <p>{reply.content}</p>
                                                 </div>
                                             )
                                         })
