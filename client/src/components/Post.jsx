@@ -19,6 +19,7 @@ function Post() {
     const commentInputRef = useRef(null); // Create a ref for the textarea element
     const [showModal, setShowModal] = useState(false);
     const [replyContent, setReplyContent] = useState('');
+    const [showReplies, setShowReplies] = useState(true)
 
 
     useEffect(() => {
@@ -89,7 +90,7 @@ function Post() {
             {targetedPost && (
                 <div className='selected-post-wrapper'>
                     <div className='owner-of-post'>
-                        <img style={{ height: "200px", width: "200px" }} src={targetedPost.ownerPicture} alt="" />
+                        <img src={targetedPost.ownerPicture} alt="" />
                         <h1>{targetedPost.title}</h1>
                         <p>{targetedPost.content}</p>
                         <hr style={{ width: "90%" }} />
@@ -131,10 +132,12 @@ function Post() {
                                     <div className='comment' key={comment._id}> {/* Moved key to parent div */}
                                     <div className='comment-owner-info'>
                                         <img src={comment.ownerPicture} alt="" />
+                                    <div className='comment-content'>
                                         <span>{comment.ownerName}</span>
+                                        <p>{comment.content}</p>
+                                        <button onClick={handleModalOpen}>reply</button>
                                     </div>
-                                    <p>{comment.content}</p>
-                                    <button onClick={handleModalOpen} className='btn btn-secondary'>reply</button>
+                                    </div>
                                 </div>
                                     <Modal className="modal-container" show={showModal} onHide={handleModalClose}>
                                         <Modal.Header closeButton>
@@ -151,9 +154,8 @@ function Post() {
                                     </Modal>
                                     <div className='replies'>
                                         <p>Replies</p>
-                                        {comment.replies.length > 0 ? comment.replies.map(reply => {
+                                        { showReplies && comment.replies.length > 0 ? comment.replies.map(reply => {
                                             return(
-                                                
                                                 <div className='reply'>
                                                     <div className='reply-owner-info'>
                                                         <img style={{height:"25px", width:"25px"}} src={reply.ownerPicture} alt="" />
@@ -161,7 +163,6 @@ function Post() {
                                                     </div>
                                                     <p>{reply.content}</p>
                                                 </div>
-                                                
                                             )
                                         })
                                         :

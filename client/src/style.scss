@@ -1196,6 +1196,14 @@ form {
 
 }
 
+.selected-post-container{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  
+}
+
 
 .selected-post-wrapper {
   height: 100vh;
@@ -1204,6 +1212,7 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: scroll;
 
   hr {
     margin: 0;
@@ -1220,33 +1229,37 @@ form {
   }
 
   .owner-of-post {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; /* Align content at the top */
     border-radius: 5px;
     padding: 20px;
-    margin-top: 0; /* Adjusted margin-top to remove any space */
-    margin-bottom: 20px; /* Add margin to separate from comments */
-    flex: 0 0 auto; /* Fixed height */
-    height: auto; /* Optional: Allow height to adjust based on content */
-  
+    height: 100vh;
+    
     img {
+      height: 20vh;
+      width: auto;
       border-radius: 50%;
     }
   }
 }
 
 .comments-container{
+  flex:2;
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding: 10vh;
+  border: solid 1px black;
 
   .comment-wrapper{
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-    width: 80%;
-    padding: 50px;
+    width: auto;
+    height: 20v;
+
     .comment{
       display: flex;
       flex-direction: column;
@@ -1254,6 +1267,23 @@ form {
       .comment-owner-info{
         display: flex;
         flex-direction: row;
+        max-height: 20vh;
+        
+        button{
+          background-color: transparent;
+          border: none;
+          &:hover{
+            background-color: #004c96;
+            color: white;
+            border-radius: 20px;
+          }
+
+        }
+
+        .comment-content{
+          display: flex;
+          flex-direction: column;
+        }
       }
 
       button{
@@ -1268,11 +1298,19 @@ form {
       }
     }
 
-    .reply{
-      display: flex;
-      padding: 10px;
+    .replies {
       display: flex;
       flex-direction: column;
+      margin-left: 20px;
+      padding: 0;
+      width: 100%;
+    }
+
+    .reply{
+      display: flex;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
 
       .reply-owner-info{
         display: flex;
