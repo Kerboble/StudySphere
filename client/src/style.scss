@@ -1257,11 +1257,16 @@ form {
   flex-direction: column;
   padding: 2vh;
   margin-bottom: 100px;
+  gap: 2vh;
+
+
 
   .comment-wrapper {
     width: auto;
     height: auto; /* Adjust height to grow as content increases */
-
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    border-radius: 5px;
+  
     .comment {
       display: flex;
       flex-direction: column;
@@ -1312,13 +1317,17 @@ form {
       margin-left: 30px;
       padding: 0;
       width: 100%;
+      gap: 1vh;
 
-      p{
+
+      .replies-toggle{
         color: #004c96;
+        width: 20px;
         &:hover{
           cursor: pointer;
         }
       }
+
 
     }
 
@@ -1332,6 +1341,10 @@ form {
         display: flex;
         flex-direction: column;
         padding-left: 10px;
+        
+        p{
+          margin: 0;
+        }
       }
 
     
