@@ -89,7 +89,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   height: 100vh;
   width: 100vw;
-  background-color: #ADE8F4;
+  background-color: $body-background-color-5;
   overflow: hidden;
 }
 
@@ -136,6 +136,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  overflow: scroll;
 
   .login-button{
     margin-right: 20px;
@@ -156,7 +157,7 @@ body {
     color: #ADE8F4;
     flex: 1;
     margin: 0;
-    padding: 0;
+    padding-top: 100px;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 5px 10px;
     border-radius: 0px 0px 20px 20px;
 
@@ -240,7 +241,7 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ADE8F4;
+    background-color: $body-background-color-5;
     margin-top: 10px;
     padding: 0;
 
@@ -745,7 +746,6 @@ form {
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  gap: 2rem;
   overflow: scroll;
 
 
@@ -765,6 +765,7 @@ form {
     gap: 1rem;
     padding: 2rem;
     height: 80%;
+    margin: 0;
   
     h3 {
       display: inline;
@@ -785,7 +786,7 @@ form {
       justify-content: flex-start;
       gap: 0.5rem;
       overflow: scroll;
-      height: 60%; // Set the height of the .students div
+      height: 50vh; // Set the height of the .students div
       padding-bottom: 1rem; // Add some padding to the bottom to make space for scrollbar
       width: 50%;
       border-radius: 5px;
@@ -831,14 +832,14 @@ form {
       justify-content: center;
       align-items: center;
       flex: 2;
-      height: 60%;
+      height: 50vh;
       width: auto;
       box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
       border-radius: 5px;
       
       .instructor-photo{
-        height: 300px;
-        width: 300px;
+        height: 10vh;
+        width: auto;
       }
 
     }
@@ -849,8 +850,8 @@ form {
   .files {
     display: flex;
     flex-direction: column;
-    height: 12rem;
-    width: 12rem;
+    height: 15vh;
+    width: 15vw;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
     justify-content: center;
     align-items: center;
@@ -863,8 +864,8 @@ form {
   }
 
   img {
-    height: 3.688rem;
-    width: 3.688rem;
+    height: 5vh;
+    width: auto;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -1023,12 +1024,13 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: 75vh;
     flex: 3;
     overflow: scroll;
     padding: 20px;
     -ms-overflow-style: none; 
-    scrollbar-width: none;  
+    scrollbar-width: none; 
+    height: 60vh;
+    margin-bottom: 50px;
 
     .no-posts {
       flex: 3;
@@ -1059,7 +1061,7 @@ form {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
     border-radius: 10px;
-    padding: 20px;
+    padding: 50px;
     margin-bottom: 10px;
     justify-content: space-between;
     cursor: pointer;
@@ -1119,6 +1121,8 @@ form {
 
   .owner-photo {
     border-radius: 50%;
+    height: 2%;
+    width: 2vw;
   }
 
   .replies-preview{
@@ -1160,8 +1164,8 @@ form {
   }
 
   .owner-photo{
-   height: 100px;
-   width: 100px;
+   height: 10vh;
+   width: auto;
   }
 
   .make-post{
@@ -1195,6 +1199,14 @@ form {
 
 }
 
+.selected-post-container{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  
+}
+
 
 .selected-post-wrapper {
   height: 100vh;
@@ -1203,6 +1215,7 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: scroll;
 
   hr {
     margin: 0;
@@ -1219,33 +1232,37 @@ form {
   }
 
   .owner-of-post {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; /* Align content at the top */
     border-radius: 5px;
     padding: 20px;
-    margin-top: 0; /* Adjusted margin-top to remove any space */
-    margin-bottom: 20px; /* Add margin to separate from comments */
-    flex: 0 0 auto; /* Fixed height */
-    height: auto; /* Optional: Allow height to adjust based on content */
-  
+    height: 100vh;
+    
     img {
+      height: 20vh;
+      width: auto;
       border-radius: 50%;
     }
   }
 }
 
 .comments-container{
+  flex:2;
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding: 10vh;
+  border: solid 1px black;
 
   .comment-wrapper{
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-    width: 80%;
-    padding: 50px;
+    width: auto;
+    height: 20v;
+
     .comment{
       display: flex;
       flex-direction: column;
@@ -1253,6 +1270,23 @@ form {
       .comment-owner-info{
         display: flex;
         flex-direction: row;
+        max-height: 20vh;
+        
+        button{
+          background-color: transparent;
+          border: none;
+          &:hover{
+            background-color: #004c96;
+            color: white;
+            border-radius: 20px;
+          }
+
+        }
+
+        .comment-content{
+          display: flex;
+          flex-direction: column;
+        }
       }
 
       button{
@@ -1267,11 +1301,19 @@ form {
       }
     }
 
-    .reply{
-      display: flex;
-      padding: 10px;
+    .replies {
       display: flex;
       flex-direction: column;
+      margin-left: 20px;
+      padding: 0;
+      width: 100%;
+    }
+
+    .reply{
+      display: flex;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
 
       .reply-owner-info{
         display: flex;

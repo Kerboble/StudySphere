@@ -5,7 +5,6 @@ const TeacherContext = createContext();
 const TeacherContextProvider = ({ children }) => {
     const storedTeacher = JSON.parse(localStorage.getItem('teacher'));
     const [teacher, setTeacher] = useState(storedTeacher ? storedTeacher : null);
-    console.log(teacher)
     return (
         <TeacherContext.Provider value={{ teacher, setTeacher }}>
             {children}
