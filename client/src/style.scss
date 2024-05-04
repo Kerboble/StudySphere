@@ -84,13 +84,8 @@ body {
 
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  height: 100vh;
-  width: 100vw;
-  background-color: $body-background-color-5;
-  overflow: hidden;
+padding: 0;
+margin: 0;
 }
 
 .register-logo{
@@ -361,8 +356,7 @@ form {
   display: flex;
   justify-content: center;
   align-items: center; /* Center vertically */
-  
-  overflow: scroll;
+  overflow: auto; /* Use auto to show scrollbar only when necessary */
 
   .home-body {
     display: flex;
@@ -370,6 +364,8 @@ form {
     width: 100%;
     padding: 0;
     margin: 0;
+    overflow: auto; /* Use auto to show scrollbar only when necessary */
+    height: auto; /* Allow container to grow as content increases */
   }
 }
 
@@ -379,7 +375,7 @@ form {
   background-color: white;
   display: flex;
   flex-direction: row;
-  overflow: hidden;
+  overflow: auto; /* Use auto to show scrollbar only when necessary */
 }
 
 /* Top navbar */
@@ -1199,105 +1195,114 @@ form {
 
 }
 
-.selected-post-container{
-  height: 100vh;
+.selected-post-container {
+  height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
-  
-}
 
-
-.selected-post-wrapper {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: scroll;
-
-  hr {
-    margin: 0;
-    padding: 0;
+  p{
+    font-size: 1vw;
   }
 
-  h1 {
-    padding: 0;
-    margin: 0;
-  }
 
-  .text-area {
-    width: 40%;
-  }
-
-  .owner-of-post {
-    flex: 1;
+  .selected-post-wrapper {
+    height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-start; /* Align content at the top */
-    border-radius: 5px;
-    padding: 20px;
-    height: 100vh;
-    
-    img {
-      height: 20vh;
-      width: auto;
-      border-radius: 50%;
+    overflow: auto; /* Use auto to show scrollbar only when necessary */
+
+    hr {
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      padding: 0;
+      margin: 0;
+    }
+
+    .text-area {
+      width: 40%;
+    }
+
+    .owner-of-post {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Align content at the top */
+      border-radius: 5px;
+      padding: 20px;
+      flex: 2;
+      height: auto;
+      margin-top: 35vh;
+
+      img {
+        height: 20vh;
+        width: auto;
+        border-radius: 50%;
+      }
     }
   }
 }
 
-.comments-container{
-  flex:2;
+.comments-container {
   width: 100%;
-  height: 100vh;
+  height: 50vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
-  padding: 10vh;
-  border: solid 1px black;
+  padding: 2vh;
+  margin-bottom: 100px;
 
-  .comment-wrapper{
+  .comment-wrapper {
     width: auto;
-    height: 20v;
+    height: auto; /* Adjust height to grow as content increases */
 
-    .comment{
+    .comment {
       display: flex;
       flex-direction: column;
+      padding: 10px; /* Add padding for spacing between comments */
 
-      .comment-owner-info{
+      .comment-owner-info {
         display: flex;
         flex-direction: row;
-        max-height: 20vh;
-        
-        button{
+        align-items: center;
+        position: relative;
+
+        button {
           background-color: transparent;
           border: none;
-          &:hover{
+          &:hover {
             background-color: #004c96;
             color: white;
             border-radius: 20px;
           }
-
         }
 
-        .comment-content{
-          display: flex;
-          flex-direction: column;
+        .comment-content {
+          word-wrap: break-word; /* Wrap long words to prevent horizontal overflow */
+          padding-left: 60px;
+          span{
+            font-weight: bold;
+          }
         }
       }
 
-      button{
+      button {
         height: 35px;
         width: 100px;
-
       }
-      img{
+
+      img {
         height: 50px;
         width: 50px;
         border-radius: 50%;
+        position: absolute;
+        top: 0;
       }
     }
 
@@ -1309,23 +1314,22 @@ form {
       width: 100%;
     }
 
-    .reply{
-      display: flex;
+    .reply {
       display: flex;
       flex-direction: column;
       width: 100%;
 
-      .reply-owner-info{
+      .reply-owner-info {
         display: flex;
         flex-direction: row;
+        align-items: center;
       }
 
-      img{
+      img {
         border-radius: 50%;
       }
     }
   }
- 
 }
 
 

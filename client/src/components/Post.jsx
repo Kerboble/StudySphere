@@ -19,7 +19,7 @@ function Post() {
     const commentInputRef = useRef(null); // Create a ref for the textarea element
     const [showModal, setShowModal] = useState(false);
     const [replyContent, setReplyContent] = useState('');
-    const [showReplies, setShowReplies] = useState(true)
+    const [showReplies, setShowReplies] = useState(false)
 
 
     useEffect(() => {
@@ -135,7 +135,7 @@ function Post() {
                                     <div className='comment-content'>
                                         <span>{comment.ownerName}</span>
                                         <p>{comment.content}</p>
-                                        <button onClick={handleModalOpen}>reply</button>
+                                        <button onClick={handleModalOpen}>Reply</button>
                                     </div>
                                     </div>
                                 </div>
