@@ -356,7 +356,7 @@ form {
   display: flex;
   justify-content: center;
   align-items: center; /* Center vertically */
-  overflow: auto; /* Use auto to show scrollbar only when necessary */
+  overflow: hidden;
 
   .home-body {
     display: flex;
@@ -364,7 +364,7 @@ form {
     width: 100%;
     padding: 0;
     margin: 0;
-    overflow: auto; /* Use auto to show scrollbar only when necessary */
+    overflow: scroll; /* Use auto to show scrollbar only when necessary */
     height: auto; /* Allow container to grow as content increases */
   }
 }
@@ -375,13 +375,13 @@ form {
   background-color: white;
   display: flex;
   flex-direction: row;
-  overflow: auto; /* Use auto to show scrollbar only when necessary */
+  overflow: hidden; /* Use auto to show scrollbar only when necessary */
 }
 
 /* Top navbar */
 .top-navbar {
   width: 100%;
-  height: 75px;
+  height: 8vh;
   display: flex;
   align-items: center;
   background-color: white;
@@ -405,10 +405,11 @@ form {
     gap: 5px;
     align-items: center;
     margin-right: 20px;
+    height: 7vh;
 
   .profile-photo {
-  height: 40px; /* Adjust height as needed */
-  width: 40px; /* Adjust width as needed */
+  height: 5vh; /* Adjust height as needed */
+  width: auto; /* Adjust width as needed */
   border-radius: 50%;
   }
 
@@ -1202,18 +1203,19 @@ form {
   flex-direction: column;
 
   p{
-    font-size: 1vh;
+    font-size: 1vw;
   }
 
 
   .selected-post-wrapper {
-    height: 100vh;
+    height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: scroll; /* Use auto to show scrollbar only when necessary */
+    margin: 0;
 
     hr {
       margin: 0;
@@ -1238,7 +1240,7 @@ form {
       padding: 20px;
       flex: 1;
       height: auto;
-      margin-top: 20vh;
+
 
       img {
         height: 20vh;
