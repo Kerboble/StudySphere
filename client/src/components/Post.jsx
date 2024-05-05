@@ -93,13 +93,16 @@ function Post() {
     };
 
     const replyToComment = async (replierName, replierPicture, postID, commentID) => {
-        console.log(commentID);
         try {
-            const res = axios.post("http://localhost:4000/reply", { replierName, replierPicture, _id: postID, commentID, replyContent });
+            const res = await axios.post("http://localhost:4000/reply", { replierName, replierPicture, _id: postID, commentID, replyContent });
+            const updatedPost = res.data.post;
+            setTargetedPost(updatedPost)
+            handleModalClose(commentID); // Close the modal
         } catch (error) {
             console.log(error);
         }
     };
+    
 
     return (
         <div className='selected-post-container'>

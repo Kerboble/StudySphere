@@ -1202,7 +1202,7 @@ form {
   flex-direction: column;
 
   p{
-    font-size: 1vw;
+    font-size: 1vh;
   }
 
 
@@ -1213,7 +1213,7 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: auto; /* Use auto to show scrollbar only when necessary */
+    overflow: scroll; /* Use auto to show scrollbar only when necessary */
 
     hr {
       margin: 0;
@@ -1236,9 +1236,9 @@ form {
       justify-content: flex-start; /* Align content at the top */
       border-radius: 5px;
       padding: 20px;
-      flex: 2;
+      flex: 1;
       height: auto;
-      margin-top: 35vh;
+      margin-top: 20vh;
 
       img {
         height: 20vh;
@@ -1251,14 +1251,15 @@ form {
 
 .comments-container {
   width: 100%;
-  height: 50vh;
+  height: 60vh;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   padding: 2vh;
-  margin-bottom: 100px;
-  gap: 2vh;
-
+  margin-bottom: auto;
+  flex:2;
+  gap: 1vh;
+ 
 
 
   .comment-wrapper {
