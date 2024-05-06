@@ -23,6 +23,7 @@ function AdminNavBar() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('currentUser')
+    localStorage.clear()
   };
 
   const activeStyles = {

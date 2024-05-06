@@ -14,6 +14,8 @@ import spotlight from "../img/spotlight.png"
 import introductions from "../img/Introductions.png"
 import announcements from "../img/announcements.png"
 import Feedback from 'react-bootstrap/esm/Feedback';
+import { useOutletContext } from 'react-router-dom';
+import { Prev } from 'react-bootstrap/esm/PageItem';
 
 
 function DiscussionBoard() {
@@ -28,7 +30,7 @@ function DiscussionBoard() {
     const [posts, setPosts] = useState([]);
     const [refresh, setRefresh] = useState(0);
     const {setPost } = useContext(PostContext);
-    const [postType, setPostType] = useState('faq');
+    const [postType, setPostType] = useState('General');
     const Navigate = useNavigate()
 
 
@@ -67,13 +69,14 @@ function DiscussionBoard() {
         Navigate('../post')
     };
 
-    const deletePost = async (event, _id) => {
+    const deletePost = async (event, _id, cohortId) => {
+        console.log(cohortId)
         event.stopPropagation();
-        console.log(_id)
-        const res  = await axios.delete("http://localhost:4000/delete-post", {data : {_id} });
-        setRefresh(refresh + 1)
+        const res  = await axios.delete("http://localhost:4000/delete-post", {data : {_id, cohortId} });
         try {
-            console.log(res.data)
+            const updatedPosts = res.data.posts;
+            console.log(updatedPosts)
+            setPosts(updatedPosts)
         } catch (error) {
             
         }
@@ -115,7 +118,7 @@ function DiscussionBoard() {
                         </div>
                         {currentUser.profilePicture === post.ownerPicture && (
                         <button
-                            onClick={(event) => deletePost(event, post._id)}
+                            onClick={(event) => deletePost(event, post._id, cohortId)}
                             className='btn btn-danger btn-sm'
                         >
                             Delete

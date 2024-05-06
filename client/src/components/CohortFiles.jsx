@@ -10,21 +10,24 @@ import defaultPhoto from "../img/shark.png"
 import { useNavigate } from 'react-router-dom';
 import { StudentContext } from '../context/studentContext';
 import { TeacherContext } from '../context/teacherContext';
+import { useOutletContext } from 'react-router-dom';
 
 
 function CohortFiles() {
   const { cohort, setCohort } = useContext(CohortContext);
   const [teacher, _setTeacher] = useState(null);
   const Navigate = useNavigate();
-  const [refresh, setRefresh] = useState(false)
   const {setStudent} = useContext(StudentContext);
   const {setTeacher} = useContext(TeacherContext)
+  const [users, refreshData, cohorts] = useOutletContext();
+
 
   const readingMaterials = cohort ? cohort.cohortFiles.readingMaterial : null;
   const readingAssignments = cohort ? cohort.cohortFiles.assignments : null;
   const tests = cohort ? cohort.cohortFiles.tests : null;
   const teacherID = cohort ? cohort.instructorID : null;
 
+  console.log(cohort)
 
   useEffect(() => {
     const fetchTeacher = async () => {
@@ -47,6 +50,7 @@ function CohortFiles() {
       localStorage.removeItem('cohort');
       setCohort(response.data.cohort);
       localStorage.setItem('cohort', JSON.stringify(response.data.cohort));
+      refreshData(prev => prev + 1)
     } catch (error) {
       console.error(error);
     }

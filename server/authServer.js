@@ -728,17 +728,20 @@ app.post("/reply", async (req, res) => {
 
 //delete a post from discussion board
 app.delete("/delete-post", async (req, res) => {
-  const { _id } = req.body;
-  const post = await DiscussionPost.findById(_id);
-  if(post){
-    try {
-       await DiscussionPost.findByIdAndDelete(_id);
-      res.status(200).json({message: "deleted post"})
-    } catch (error) { 
-      res.status(404).json({message: "Post not found"})
-    }
+  const { _id, cohortId } = req.body;
+  try {
+      const deletedPost = await DiscussionPost.findOneAndDelete({ _id });
+      if (deletedPost) {
+          const updatedPosts = await DiscussionPost.find({cohort: cohortId});
+          res.status(200).json({ message: "Deleted post", posts: updatedPosts });
+      } else {
+          res.status(404).json({ message: "Post not found" });
+      }
+  } catch (error) {
+      res.status(500).json({ message: "Server error" });
   }
-})
+});
+
 
 
 

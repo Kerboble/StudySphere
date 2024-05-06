@@ -62,6 +62,7 @@ function AdminStudents() {
             try {
                 const res = await axios.delete("http://localhost:4000/delete-user", { data:{email} });
                 setRefreshData(prev => prev + 1)
+                localStorage.removeItem('cohort')
                 setShowModal(false);
                 console.log('User has been deleted:', res.data);
             } catch (error) {

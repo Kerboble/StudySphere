@@ -13,7 +13,7 @@ function Home() {
   const [refreshData, setRefreshData] = useState(0);
   const [cohorts, setCohorts] = useState([]);
 
-  console.log(cohorts);
+  console.log(refreshData);
 
   //localStorage.clear();
   useEffect(() => {
@@ -41,7 +41,6 @@ function Home() {
     };
     fetchUsers();
   }, [refreshData]);
-
 
 
   return (

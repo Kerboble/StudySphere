@@ -33,6 +33,7 @@ function StudentProfile() {
                 username
             });
             console.log("Response:", res.data);
+            refreshData(prev => prev + 1)
             closeModal();
         } catch (error) {
             alert('User is already in selected cohort')
