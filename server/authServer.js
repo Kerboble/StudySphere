@@ -210,7 +210,6 @@ app.post('/get-teacher', async (req, res) => {
 //delete user from cohort based on id
 app.delete('/remove-user', async (req, res) => {
   const { id, cohortID } = req.body; // Extracting id and cohortID from query parameters
-  console.log()
   try {
     // Use $pull to remove the student from the students array based on their ID
     const updatedCohort = await Cohort.findByIdAndUpdate(cohortID, { $pull: { students: { 'student.id': id } } }, { new: true });
@@ -727,7 +726,19 @@ app.post("/reply", async (req, res) => {
   }
 });
 
-
+//delete a post from discussion board
+app.delete("/delete-post", async (req, res) => {
+  const { _id } = req.body;
+  const post = await DiscussionPost.findById(_id);
+  if(post){
+    try {
+       await DiscussionPost.findByIdAndDelete(_id);
+      res.status(200).json({message: "deleted post"})
+    } catch (error) { 
+      res.status(404).json({message: "Post not found"})
+    }
+  }
+})
 
 
 

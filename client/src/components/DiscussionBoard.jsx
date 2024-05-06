@@ -67,6 +67,19 @@ function DiscussionBoard() {
         Navigate('../post')
     };
 
+    const deletePost = async (event, _id) => {
+        event.stopPropagation();
+        console.log(_id)
+        const res  = await axios.delete("http://localhost:4000/delete-post", {data : {_id} });
+        setRefresh(refresh + 1)
+        try {
+            console.log(res.data)
+        } catch (error) {
+            
+        }
+    };
+    
+
     const displayPosts = posts.length > 0 ? posts.map((post, index) => {
         return (
               <div key={index} className='posts' onClick={() => showPost(post)}>
@@ -100,6 +113,14 @@ function DiscussionBoard() {
                         <div className="comments-count">
                             {post.comments.length} comments
                         </div>
+                        {currentUser.profilePicture === post.ownerPicture && (
+                        <button
+                            onClick={(event) => deletePost(event, post._id)}
+                            className='btn btn-danger btn-sm'
+                        >
+                            Delete
+                        </button>
+                    )}
                     </div>
                 </div>
         )
@@ -111,16 +132,15 @@ function DiscussionBoard() {
         </div>
     </>
 
-    const handlePostSubmit = async () => {
-        const res = await axios.post('http://localhost:4000/discussion-post', {ownerOfPost, cohortId, ownerOfPostPhoto, postTitle, postContent, postType})
-        console.log(res.data)
-        setRefresh(refresh + 1)
-        setPostTitle('');
-        setPostContent('');
-        setShowModal(false);
-    };
+const handlePostSubmit = async () => {
+    const res = await axios.post('http://localhost:4000/discussion-post', {ownerOfPost, cohortId, ownerOfPostPhoto, postTitle, postContent, postType})
+    setRefresh(refresh + 1)
+    setPostTitle('');
+    setPostContent('');
+    setShowModal(false);
+};
 
-    console.log(postType)
+console.log(ownerOfPostPhoto)
 
   return (
     <div className='discussion-container'>

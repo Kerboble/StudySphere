@@ -27,25 +27,18 @@ function Post() {
     // Function to toggle the visibility of replies for a specific comment
     const toggleReplies = (commentID) => {
         setShowReplies(prevState => ({
-            ...prevState,
             [commentID]: !prevState[commentID] // Toggle the value of showReplies for the specified comment ID
         }));
     };
 
     // Function to open a specific modal
     const handleModalOpen = (commentID) =>{
-        setModalState(prevState => ({
-            ...prevState,
-            [commentID]: true
-        }))
+        setModalState({[commentID]: true})
     };
 
     // Function to close a specific modal
-    const handleModalClose = (commentId) => {
-        setModalState(prevState => ({
-            ...prevState,
-            [commentId]: false // Set the modal state for the specified comment ID to false
-        }));
+    const handleModalClose = (commentID) =>{
+        setModalState({[commentID]: false})
     };
 
     useEffect(() => {
@@ -74,6 +67,10 @@ function Post() {
     }, [isCommenting]);
 
     const handleCommentSubmit = async () => {
+        if(commentText.length <= 0){
+           return alert('please write your comment')
+        }
+
         try {
             const res = await axios.post("http://localhost:4000/add-comment", {
                 _id: targetedPost._id,
@@ -102,7 +99,7 @@ function Post() {
             console.log(error);
         }
     };
-    
+     console.log(commentText.length )
 
     return (
         <div className='selected-post-container'>
@@ -130,8 +127,8 @@ function Post() {
                                 }}
                             />
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                <button className='btn btn-secondary' onClick={() => setIsCommenting(false)} >Cancel</button>
-                                <button className='btn btn-primary' onClick={handleCommentSubmit} >Submit</button>
+                                <button className='btn btn-danger' onClick={() => setIsCommenting(false)} >Cancel</button>
+                                <button className={commentText.length <= 0 ? 'btn btn-secondary' : 'btn btn-primary'}onClick={handleCommentSubmit} >Submit</button>
                             </div>
                         </div>
                     ) : (
@@ -158,7 +155,7 @@ function Post() {
                                             </div>
                                         </div>
                                     </div>
-                                    <Modal className="modal-container" show={modalState[comment._id] || false} onHide={() => handleModalClose(comment._id)}>
+                                    <Modal className="modal-container" show={modalState[comment._id]} onHide={() => handleModalClose(comment._id)}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>Reply to {comment.ownerName}'s comment</Modal.Title>
                                         </Modal.Header>

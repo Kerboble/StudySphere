@@ -7,7 +7,7 @@ import { StudentContext } from '../context/studentContext';
 
 function AdminStudents() {
     const {setStudent} = useContext(StudentContext);
-    const [users] = useOutletContext();
+    const [users, setRefreshData] = useOutletContext();
     const [showModal, setShowModal] = useState(false);
     const [showAddStudentModal, setShowAddStudentModal] = useState(false); // State for the second modal
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -39,7 +39,8 @@ function AdminStudents() {
         console.log('hello')
         try {
             const res = await axios.post("http://localhost:4000/register-admin", { username, email, password });
-            alert(`Student ${res.data.username} was added`);
+            toggleAddStudentModal()
+            setRefreshData(prev => prev + 1);
         } catch (error) {
             if (error.response) {
                 // The request was made and the server responded with a status code
@@ -60,6 +61,7 @@ function AdminStudents() {
         if (confirmed) {
             try {
                 const res = await axios.delete("http://localhost:4000/delete-user", { data:{email} });
+                setRefreshData(prev => prev + 1)
                 setShowModal(false);
                 console.log('User has been deleted:', res.data);
             } catch (error) {

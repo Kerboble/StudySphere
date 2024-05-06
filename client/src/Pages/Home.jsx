@@ -42,9 +42,6 @@ function Home() {
     fetchUsers();
   }, [refreshData]);
 
-  const resetTheData = () => {
-    setRefreshData(refreshData + 1);
-  };
 
 
   return (
@@ -53,8 +50,7 @@ function Home() {
         <AdminNavBar />
         <div className="home-body">
           <Navbar />
-          <button onClick={resetTheData} type="button" className="btn btn-primary" style={{borderRadius:"0px", backgroundColor:"#0077B6", border:"none"}}>Refresh Data</button>
-          <Outlet context={[users, refreshData, cohorts]} />
+          <Outlet context={[users, setRefreshData, cohorts]} />
         </div>
       </div>
     </div>

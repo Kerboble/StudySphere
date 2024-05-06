@@ -7,7 +7,7 @@ import EditCohort from './EditCohort';
 import { CohortContext } from '../context/cohortContext';
 
 function AdminCohorts() {
-    const [users, refreshData, cohorts] = useOutletContext();
+    const [users, setRefreshData, cohorts] = useOutletContext();
     const [selectedCohort, setSelectedCohort] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -82,6 +82,7 @@ function AdminCohorts() {
             try {
                 const res = await axios.delete("http://localhost:4000/delete-cohort", {data:{id}});
                 setShowModal(false);
+                setRefreshData(prev => prev + 1)
                 console.log('Cohort has been deleted:', res.data);
             } catch (error) {
                 console.error('Error deleting cohort:', error);
@@ -102,6 +103,7 @@ function AdminCohorts() {
             try {
                 const res = await axios.post("http://localhost:4000/assign-teacher", { teacherID, cohortID });
                 setTeacherModal(false)
+                setRefreshData(prev => prev + 1)
                 console.log(res.data);
             } catch (error) {
                 console.error("Error setting teacher to cohort:", error);
@@ -211,7 +213,6 @@ function AdminCohorts() {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={toggleTeacherModal}>Close</Button>
-                    {/* Add functionality to save the assigned teacher */}
                     <Button variant="primary" onClick={() => {
                         const selectedTeacher = document.getElementById("teacherSelect").value;
                         setTeacherToCohort(selectedTeacher, selectedCohort._id);

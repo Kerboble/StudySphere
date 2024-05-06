@@ -3,10 +3,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Sphere from "../img/globe.png"
 import { AuthContext } from '../context/authContext.jsx';
+import { useOutletContext } from 'react-router-dom';
 
 const NewCohort = () => {
     const { currentUser } = useContext(AuthContext)
     const navigate = useNavigate();
+    const [users, setRefreshData, cohorts] = useOutletContext();
+
 
     const [cohortInfo, setCohortInfo] = useState({
     cohortName: '',
@@ -55,8 +58,7 @@ const NewCohort = () => {
     e.preventDefault();
       try {
         const res = await axios.post('http://localhost:4000/newCohort', cohortInfo);
-        console.log(res.data); // Handle successful registration
-        alert('Cohort was successfully created')
+        setRefreshData(prev => prev + 1)
       } catch (err) {
         console.error('Cohort creation error:', err.response);
       }
