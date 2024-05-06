@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 import { Modal, Button } from 'react-bootstrap';
+import more from "../img/more.png"
 
 function Post() {
     const { post } = useContext(PostContext);
@@ -17,6 +18,8 @@ function Post() {
     const [isCommenting, setIsCommenting] = useState(false);
     const commentInputRef = useRef(null); // Create a ref for the textarea element
     const [replyContent, setReplyContent] = useState('');
+    const [moreOptions, setMoreOptions] = useState(false)
+    const [selectedCommentId, setSelectedCommentId] = useState(null);
     
     // State to manage the visibility of replies for each comment
     const [showReplies, setShowReplies] = useState({});
@@ -39,6 +42,11 @@ function Post() {
     // Function to close a specific modal
     const handleModalClose = (commentID) =>{
         setModalState({[commentID]: false})
+    };
+
+    // Function to toggle the "more options" for a specific comment
+    const toggleMoreOptions = (commentID) => {
+        setSelectedCommentId(commentID === selectedCommentId ? null : commentID);
     };
 
     useEffect(() => {
@@ -90,6 +98,16 @@ function Post() {
     };
 
     const replyToComment = async (replierName, replierPicture, postID, commentID) => {
+        if (replyContent.length === 0) {
+            // Show an error message or prevent submission if the reply is empty
+            return console.error('Reply content cannot be empty');
+        }
+    
+        if (replyContent.length > 1000 ) {
+            // Show an error message or prevent submission if the reply exceeds the maximum length
+            return console.error('Reply content is too long');
+        }
+    
         try {
             const res = await axios.post("http://localhost:4000/reply", { replierName, replierPicture, _id: postID, commentID, replyContent });
             const updatedPost = res.data.post;
@@ -98,8 +116,11 @@ function Post() {
         } catch (error) {
             console.log(error);
         }
-    };
-     console.log(commentText.length )
+    };;
+
+    const deleteReply = (postID) => {
+        console.log(postID)
+    }
 
     return (
         <div className='selected-post-container'>
@@ -152,6 +173,16 @@ function Post() {
                                                 <span>{comment.ownerName}</span>
                                                 <p>{comment.content}</p>
                                                 <button className='reply-btn' onClick={() => handleModalOpen(comment._id)}>Reply</button>
+                                                <img 
+                                                    onClick={() => toggleMoreOptions(comment._id)} 
+                                                    className="more" 
+                                                    src={more} 
+                                                    alt="" 
+                                                />
+                                               { selectedCommentId === comment._id && <div className='more-options' >
+                                                    <div className='more-options-edit' >Edit</div>
+                                                    <div onClick={() => deleteReply(targetedPost._id)} className='more-options-delete'>Delete</div>
+                                                </div>}
                                             </div>
                                         </div>
                                     </div>
@@ -161,6 +192,7 @@ function Post() {
                                         </Modal.Header>
                                         <Modal.Body className="modal-content">
                                             <textarea name="reply" id="reply" cols="30" rows="10" onChange={(e) => setReplyContent(e.target.value)}></textarea>
+                                            <p>{replyContent.length} / 1000 characters</p> {/* Display character count */}
                                         </Modal.Body>
                                         <Modal.Footer>
                                             <button className="btn btn-primary" onClick={() => replyToComment(currentUser.username, currentUser.profilePicture, targetedPost._id, comment._id)}>Reply</button>

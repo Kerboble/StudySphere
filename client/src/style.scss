@@ -381,7 +381,7 @@ form {
 /* Top navbar */
 .top-navbar {
   width: 100%;
-  height: 8vh;
+  max-height: 100px;
   display: flex;
   align-items: center;
   background-color: white;
@@ -404,11 +404,11 @@ form {
     border-radius: 40px;
     gap: 5px;
     align-items: center;
-    margin-right: 20px;
-    height: 7vh;
+    height: 75px;
+    margin: 1vh;
 
   .profile-photo {
-  height: 5vh; /* Adjust height as needed */
+  height: 50px; /* Adjust height as needed */
   width: auto; /* Adjust width as needed */
   border-radius: 50%;
   }
@@ -789,13 +789,13 @@ form {
       padding: 20px;
 
       .cohort-students {
-        height: 200px;
+        height: 15vh;
         width: auto;
         display: flex;
         flex-direction: column;
         align-items: center;
         box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-        padding: 20px;
+        padding: 1vh;
         margin: 0;
         gap: 2px;
 
@@ -884,7 +884,6 @@ form {
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    overflow: auto;
     
 
     .top {
@@ -921,17 +920,21 @@ form {
       color: grey;
     }
 
-    .add-to-cohort{
+    .add-to-cohort {
       display: flex;
       flex-direction: row;
       gap: 5px;
       height: 100%;
-      
+      align-items: flex-end; 
+    
       button {
-        height: 45px;
-        font-size: 1.5vh;
+        height: 50px;
+        font-size: 0.9em;
+        padding: 5px;
+        min-width: 55px;
       }
     }
+    
 
   }
 
@@ -1199,7 +1202,7 @@ form {
 
 
   .selected-post-wrapper {
-    height: auto;
+    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -1207,6 +1210,7 @@ form {
     align-items: center;
     overflow: scroll; /* Use auto to show scrollbar only when necessary */
     margin: 0;
+    overflow-x: hidden;
 
     hr {
       margin: 0;
@@ -1241,7 +1245,7 @@ form {
 
 .comments-container {
   width: 100%;
-  height: 60vh;
+  height: auto;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -1268,7 +1272,7 @@ form {
         flex-direction: row;
         align-items: center;
         position: relative;
-
+      
         .reply-btn {
           background-color: transparent;
           border: none;
@@ -1278,15 +1282,56 @@ form {
             border-radius: 20px;
           }
         }
-
+      
         .comment-content {
           word-wrap: break-word; /* Wrap long words to prevent horizontal overflow */
           padding-left: 60px;
-          span{
+          span {
             font-weight: bold;
+          }
+      
+          .more {
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            cursor: pointer;
+          }
+
+          .more-options{
+            flex-direction: column;
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+            justify-content: center;
+            position: absolute;
+            right: 0;
+            background-color: #ffffff;
+            height: auto;
+            z-index: 1;
+
+
+            .more-options-delete, .more-options-edit{
+              height: 50px;
+              width: 150px;
+              align-content: center;
+              text-align: center;
+            }
+
+            .more-options-edit:hover, .more-options-delete:hover{
+              cursor: pointer;
+              background-color: #004c96;
+              color: white;
+              border-radius: 10px 10px 0px 0px ;
+            }
+
+            .more-options-delete:hover{
+              border-radius: 0px 0px 10px 10px 
+            }
           }
         }
       }
+      
 
       button {
         height: 35px;

@@ -701,6 +701,7 @@ app.post("/add-comment", async (req, res) => {
   }
 });
 
+//add a reply to comment
 app.post("/reply", async (req, res) => {
   const { replierName, replierPicture, _id, commentID, replyContent } = req.body;
   try {
@@ -726,6 +727,38 @@ app.post("/reply", async (req, res) => {
   }
 });
 
+//delete a reply to a comment
+app.post("/delete-reply", async (req, res) => {
+  const { postId, commentId, replyId } = req.body;
+  try {
+    const post = await DiscussionPost.findById(postId);
+    if (post) {
+      const commentIndex = post.comments.findIndex(comment => comment._id.toString() === commentId);
+      if (commentIndex !== -1) {
+        const replyIndex = post.comments[commentIndex].replies.findIndex(reply => reply._id.toString() === replyId);
+        if (replyIndex !== -1) {
+          // Remove the reply from the replies array of the comment
+          post.comments[commentIndex].replies.splice(replyIndex, 1);
+          // Save the updated post
+          await post.save();
+          res.status(200).json({ message: "Reply deleted successfully" });
+        } else {
+          res.status(404).json({ message: "Reply not found" });
+        }
+      } else {
+        res.status(404).json({ message: "Comment not found" });
+      }
+    } else {
+      res.status(404).json({ message: "Post not found" });
+    }
+  } catch (error) {
+    console.error('Error deleting reply:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 //delete a post from discussion board
 app.delete("/delete-post", async (req, res) => {
   const { _id, cohortId } = req.body;
@@ -741,8 +774,6 @@ app.delete("/delete-post", async (req, res) => {
       res.status(500).json({ message: "Server error" });
   }
 });
-
-
 
 
 

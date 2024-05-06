@@ -50,7 +50,7 @@ function TeacherProfile() {
             <hr style={{width:"99%"}}/>
         </div>
         <div className="bottom">
-            <strong>CURRENT ADDRESS</strong>
+            <strong>Office</strong>
             {/* Dummy data */}
             <p>987 Emmett Tunnel, West Kristopher, IL 70661</p>
             <strong style={{marginTop:"20px"}}>PHONE NUMBER</strong>
