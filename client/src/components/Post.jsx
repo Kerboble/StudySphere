@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { PostContext } from '../context/postContext';
 import { CohortContext } from '../context/cohortContext';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useOutletContext } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 import { Modal, Button } from 'react-bootstrap';
 import more from "../img/more.png"
@@ -20,6 +20,8 @@ function Post() {
     const [replyContent, setReplyContent] = useState('');
     const [moreOptions, setMoreOptions] = useState(false)
     const [selectedCommentId, setSelectedCommentId] = useState(null);
+    const [editingComment, setEditingComment] = useState(false);
+
     
     // State to manage the visibility of replies for each comment
     const [showReplies, setShowReplies] = useState({});
@@ -118,9 +120,42 @@ function Post() {
         }
     };;
 
-    const deleteReply = (postID) => {
-        console.log(postID)
-    }
+    const deleteComment = async (_id, comment) => {
+        console.log(_id, comment);
+        try {
+            const res = await axios.delete("http://localhost:4000/delete-comment", {
+                data: { _id, comment}
+            });
+            const updatedPost = res.data.post
+            toggleMoreOptions(comment._id)
+            setTargetedPost(updatedPost)
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleEditComment = (comment) => {
+        setEditingComment(!editingComment);
+        setSelectedCommentId(editingComment ? null : comment._id);
+
+    };
+
+    const closeMoreOptions = () => {
+        setSelectedCommentId(null);
+    };
+
+    const saveEditedComment = async (_id, comment, content) => {
+        try {
+            const res = await axios.post("http://localhost:4000/edit-comment", { _id, comment, content });
+            handleEditComment(comment)
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+    
+    
+   
 
     return (
         <div className='selected-post-container'>
@@ -171,7 +206,8 @@ function Post() {
                                             <img src={comment.ownerPicture} alt="" />
                                             <div className='comment-content'>
                                                 <span>{comment.ownerName}</span>
-                                                <p>{comment.content}</p>
+                                                <p  className={editingComment && selectedCommentId === comment._id ? 'selected-comment' : ''} contentEditable={editingComment && selectedCommentId === comment._id && currentUser.profilePicture === comment.ownerPicture}>{comment.content}</p>
+                                                {editingComment &&  selectedCommentId === comment._id &&<button onClick={() => saveEditedComment(targetedPost._id, comment._id, document.querySelector('.selected-comment').innerText)} className='reply-btn'>Save</button>}
                                                 <button className='reply-btn' onClick={() => handleModalOpen(comment._id)}>Reply</button>
                                                 <img 
                                                     onClick={() => toggleMoreOptions(comment._id)} 
@@ -179,10 +215,19 @@ function Post() {
                                                     src={more} 
                                                     alt="" 
                                                 />
-                                               { selectedCommentId === comment._id && <div className='more-options' >
-                                                    <div className='more-options-edit' >Edit</div>
-                                                    <div onClick={() => deleteReply(targetedPost._id)} className='more-options-delete'>Delete</div>
-                                                </div>}
+                                               { selectedCommentId === comment._id && currentUser.profilePicture === comment.ownerPicture && 
+                                                    <div className='more-options' >
+                                                        <div className='more-options-edit' onClick={() => handleEditComment(comment)}>
+                                                            Edit
+                                                        </div>
+                                                        <div onClick={() => deleteComment(targetedPost._id, comment._id)} className='more-options-delete'>Delete</div>
+                                                    </div>
+                                               }
+                                                { selectedCommentId === comment._id && currentUser.profilePicture !== comment.ownerPicture && 
+                                                    <div className='more-options' >
+                                                        <div className='flag-option' >Flag</div>
+                                                    </div>
+                                               }
                                             </div>
                                         </div>
                                     </div>

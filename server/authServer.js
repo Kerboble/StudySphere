@@ -701,6 +701,51 @@ app.post("/add-comment", async (req, res) => {
   }
 });
 
+//delte comment
+app.delete("/delete-comment", async (req, res) => {
+  const { _id, comment} = req.body;
+  try {
+      const updatedPost = await DiscussionPost.findByIdAndUpdate(
+          _id,
+          { $pull: { comments: { _id:comment } } },
+          { new: true }
+      );
+      if (updatedPost) {
+          res.status(200).json({ message: "Comment deleted", post: updatedPost });
+      } else {
+          res.status(404).json({ message: "Post not found" });
+      }
+  } catch (error) {
+      console.error('Error deleting comment:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//edit comment 
+app.post("/edit-comment", async (req, res) => {
+  const { _id, comment, content } = req.body;
+  try {
+    const updatedPost = await DiscussionPost.findByIdAndUpdate(
+      _id,
+      { $set: { "comments.$[elem].content": content } },
+      { new: true, arrayFilters: [{ "elem._id": comment }] }
+    );
+
+    if (updatedPost) {
+      res.status(200).json({ message: "Comment successfully edited", post: updatedPost });
+    } else {
+      res.status(404).json({ error: "Post or comment not found" });
+    }
+  } catch (error) {
+    console.error('Error editing comment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+
+
 //add a reply to comment
 app.post("/reply", async (req, res) => {
   const { replierName, replierPicture, _id, commentID, replyContent } = req.body;

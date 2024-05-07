@@ -165,7 +165,6 @@ margin: 0;
     bounce2 800ms
           alternate infinite
           cubic-bezier(.5, .5, .5, 0.5);
-
     }
 
 }
@@ -1289,6 +1288,15 @@ form {
           span {
             font-weight: bold;
           }
+
+          .selected-comment {
+            color: #004c96;
+            animation: 
+            bounce2 200ms
+                  alternate 4
+                  cubic-bezier(.5, .5, .5, 0.5);
+        }
+        
       
           .more {
             height: 20px;
@@ -1311,7 +1319,7 @@ form {
             z-index: 1;
 
 
-            .more-options-delete, .more-options-edit{
+            .more-options-delete, .more-options-edit, .flag-option{
               height: 50px;
               width: 150px;
               align-content: center;
@@ -1327,6 +1335,12 @@ form {
 
             .more-options-delete:hover{
               border-radius: 0px 0px 10px 10px 
+            }
+
+            .flag-option:hover{
+              background-color: #004c96;
+              border-radius: 10px;
+              color: white;
             }
           }
         }
