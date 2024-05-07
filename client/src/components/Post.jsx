@@ -21,6 +21,7 @@ function Post() {
     const [moreOptions, setMoreOptions] = useState(false)
     const [selectedCommentId, setSelectedCommentId] = useState(null);
     const [editingComment, setEditingComment] = useState(false);
+    const [switchEdit, setSwitchEdit] = useState();
 
     
     // State to manage the visibility of replies for each comment
@@ -136,14 +137,14 @@ function Post() {
         }
     };
 
+    const changeEdit = () => {
+        setSwitchEdit(!switchEdit)
+    }
+
     const handleEditComment = (comment) => {
+        changeEdit()
         setEditingComment(!editingComment);
         setSelectedCommentId(editingComment ? null : comment._id);
-
-    };
-
-    const closeMoreOptions = () => {
-        setSelectedCommentId(null);
     };
 
     const saveEditedComment = async (_id, commentID, content) => {
@@ -222,7 +223,7 @@ function Post() {
                                                { selectedCommentId === comment._id && currentUser.profilePicture === comment.ownerPicture && 
                                                     <div className='more-options' >
                                                         <div className='more-options-edit' onClick={() => handleEditComment(comment)}>
-                                                            Edit
+                                                            {switchEdit ? <p>Cancel</p> : <p>Edit</p>}
                                                         </div>
                                                         <div onClick={() => deleteComment(targetedPost._id, comment._id)} className='more-options-delete'>Delete</div>
                                                     </div>
