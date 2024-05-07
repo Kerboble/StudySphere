@@ -76,6 +76,8 @@ function Post() {
         }
     }, [isCommenting]);
 
+    
+
     const handleCommentSubmit = async () => {
         if(commentText.length <= 0){
            return alert('please write your comment')
@@ -144,14 +146,16 @@ function Post() {
         setSelectedCommentId(null);
     };
 
-    const saveEditedComment = async (_id, comment, content) => {
+    const saveEditedComment = async (_id, commentID, content) => {
         try {
-            const res = await axios.post("http://localhost:4000/edit-comment", { _id, comment, content });
-            handleEditComment(comment)
+            const res = await axios.post("http://localhost:4000/edit-comment", { _id, commentID, content });
+            handleEditComment(commentID)
         } catch (error) {
             console.error(error);
         }
     };
+    
+    
     
     
     

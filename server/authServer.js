@@ -723,12 +723,12 @@ app.delete("/delete-comment", async (req, res) => {
 
 //edit comment 
 app.post("/edit-comment", async (req, res) => {
-  const { _id, comment, content } = req.body;
+  const { _id, commentID, content } = req.body;
   try {
     const updatedPost = await DiscussionPost.findByIdAndUpdate(
       _id,
       { $set: { "comments.$[elem].content": content } },
-      { new: true, arrayFilters: [{ "elem._id": comment }] }
+      { new: true, arrayFilters: [{ "elem._id": commentID }] }
     );
 
     if (updatedPost) {

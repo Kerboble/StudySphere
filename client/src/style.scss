@@ -788,7 +788,7 @@ form {
       padding: 20px;
 
       .cohort-students {
-        height: 15vh;
+        height: auto;
         width: auto;
         display: flex;
         flex-direction: column;
@@ -1201,7 +1201,7 @@ form {
 
 
   .selected-post-wrapper {
-    height: 100vh;
+    height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -1232,6 +1232,7 @@ form {
       justify-content: flex-start; /* Align content at the top */
       border-radius: 5px;
       padding: 20px;
+      height: auto;
 
       img {
         height: 20vh;
@@ -1317,6 +1318,7 @@ form {
             background-color: #ffffff;
             height: auto;
             z-index: 1;
+            top: 30%;
 
 
             .more-options-delete, .more-options-edit, .flag-option{
