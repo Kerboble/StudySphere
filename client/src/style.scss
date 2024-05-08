@@ -44,6 +44,9 @@ img{
   object-fit: cover;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
 
 
 .formWrapper form {
@@ -1286,6 +1289,8 @@ form {
         .comment-content {
           word-wrap: break-word; /* Wrap long words to prevent horizontal overflow */
           padding-left: 60px;
+          padding-right: 30px;
+          text-align: justify;
           span {
             font-weight: bold;
           }
@@ -1306,6 +1311,7 @@ form {
             right: 0;
             top: 50%;
             cursor: pointer;
+            margin-left: 1vh;
           }
 
           .more-options{
@@ -1408,4 +1414,168 @@ form {
   }
 }
 
+//student courses 
 
+.student-courses-container{
+  display: flex;
+  flex-direction: row;
+  height: auto;
+
+  .left-side {
+    height: auto;
+    width: 100%;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+
+
+    .courses-filter {
+      height: 5vh;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-content: center;
+      padding-left: 2vh;
+      padding-right: 2vh;
+      align-items: center;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    }
+
+    .courses {
+      flex: 11;
+      padding: 2vh;
+      height: auto;
+
+      .my-course{
+        height: auto;
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+        padding: 20px;
+        display: flex;
+        gap: 5vh;
+        border-radius: 20px;
+        margin-bottom: 20px;
+
+        .right{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .course-footers{
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+
+          .course-tags{
+            display: flex;
+            gap: 1vh;
+
+            p{
+              height: auto;
+              width: auto;
+              box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+              padding: 1vh;
+              background-color: rgb(105, 105, 105);
+              color: white;
+              border-radius: 5px;
+            }
+
+          }
+
+          button{
+            height: 50px;
+            width: auto;
+
+            img{
+              height: 25px;
+              width: auto;
+            }
+          }
+        }
+
+        img{
+          height: 20vh;
+          width: auto;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
+  .right-side {
+    flex: 1;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    gap: 2vh;
+    
+
+    h1{
+      text-align: c;
+    }
+
+    .calender{
+      flex: 1;
+      height: auto;
+      width: 100%;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      border-radius: 20px;
+
+    }
+
+    .teachers{
+      flex: 2;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      padding: 50px;
+      width: 100%;
+      align-items: center;
+
+      hr {
+        width: 70%;
+        padding: 0;
+        margin: 5px;
+        margin-left: 50px;
+      }
+
+
+      .instructor{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1vh;
+
+        img{
+          height: 50px;
+
+        }
+      }
+
+    }
+
+    .learning-process{
+      flex: 1;
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      border-radius: 20px;
+      width: 100%;
+      height: auto;
+
+      .course-progress{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+
+        strong{
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}

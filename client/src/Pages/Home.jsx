@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 import Navbar from '../components/Navbar';
 import AdminNavBar from '../components/AdminNavbar';
 import { Outlet } from 'react-router-dom';
+import UserNavbar from '../components/UserNavbar';
 
 function Home() {
   const { currentUser, setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
@@ -42,11 +43,13 @@ function Home() {
     fetchUsers();
   }, [refreshData]);
 
+  console.log(currentUser.role)
 
   return (
     <div className="home-container">
       <div className='home'>
-        <AdminNavBar />
+        {currentUser.role == "SuperAdmin" && <AdminNavBar />}
+        {currentUser.role === "student"  && <UserNavbar />}
         <div className="home-body">
           <Navbar />
           <Outlet context={[users, setRefreshData, cohorts]} />

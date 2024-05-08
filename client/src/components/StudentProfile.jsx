@@ -23,8 +23,6 @@ function StudentProfile() {
     )) : null;
 
     const handleAddToCohort = async () => {
-        console.log(id, selectedCohort, profilePicture, username);
-        console.log(id)
         try {
             const res = await axios.post("http://localhost:4000/add-to-class", {
                 studentId: id,

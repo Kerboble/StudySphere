@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { StudentContext } from '../context/studentContext';
 import { TeacherContext } from '../context/teacherContext';
 import { useOutletContext } from 'react-router-dom';
-
+import { AuthContext } from '../context/authContext';
 
 function CohortFiles() {
   const { cohort, setCohort } = useContext(CohortContext);
@@ -20,6 +20,7 @@ function CohortFiles() {
   const {setStudent} = useContext(StudentContext);
   const {setTeacher} = useContext(TeacherContext)
   const [users, refreshData, cohorts] = useOutletContext();
+  const {currentUser} = useContext(AuthContext);
 
 
   const readingMaterials = cohort ? cohort.cohortFiles.readingMaterial : null;
@@ -105,11 +106,11 @@ const displayReadingMaterials = readingMaterials
   const displayStudents = cohort.students
     ? cohort.students.map((student, index) => (
       <>
-      <div className='cohort-students' key={student.id}>
+       <div className='cohort-students' key={student.id}>
           <img src={student.student.profilePicture || defaultPhoto} alt={`Student ${index + 1}`} />
           <strong>{student.student.username}</strong>
           <button onClick={() => goToProfile(student.student.id)} className='btn btn-primary btn-sm'>Profile</button>
-          <button onClick={() => removeFromCohort(student.student.id, cohort._id)} className='btn btn-danger btn-sm' >Remove</button>
+          {currentUser.role === "SuperAdmin" && <button onClick={() => removeFromCohort(student.student.id, cohort._id)} className='btn btn-danger btn-sm' >Remove</button>}
         </div>
       </>
       ))

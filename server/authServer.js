@@ -90,6 +90,8 @@ const CohortSchema = new mongoose.Schema({
   cohortSubject: String,
   adminID: String, // Auto set to _id of current user
   instructorID: String,
+  instructorName: String,
+  instructorProfilePhoto: String,
   dateRange: {
     startDate: Date,
     endDate: Date

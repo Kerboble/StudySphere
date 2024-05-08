@@ -22,7 +22,8 @@ import StudentProfile from './components/StudentProfile';
 import TeacherProfile from './components/TeacherProfile';
 import DiscussionBoard from './components/DiscussionBoard';
 import Post from './components/Post';
-
+import StudentDashboard from './components/StudentDashboard';
+import StudentCourses from './components/StudentCourses';
 
 
 const App = () => {
@@ -58,7 +59,9 @@ const App = () => {
             <Route path="teacherprofile" element={<TeacherProfile />}/>
             <Route path="cohortfiles" element={<CohortFiles />}/>
             <Route path='discussionboard' element={<DiscussionBoard />}/> 
-            <Route path='post' element={<Post />}/> 
+            <Route path='post' element={<Post />}/>
+            <Route path="dashboard" element={<StudentDashboard />}/>
+            <Route path="courses" element={<StudentCourses />}/>
           </Route>
           <Route path="landing" element={<LandingPage />} />
           <Route path='confirmation/:token' element={<EmailConfirmation />} />
