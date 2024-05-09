@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import defaultCohortPhoto from "../img/coursephoto.jpg"
@@ -16,7 +16,7 @@ function StudentCourses() {
     const [users, refreshData, cohorts] = useOutletContext();
     const {setCohort} = useContext(CohortContext);
     const Navigate = useNavigate();
-
+    const instructor = [];
 
 
     const courseOverView = (cohort) => {
@@ -44,12 +44,11 @@ function StudentCourses() {
                             <h2>{cohort.cohortName}</h2>
                         </div>
                         <div className="course-description">
-                            <p>Course Description will go here, needs to be implemented in the backend</p>
+                            <p>{cohort.description}</p>
                         </div>
                         <div className="course-footers">
                             <div className="course-tags">
-                                <p>Tag</p>
-                                <p>Tag</p>
+                              {cohort.tags.map(tag => <p>{tag}</p>)}
                             </div>
                             <button onClick={() => courseOverView(cohort)} className='btn btn-primary'>
                                 <img src={arrow} alt="" />
@@ -82,28 +81,29 @@ function StudentCourses() {
     : null;
 
    
-    const showMyCoursesInstructors = cohorts
-    ? cohorts.reduce((instructors, cohort) => {
-        if (cohort.students) {
-          const studentIds = cohort.students.map(student => student.student.id);
-          if (studentIds.includes(currentUser._id)) {
-            const instructorID = cohort.instructorID;
-            if (!instructors.includes(instructorID)) {
-              instructors.push(instructorID);
-            }
-          }
+    const showMyInstructors = cohorts
+  ? cohorts.map(cohort => {
+      if (cohort.students) {
+        const studentIds = cohort.students.map(student => student.student.id);
+        if (studentIds.includes(currentUser._id) && !instructor.includes(cohort.instructorID)) {
+          // Only render the instructor if currentUser._id is in studentIds and cohort.instructorID is not in instructor array
+          instructor.push(cohort.instructorID);
+          return (
+            <>
+            <div className='instructor'>
+              <img src={cohort.instructorProfilePhoto} />
+              <strong> {cohort.instructorName}</strong>
+            </div>
+            <hr />
+            </>
+          );
         }
-        return instructors;
-      }, []).map(instructorID => (
-        <>
-        <div className='instructor' key={instructorID}>
-          <img src={defaultTeacherPhoto} alt="Instructor" />
-          <strong> {instructorID}</strong>
-        </div>
-        <hr />
-        </>
-      ))
-    : null;
+      }
+      return null;
+    })
+  : null;
+
+
   
 
 
@@ -129,7 +129,7 @@ function StudentCourses() {
             </div>
             <h2>Instructors</h2>
             <div className="teachers">
-                {showMyCoursesInstructors}
+                {showMyInstructors}
             </div>
             <h2>Learning Process</h2>
             <div className="learning-process">

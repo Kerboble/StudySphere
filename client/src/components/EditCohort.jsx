@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 function EditCohort() {
   const { cohort } = useContext(CohortContext);  
+  console.log(cohort)
 
   const [formValues, setFormValues] = useState({
     cohortName: cohort.cohortName || '',

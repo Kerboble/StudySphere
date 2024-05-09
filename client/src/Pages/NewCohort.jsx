@@ -6,75 +6,74 @@ import { AuthContext } from '../context/authContext.jsx';
 import { useOutletContext } from 'react-router-dom';
 
 const NewCohort = () => {
-    const { currentUser } = useContext(AuthContext)
-    const navigate = useNavigate();
-    const [users, setRefreshData, cohorts] = useOutletContext();
+  const { currentUser } = useContext(AuthContext)
+  const navigate = useNavigate();
+  const [users, setRefreshData, cohorts] = useOutletContext();
 
 
-    const [cohortInfo, setCohortInfo] = useState({
+  const [cohortInfo, setCohortInfo] = useState({
     cohortName: '',
     cohortSubject: 'math',
-    adminID: '',
+    adminID: currentUser._id,
+    cohortPhoto: '',
     instructorID: '',
+    instructorName: '',
+    instructorProfilePhoto: '',
+    description: '',
+    tags: [], // Initialize tags as an empty array
     dateRange: {
       startDate: '',
       endDate: ''
     },
     cohortFiles: {
-        readingMaterial: [],
-        assignments: [],
-        tests: []
+      readingMaterial: [],
+      assignments: [],
+      tests: []
     },
     providerID: '',
-    isLive: false
-    });
+    isLive: false,
+    students: [] // Initialize students as an empty array
+  });
 
-
-  const { cohortName, cohortSubject, adminID, instructorID, dateRange, cohortFiles, providerID, isLive } = cohortInfo;
-  
+  const { cohortName, cohortSubject, description, tags, dateRange, cohortFiles, providerID, isLive } = cohortInfo;
 
   const onChange = (e) => {
+    if (e.target.name === 'tags') {
+      const tagsArray = e.target.value.split(',').map(tag => tag.trim());
+      setCohortInfo({ ...cohortInfo, tags: tagsArray });
+    } else {
       setCohortInfo({ ...cohortInfo, [e.target.name]: e.target.value });
+    }
   };
 
   const onChangeDate = (e) => {
-    setCohortInfo(oldArr => ({ // Using the old array you add any files to reading material
-      ...oldArr, 
+    setCohortInfo(oldArr => ({
+      ...oldArr,
       dateRange: {
-          ...oldArr.dateRange, [e.target.name]: e.target.value
+        ...oldArr.dateRange, [e.target.name]: e.target.value
       }
-      }))};
-  
-  useEffect(() => {
-    // Set the admin ID to user creating cohort
-    setCohortInfo(oldArr => ({ 
-      ...oldArr, 
-      adminID: currentUser._id
-      }))
-  }, [currentUser._id])
-
+    }));
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-      try {
-        const res = await axios.post('http://localhost:4000/newCohort', cohortInfo);
-        setRefreshData(prev => prev + 1)
-      } catch (err) {
-        console.error('Cohort creation error:', err.response);
-      }
+    try {
+      const res = await axios.post('http://localhost:4000/newCohort', cohortInfo);
+      setRefreshData(prev => prev + 1)
+    } catch (err) {
+      console.error('Cohort creation error:', err.response);
+    }
   };
 
-
-  // Handling adding files
   const onFileChange = (e) => {
     const reader = new FileReader();
     reader.onload = () => {
-      setCohortInfo(oldArr => ({ // Using the old array you add any files to reading material
-        ...oldArr, 
+      setCohortInfo(oldArr => ({
+        ...oldArr,
         cohortFiles: {
-            ...oldArr.cohortFiles, readingMaterial: [...oldArr.cohortFiles.readingMaterial, reader.result] 
+          ...oldArr.cohortFiles, readingMaterial: [...oldArr.cohortFiles.readingMaterial, reader.result]
         }
-        }));
+      }));
     };
     reader.readAsDataURL(e.target.files[0]);
   };
@@ -100,6 +99,14 @@ const NewCohort = () => {
                   <option value="tech">IT</option>
                 </select>
               </div>
+              <div className="inputWrapper">
+                <label htmlFor="description">Description:</label>
+                <textarea id="description" name="description" value={description} onChange={e => onChange(e)} required />
+              </div>
+              <div className="inputWrapper">
+                <label htmlFor="tags">Tags (comma separated):</label>
+                <input type="text" id="tags" name="tags" value={tags} onChange={e => onChange(e)} />
+              </div>
             </div>
             <div className='inputWrapper'>
               <label htmlFor='file' className='files-input'> Cohort Files</label>
@@ -122,8 +129,8 @@ const NewCohort = () => {
               </div>
             </div>
             <div className="inputWrapper">
-                <label htmlFor="provider">Provider ID:</label>
-                <input type="text" id="providerID" name="providerID" value={providerID} onChange={e => onChange(e)} />
+              <label htmlFor="provider">Provider ID:</label>
+              <input type="text" id="providerID" name="providerID" value={providerID} onChange={e => onChange(e)} />
             </div>
             <button className="btn btn-primary">Create Cohort</button>
           </form>

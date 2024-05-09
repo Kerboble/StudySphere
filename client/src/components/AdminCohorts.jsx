@@ -72,7 +72,7 @@ function AdminCohorts() {
 
     const displayTeachers = filteredTeachers?.map(teacher => (
         <option key={teacher._id} value={teacher._id}>
-            Username: {teacher.username}, ID: {teacher._id}
+             Username: {teacher.username}, ID: {teacher._id}
         </option>
     ));
 

@@ -6,6 +6,7 @@ import { useOutletContext } from 'react-router-dom'
 import defaultCohortPhoto from "../img/teamwork(1).png"
 import { CohortContext } from '../context/cohortContext'
 
+
 function TeacherProfile() {
     const [users, refreshData, cohorts] = useOutletContext();
     const {teacher} = useContext(TeacherContext)
@@ -44,7 +45,7 @@ function TeacherProfile() {
             <hr style={{width:"99%"}}/>
         </div>
         <div className="cohorts">
-            <strong>Classes</strong>
+            <strong>Courses</strong>
             <strong style={{marginTop:"20px"}}>Institute</strong>
             <p>BVT</p>
             <hr style={{width:"99%"}}/>
@@ -67,7 +68,7 @@ function TeacherProfile() {
         </div>
     </div>
     <div className="academic-stats">
-        <h1>Cohorts</h1>
+        <h1>Courses</h1>
         <div className='display-cohorts'>
             {displayMyCourses}
         </div>

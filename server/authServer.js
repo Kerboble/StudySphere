@@ -89,9 +89,12 @@ const CohortSchema = new mongoose.Schema({
   cohortName: String,
   cohortSubject: String,
   adminID: String, // Auto set to _id of current user
+  cohortPhoto: String,
   instructorID: String,
   instructorName: String,
   instructorProfilePhoto: String,
+  description: String,
+  tags: Array,
   dateRange: {
     startDate: Date,
     endDate: Date
@@ -418,12 +421,12 @@ app.post('/login', async (req, res) => {
 // Creating a cohort in the database
 app.post('/newCohort', async (req, res) => {
   try {
-    const { cohortName, cohortSubject, adminID, instructorID, dateRange, cohortFiles, providerID, isLive} = req.body;
+    const { cohortName, cohortSubject, adminID, instructorID, dateRange, cohortFiles, providerID, isLive, description, tags} = req.body;
     const existingCohort = await Cohort.findOne({ cohortName }); // Check if user already exists in the database
     if (existingCohort) { // If cohort already exists, return error
       return res.status(400).send('Cohort already exists');
     }
-    const newCohort = new Cohort({ cohortName, cohortSubject, adminID, instructorID, dateRange, cohortFiles, providerID, isLive}); // Create a new User document
+    const newCohort = new Cohort({ cohortName, cohortSubject, adminID, instructorID, dateRange, cohortFiles, providerID, isLive, description, tags}); // Create a new User document
     await newCohort.save(); // Save the new cohort to the database
     res.status(201).send('Cohort successfully created'); // Send success response
   } catch (error) {
@@ -585,11 +588,12 @@ app.delete('/delete-user', async (req, res) => {
 
 //assigning teacher to cohort 
 app.post("/assign-teacher", async (req, res) => {
-  const { teacherID, cohortID } = req.body;
+  const { teacherID, cohortID} = req.body;
   try {
+    const user = await User.findById({_id:teacherID})
     const cohort = await Cohort.findOne({ _id: cohortID });
     if (cohort) {
-      await Cohort.updateOne({ _id: cohortID }, { $set: { instructorID: teacherID } });
+      await Cohort.updateOne({ _id: cohortID }, { $set: { instructorID: teacherID, instructorName:user.username, instructorProfilePhoto:user.profilePicture} });
       res.status(200).send("Teacher assigned successfully.");
     } else {
       res.status(404).send("Cohort not found.");

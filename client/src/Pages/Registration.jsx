@@ -14,14 +14,15 @@ const Registration = () => {
     phoneNumber: '',
     password: '',
     confirmPassword: '',
-    profilePicture: null // Initialize profilePicture as null
+    profilePicture: null, // Initialize profilePicture as null
+    role: 'student' // Default role is 'student'
   });
 
   const [avatar, setAvatar] = useState('');
   const [userAvailability, setUserAvailability] = useState(null);
   const [showPasswordStrength, setShowPasswordStrength] = useState(false);
   const navigate = useNavigate();
-  const { username, email, phoneNumber, password, confirmPassword, profilePicture } = formData;
+  const { username, email, phoneNumber, password, confirmPassword, profilePicture, role } = formData;
 
   const passwordStrengthStyle = {
     color:"#023E8A",
@@ -62,6 +63,7 @@ const Registration = () => {
     formDataToSend.append('phoneNumber', phoneNumber);
     formDataToSend.append('password', password);
     formDataToSend.append('profilePicture', profilePicture);
+    formDataToSend.append('role', role); // Append role to formData
 
     try {
       const res = await axios.post('http://localhost:4000/register', formDataToSend);
@@ -129,6 +131,28 @@ const Registration = () => {
                   onChange={onFileChange}
                   style={{ display: 'none', cursor: 'pointer' }}
                 />
+              </label>
+            </div>
+            <div className='role-selection'>
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="student"
+                  checked={role === 'student'}
+                  onChange={onChange}
+                />
+                Student
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="teacher"
+                  checked={role === 'teacher'}
+                  onChange={onChange}
+                />
+                Instructor
               </label>
             </div>
             <button type='submit'>Register</button>
