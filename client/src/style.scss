@@ -973,20 +973,23 @@ form {
 
 
   .my-cohort {
-    height: 31vh;
-    width: auto;
+    height: auto;
+    width: 30vh;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-    align-content: center;
     border-radius: 5px;
     padding: 1em;
     margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-wrap: wrap;
+    
 
     img {
       height: 15vh;
-      width: auto;
+      width: 100%;
+      align-self: center;
+      object-fit: contain;
     }
   }
 }
@@ -1417,37 +1420,54 @@ form {
 
 //student courses 
 
-.student-courses-container{
+.student-courses-container {
   display: flex;
   flex-direction: row;
   height: auto;
+  width: 100%;
 
   .left-side {
-    height: auto;
-    width: 100%;
-    flex: 3;
+    height: 100%;
+    max-width: 70%; /* Specify a maximum width */
+    flex: 1; /* Adjust flex property */
     display: flex;
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
 
-
     .courses-filter {
-      flex: 1;
       width: 100%;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: flex-start;
       padding-left: 2vh;
       padding-right: 2vh;
+      cursor: pointer;
+      overflow-x: auto; /* Allow horizontal scrolling for overflow */
+      white-space: nowrap; /* Prevent wrapping of tags */
+      gap: 1vh;
 
+      p {
+        height: auto;
+        padding: 1vh;
+        color: #004c96;
+        border-radius: 5px;
+        border: 1px solid rgb(221, 217, 217);
+        margin-right: 1vh; /* Adjust margin for spacing between tags */
+      }
+
+      .selected-tag {
+        background-color: #004c96;
+        color: white;
+        cursor: pointer;
+      }
     }
 
     .courses {
-      flex: 11;
+      flex: 1; /* Adjust flex property */
       padding: 2vh;
       height: auto;
 
-      .my-course{
+      .my-course {
         height: auto;
         width: 100%;
         box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
@@ -1456,23 +1476,31 @@ form {
         gap: 5vh;
         border-radius: 20px;
         margin-bottom: 20px;
+        position: relative;
 
-        .right{
+        .course-description{
+          min-width: 100%;
+          
+        }
+
+        .right {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
         }
 
-        .course-footers{
+        .course-footers {
           display: flex;
           width: 100%;
           justify-content: space-between;
 
-          .course-tags{
+
+          .course-tags {
             display: flex;
             gap: 1vh;
+            flex-wrap: wrap;
 
-            p{
+            p {
               height: auto;
               box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
               padding: 1vh;
@@ -1480,21 +1508,23 @@ form {
               color: white;
               border-radius: 5px;
             }
-
           }
 
-          button{
-            height: 50px;
+          button {
+            height: 43px;
             width: auto;
+            position: absolute;
+            bottom: 35px;
+            right: 10px;
 
-            img{
+            img {
               height: 25px;
               width: auto;
             }
           }
         }
 
-        img{
+        img {
           height: 20vh;
           width: auto;
           border-radius: 10px;
@@ -1511,22 +1541,20 @@ form {
     flex-direction: column;
     padding: 50px;
     gap: 2vh;
-    
 
-    h1{
+    h1 {
       text-align: c;
     }
 
-    .calender{
+    .calender {
       flex: 1;
       height: auto;
       width: 100%;
       box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
       border-radius: 20px;
-
     }
 
-    .teachers{
+    .teachers {
       flex: 2;
       box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
       border-radius: 20px;
@@ -1537,44 +1565,98 @@ form {
       align-items: center;
 
       hr {
-        width: 70%;
+        width: 100%;
         padding: 0;
         margin: 5px;
         margin-left: 50px;
       }
 
-
-      .instructor{
+      .instructor {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 1vh;
+        gap: 2vh;
+        justify-content: flex-start;
+        width: 100%;
 
-        img{
+        img {
           height: 50px;
           width: 50px;
           border-radius: 50%;
         }
       }
-
     }
 
-    .learning-process{
-      flex: 1;
+    .learning-progress {
       box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
       border-radius: 20px;
       width: 100%;
       height: auto;
 
-      .course-progress{
+      .course-progress {
         padding: 20px;
         display: flex;
         flex-direction: column;
 
-        strong{
+        strong {
           margin-bottom: 10px;
         }
       }
     }
   }
+
+  /* Add these styles to your CSS file */
+.react-calendar {
+  width: 100%;
+  max-width: 300px; /* Adjust the maximum width as needed */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.react-calendar__tile {
+  padding: 0.5rem;
+}
+
+.react-calendar__tile--now {
+  background-color: #eaf5ff; /* Highlight today's date */
+}
+
+.react-calendar__tile--active {
+  background-color: #b3d9ff; /* Highlight selected date */
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #ccc; /* Dim neighboring month's days */
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  color: #666; /* Weekday labels color */
+}
+
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #f5f5f5; /* Navigation background color */
+  border-bottom: 1px solid #ccc;
+}
+
+.react-calendar__navigation__label {
+  font-weight: bold;
+}
+
+.react-calendar__navigation__arrow {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.react-calendar__navigation__arrow:hover {
+  color: #004c96; /* Hover color for navigation arrows */
+}
+
+
 }
