@@ -268,7 +268,6 @@ app.post('/upload', upload.single('profilePicture'), async (req, res) => {
 
 // User Registration
 app.post('/register', upload.single('profilePicture'), async (req, res) => {
-  console.log('ping')
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
     const { username, email,  phoneNumber, password, refreshToken, role, profilePicture} = req.body;

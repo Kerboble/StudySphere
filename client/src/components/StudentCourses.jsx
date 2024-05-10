@@ -146,6 +146,7 @@ function StudentCourses() {
               </p>
             ))}
         </div>
+          <hr />
         <div className="courses">{showMyCourses}</div>
       </div>
       <div className="right-side">

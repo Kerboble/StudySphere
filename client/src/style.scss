@@ -1434,6 +1434,11 @@ form {
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
 
+    hr{
+      margin: 0;
+      padding: 0;
+    }
+
     .courses-filter {
       width: 100%;
       display: flex;
@@ -1445,19 +1450,18 @@ form {
       overflow-x: auto; /* Allow horizontal scrolling for overflow */
       white-space: nowrap; /* Prevent wrapping of tags */
       gap: 1vh;
-
+      align-content: center;
       p {
         height: auto;
         padding: 1vh;
-        color: #004c96;
         border-radius: 5px;
-        border: 1px solid rgb(221, 217, 217);
         margin-right: 1vh; /* Adjust margin for spacing between tags */
       }
 
       .selected-tag {
-        background-color: #004c96;
-        color: white;
+        padding: 1vh;
+        color: #004c96;
+        text-decoration: underline;
         cursor: pointer;
       }
     }
@@ -1502,9 +1506,8 @@ form {
 
             p {
               height: auto;
-              box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
               padding: 1vh;
-              background-color: rgb(105, 105, 105);
+              background-color: #a7a9ab;
               color: white;
               border-radius: 5px;
             }
@@ -1607,11 +1610,12 @@ form {
 
   /* Add these styles to your CSS file */
 .react-calendar {
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
   width: 100%;
   max-width: 300px; /* Adjust the maximum width as needed */
-  border: 1px solid #ccc;
   border-radius: 8px;
   font-family: Arial, sans-serif;
+  border: none;
 }
 
 .react-calendar__tile {
