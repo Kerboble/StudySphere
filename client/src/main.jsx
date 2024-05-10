@@ -7,6 +7,7 @@ import './style.scss';
 import { StudentContextProvider } from './context/studentContext.jsx';
 import { TeacherContextProvider } from './context/teacherContext.jsx';
 import { PostContextProvider } from './context/postContext';
+import './login.scss'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
