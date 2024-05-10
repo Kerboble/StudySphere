@@ -229,9 +229,6 @@ margin: 0;
   }
 }
 
-form {
-  max-width: 40vw;
-}
 
 .formContainer {
     flex: 3;
@@ -1663,3 +1660,71 @@ form {
 }
 }
 
+.edit-student-container {
+  height: auto;
+  width: 100%;
+  padding: 20px;
+
+  .edit-student-wrapper {
+    display: flex;
+    height: auto;
+    padding: 50px;
+    border-radius: 20px;
+    justify-content: center;
+    @include tablet {
+      display: flex;
+      flex-direction: column;
+    }
+
+    
+
+    .add-photo{
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 30%;
+      flex: 1;
+      
+
+      button{
+        margin: 5px;
+      }
+    }
+    
+
+    img{
+      height: 200px;
+      width: 200px;
+      border-radius: 20px;
+    }
+
+    #file{
+      display: none;
+    }
+  }
+
+  .input-container{
+    height: auto;
+    flex: 3;
+    
+    #address{
+      height: 20vh;
+      width: 25vw;
+    }
+    
+    input{
+      padding: 10px;
+      width: 25vw;
+    }
+  }
+  
+}
+
+
+.edit-cohort-container {
+  padding: 10px;
+  
+  form{
+    padding: 50px;
+  }
+}

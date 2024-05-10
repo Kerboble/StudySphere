@@ -53,7 +53,7 @@ function EditCohort() {
 
 
   return (
-    <div className="container">
+    <div className="edit-cohort-container">
       <h2>Edit Cohort</h2>
       <form onSubmit={submit}>
         <div className="mb-2">

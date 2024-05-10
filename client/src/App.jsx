@@ -20,6 +20,7 @@ import Post from './components/Post';
 import StudentDashboard from './components/StudentDashboard';
 import StudentCourses from './components/StudentCourses';
 import LoginRegistration from './Pages/RegisterLogin';
+import EditStudent from './components/EditStudent';
 
 const App = () => {
   const { currentUser, setIsLoggedIn } = useContext(AuthContext);
@@ -48,7 +49,7 @@ const App = () => {
             <Route path="adminsteachers" element={<SuperAdminRoute><AdminTeachers /></SuperAdminRoute>}/>
             <Route path="admincohorts" element={<SuperAdminRoute><AdminCohorts /></SuperAdminRoute>}/>
             <Route path="editCohort" element={<EditCohort />}/>
-            <Route path="studentprofile" element={<StudentProfile />}/>
+            <Route path="studentprofile" element={<StudentProfile />} />
             <Route path="teacherprofile" element={<TeacherProfile />}/>
             <Route path="teacherprofile" element={<TeacherProfile />}/>
             <Route path="cohortfiles" element={<CohortFiles />}/>
@@ -56,6 +57,7 @@ const App = () => {
             <Route path='post' element={<Post />}/>
             <Route path="dashboard" element={<StudentDashboard />}/>
             <Route path="courses" element={<StudentCourses />}/>
+            <Route path="edit-student" element={<EditStudent />} />
           </Route>
         </Route>
       </Routes>

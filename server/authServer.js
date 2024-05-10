@@ -60,6 +60,10 @@ mongoose.connect(process.env.MONGO_LINK, {
 
 // Define User Schema
 const UserSchema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  dob: String,
+  address: String,
   username: String,
   password: String,
   refreshToken: { 
@@ -337,7 +341,6 @@ app.post('/register-admin', async (req, res) => {
     }
   }
   
-    
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
     const newUser = new User({ username, email,  phoneNumber, password: hashedPassword, refreshToken,  role, isEmailConfirmed:true}); // Create a new User document
     await newUser.save(); // Save the new user to the database

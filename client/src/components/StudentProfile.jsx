@@ -106,7 +106,7 @@ function StudentProfile() {
                 </div>
                 <div style={{marginTop:"20px"}} className="add-to-cohort">
                     <button className="btn btn-primary" onClick={openModal}>Add to Cohort</button>
-                    <button className='btn btn-secondary'>Edit</button>
+                    <button onClick={() => Navigate("../edit-student")} className='btn btn-secondary'>Edit</button>
                     <button onClick={() => Navigate(-1)} className='btn btn-success'>Done</button>
                 </div>
             </div>
@@ -116,12 +116,6 @@ function StudentProfile() {
                         {showMyCourses}
                     </div>
             </div>
-            
-            
-
-
-
-
             {modalVisible && (
                 <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
                     <div className="modal-dialog" role="document">
