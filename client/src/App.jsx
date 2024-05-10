@@ -19,7 +19,7 @@ import DiscussionBoard from './components/DiscussionBoard';
 import Post from './components/Post';
 import StudentDashboard from './components/StudentDashboard';
 import StudentCourses from './components/StudentCourses';
-
+import LoginRegistration from './Pages/RegisterLogin';
 
 const App = () => {
   const { currentUser, setIsLoggedIn } = useContext(AuthContext);
@@ -41,8 +41,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          <Route index element={<Registration />} />
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={<LoginRegistration/>} />
           <Route path="home" element={<ProtectedRoute><Home /></ProtectedRoute>}>
             <Route path="admindashboard" element={<SuperAdminRoute> <AdminDashboard /> </SuperAdminRoute>}/>  
             <Route path="adminstudents" element={<SuperAdminRoute><AdminStudents /></SuperAdminRoute>}/>
