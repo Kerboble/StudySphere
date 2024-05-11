@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useOutletContext } from 'react-router-dom'
 import defaultCohortPhoto from "../img/teamwork(1).png"
 import { CohortContext } from '../context/cohortContext'
-
+import { AuthContext } from '../context/authContext'
 
 function TeacherProfile() {
     const [users, refreshData, cohorts] = useOutletContext();
@@ -13,6 +13,7 @@ function TeacherProfile() {
     console.log(teacher)
     const Navigate = useNavigate();
     const {setCohort} = useContext(CohortContext);
+    const {currentUser} = useContext(AuthContext);
 
     const myCourses= cohorts ? cohorts.filter(cohort => cohort.instructorID === teacher._id) : null;
     console.log(myCourses)
@@ -60,7 +61,7 @@ function TeacherProfile() {
             <p>{teacher.email}</p>
         </div>
         <div style={{marginTop:"20px"}} className="add-to-cohort">
-            <button className='btn btn-secondary'>Edit</button>
+            {currentUser._id === teacher._id  || currentUser.role === "SuperAdmin" && <button onClick={() => Navigate('../edit-teacher')} className='btn btn-secondary'>Edit</button>}
             <button onClick={() => {
                 localStorage.removeItem('teacher')
                 Navigate(-1)}} 

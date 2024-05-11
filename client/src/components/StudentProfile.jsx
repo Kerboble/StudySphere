@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import defaultCohortPhoto from "../img/teamwork(1).png"
 import { CohortContext } from '../context/cohortContext';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { AuthContext } from '../context/authContext';
 
 
 function StudentProfile() {
@@ -17,6 +18,7 @@ function StudentProfile() {
     const Navigate = useNavigate();
     const [selectedCohort, setSelectedCohort] = useState(null);
     const {setCohort} = useContext(CohortContext);
+    const {currentUser} = useContext(AuthContext);
 
     const listCohorts = cohorts ? cohorts.map(cohort => (
         <option key={cohort._id} value={cohort._id}>{cohort.cohortName}</option>
@@ -106,7 +108,8 @@ function StudentProfile() {
                 </div>
                 <div style={{marginTop:"20px"}} className="add-to-cohort">
                     <button className="btn btn-primary" onClick={openModal}>Add to Cohort</button>
-                    <button onClick={() => Navigate("../edit-student")} className='btn btn-secondary'>Edit</button>
+                    {currentUser._id === student._id  || currentUser.role === "SuperAdmin" && 
+                    <button onClick={() => Navigate("../edit-student")} className='btn btn-secondary'>Edit</button>}
                     <button onClick={() => Navigate(-1)} className='btn btn-success'>Done</button>
                 </div>
             </div>

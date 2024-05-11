@@ -21,6 +21,7 @@ import StudentDashboard from './components/StudentDashboard';
 import StudentCourses from './components/StudentCourses';
 import LoginRegistration from './Pages/RegisterLogin';
 import EditStudent from './components/EditStudent';
+import EditTeacher from './components/EditTeacher';
 
 const App = () => {
   const { currentUser, setIsLoggedIn } = useContext(AuthContext);
@@ -58,6 +59,7 @@ const App = () => {
             <Route path="dashboard" element={<StudentDashboard />}/>
             <Route path="courses" element={<StudentCourses />}/>
             <Route path="edit-student" element={<EditStudent />} />
+            <Route path="edit-teacher" element={<EditTeacher />} />
           </Route>
         </Route>
       </Routes>

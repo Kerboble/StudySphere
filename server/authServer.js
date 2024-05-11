@@ -607,7 +607,7 @@ app.post("/assign-teacher", async (req, res) => {
 });
 
 
-app.put("/edit-cohort", async (req, res) => {
+app.put("/edit-cohort", upload.single('profilePicture'), async (req, res) => {
   const { cohortName, cohortSubject, startDate, endDate, adminID, instructorID, providerID, isLive, cohortID } = req.body;
   try {
     const cohort = await Cohort.findById(cohortID);
@@ -617,6 +617,74 @@ app.put("/edit-cohort", async (req, res) => {
     } else {
       res.status(404).json({ message: "Cohort not found" });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+//edit users information 
+
+app.put('/edit-user', upload.single('profilePicture'), async (req, res) => {
+  const { firstName, lastName, dob, email, phoneNumber, address, role, id, profilePicture} = req.body;
+  try {
+    // Check if the user exists
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Upload profile picture to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
+
+    // Update user information
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { 
+        firstName, 
+        lastName, 
+        dob, 
+        email, 
+        phoneNumber, 
+        address, 
+        profilePicture: result.secure_url, 
+        role 
+      },
+      { new: true } // Return the updated user
+    );
+
+    res.status(200).json({ message: "User was successfully updated", user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+//handle user-edit if no image is being uploaded
+app.put('/edit-user-no-photo', async (req, res) => {
+  const { firstName, lastName, dob, email, phoneNumber, address, role, id} = req.body;
+  console.log(id)
+  try {
+    // Check if the user exists
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    // Update user information
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { 
+        firstName, 
+        lastName, 
+        dob, 
+        email, 
+        phoneNumber, 
+        address, 
+        role 
+      },
+      { new: true } // Return the updated user
+    );
+    res.status(200).json({ message: "User was successfully updated", user: updatedUser });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { StudentContext } from '../context/studentContext';
 import user from "../img/user(2).png";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { TeacherContext } from '../context/teacherContext'
 import transfer from "../img/transfer-file.gif"
 
-function EditStudent() {
-    const { student } = useContext(StudentContext);
+
+function EditTeacher() {
+    const { teacher } = useContext(TeacherContext);
     const [avatar, setAvatar] = useState('');
     const [formData, setFormData] = useState({
         firstName: '',
@@ -16,12 +16,13 @@ function EditStudent() {
         phoneNumber: '',
         address: '',
         profilePicture: null, // Initialize profilePicture as null
-        role: 'student' // Default role is 'student'
+        role: 'teacher' // Default role is 'student'
     });
-    const id = student._id;
-    const Navigate = useNavigate();
-    const { firstName, lastName, dob, email, phoneNumber, address, profilePicture, role } = formData;
+    const id = teacher._id;
     const [transferring, setTransferring] = useState(false)
+
+
+    const { firstName, lastName, dob, email, phoneNumber, address, profilePicture, role } = formData;
 
     const onFileChange = (e) => {
         const file = e.target.files[0];
@@ -56,8 +57,8 @@ function EditStudent() {
             }
         } else {
             try {
-                // Construct FormData for request with profilePicture
                 setTransferring(true)
+                // Construct FormData for request with profilePicture
                 const formDataToSend = new FormData();
                 formDataToSend.append('firstName', firstName);
                 formDataToSend.append('lastName', lastName);
@@ -67,7 +68,7 @@ function EditStudent() {
                 formDataToSend.append('address', address);
                 formDataToSend.append('profilePicture', profilePicture); // Append the profile picture file
                 formDataToSend.append('role', role);
-                formDataToSend.append('id', student._id);
+                formDataToSend.append('id', teacher._id);
                 console.log(formDataToSend)
 
     
@@ -96,8 +97,8 @@ function EditStudent() {
                 <div className="add-photo">
                     <input onChange={onFileChange} type="file" name="file" id="file" />
                     {avatar && <img src={avatar} />}
-                    {!avatar && student.profilePicture && <img src={student.profilePicture} alt="" />}
-                    {!avatar && !student.profilePicture && <img src={user} alt="" />}
+                    {!avatar && teacher.profilePicture && <img src={teacher.profilePicture} alt="" />}
+                    {!avatar && !teacher.profilePicture && <img src={user} alt="" />}
                     <div className="photo-buttons">
                         <label htmlFor='file' className='btn btn-primary' >Choose file</label>
                         <button onClick={() => removeFile()} className='btn btn-danger'>Remove</button>
@@ -207,4 +208,4 @@ function EditStudent() {
     );
 }
 
-export default EditStudent;
+export default EditTeacher;

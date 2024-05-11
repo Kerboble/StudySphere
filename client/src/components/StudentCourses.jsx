@@ -55,8 +55,7 @@ function StudentCourses() {
                       {cohort.tags.map((tag) => (
                         <p
                           key={tag}
-                          className={selectedTag === tag ? 'selected-tag' : ''}
-                          onClick={() => handleTagClick(tag)}
+                          className="tags"
                         >
                           {tag}
                         </p>
