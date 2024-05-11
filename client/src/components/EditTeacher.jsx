@@ -3,6 +3,7 @@ import user from "../img/user(2).png";
 import axios from 'axios';
 import { TeacherContext } from '../context/teacherContext'
 import transfer from "../img/transfer-file.gif"
+import { useNavigate } from 'react-router-dom';
 
 
 function EditTeacher() {
@@ -20,7 +21,7 @@ function EditTeacher() {
     });
     const id = teacher._id;
     const [transferring, setTransferring] = useState(false)
-
+    const Navigate = useNavigate()
 
     const { firstName, lastName, dob, email, phoneNumber, address, profilePicture, role } = formData;
 
@@ -69,9 +70,7 @@ function EditTeacher() {
                 formDataToSend.append('profilePicture', profilePicture); // Append the profile picture file
                 formDataToSend.append('role', role);
                 formDataToSend.append('id', teacher._id);
-                console.log(formDataToSend)
 
-    
                 // Send formData to endpoint for update with profilePicture
                 const res = await axios.put('http://localhost:4000/edit-user', formDataToSend, {
                     headers: {
@@ -91,6 +90,7 @@ function EditTeacher() {
     return (
         <div className='edit-student-container'>
             <div className="edit-student-wrapper">
+            <button type='button' onClick={() => {Navigate(-1)}} className='btn btn-success'>Done</button>
                 {transferring && <img className='transferring' src={transfer}/> }
                 {!transferring && 
                 <>
@@ -197,8 +197,7 @@ function EditTeacher() {
                                 </div>
                             </div>
                         </div>
-                        <button onClick={() => {Navigate(-1)}} className='btn btn-secondary'>Done</button>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="submit" className="btn btn-primary">Submit</button>
                     </div>
                 </form>
                 </>

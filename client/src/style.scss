@@ -156,7 +156,7 @@ margin: 0;
     flex: 1;
     margin: 0;
     padding-top: 100px;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 5px 10px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;    
     border-radius: 0px 0px 20px 20px;
 
 
@@ -180,7 +180,7 @@ margin: 0;
       justify-content: center;
       border-radius: 0px 0px 20px 20px;
       margin-bottom: 20px;
-      box-shadow: rgba(0, 0, 0, 0.18) 0px 5px 10px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;     
       flex: 1;
       flex-direction: row;
       
@@ -384,7 +384,7 @@ margin: 0;
   display: flex;
   align-items: center;
   background-color: white;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;  
   justify-content: space-between;
 
   input {
@@ -394,6 +394,7 @@ margin: 0;
     background-color: #f0f2f3;
     border-radius: 10px;
     height: 35px;
+    text-align: center;
   }
 
   .nav-user-info {
@@ -525,7 +526,7 @@ margin: 0;
   padding: 1rem;
   border-radius: 0.5rem;
   margin: 20px;
-  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;  
   padding: 20px;
   text-wrap: wrap;
 }
@@ -625,7 +626,7 @@ margin: 0;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;  
   max-width: 500px; /* Set the maximum width of the modal */
   width: 100%; /* Make the modal responsive */
   gap:20px;
@@ -784,7 +785,7 @@ margin: 0;
       padding-bottom: 1rem; // Add some padding to the bottom to make space for scrollbar
       width: 50%;
       border-radius: 5px;
-      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
       padding: 20px;
 
       .cohort-students {
@@ -793,7 +794,7 @@ margin: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;        
         padding: 1vh;
         margin: 0;
         gap: 2px;
@@ -817,7 +818,7 @@ margin: 0;
       flex: 2;
       height: 50vh;
       width: auto;
-      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;      
       border-radius: 5px;
       
       .instructor-photo{
@@ -836,7 +837,7 @@ margin: 0;
     flex-direction: column;
     height: 15vh;
     width: 15vw;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;    
     justify-content: center;
     align-items: center;
     border-radius: 5px;
@@ -878,8 +879,7 @@ margin: 0;
   .student-information, .teacher-information {
     height: auto;
     width: auto;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -941,7 +941,7 @@ margin: 0;
   .academic-stats {
     height: 80vh;
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;    
     border-radius: 5px;
     margin-right: 20px;
     overflow-y: auto;
@@ -972,7 +972,7 @@ margin: 0;
   .my-cohort {
     height: auto;
     width: 30vh;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;    
     border-radius: 5px;
     padding: 1em;
     margin: 0;
@@ -1049,7 +1049,7 @@ margin: 0;
     padding: 2rem;
     height: auto;
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;    
     border-radius: 10px;
     padding: 50px;
     margin-bottom: 10px;
@@ -1130,7 +1130,7 @@ margin: 0;
     top: -10px;
     width: 150px;
     max-height:25px;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;    
     border-radius: 5px;
     background-color: white;
     text-wrap: nowrap;
@@ -1264,7 +1264,7 @@ margin: 0;
   .comment-wrapper {
     width: auto;
     height: auto; /* Adjust height to grow as content increases */
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     border-radius: 5px;
   
     .comment {
@@ -1319,7 +1319,7 @@ margin: 0;
           .more-options{
             flex-direction: column;
             border-radius: 10px;
-            box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;            
             justify-content: center;
             position: absolute;
             right: 0;
@@ -1430,8 +1430,7 @@ margin: 0;
     flex: 1; /* Adjust flex property */
     display: flex;
     flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     hr{
       margin: 0;
       padding: 0;
@@ -1472,7 +1471,7 @@ margin: 0;
       .my-course {
         height: auto;
         width: 100%;
-        box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;        
         padding: 20px;
         display: flex;
         gap: 5vh;
@@ -1551,13 +1550,13 @@ margin: 0;
       flex: 1;
       height: auto;
       width: 100%;
-      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;      
       border-radius: 20px;
     }
 
     .teachers {
       flex: 2;
-      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;      
       border-radius: 20px;
       display: flex;
       flex-direction: column;
@@ -1589,7 +1588,7 @@ margin: 0;
     }
 
     .learning-progress {
-      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;      
       border-radius: 20px;
       width: 100%;
       height: auto;
@@ -1608,7 +1607,7 @@ margin: 0;
 
   /* Add these styles to your CSS file */
 .react-calendar {
-  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;  
   width: 100%;
   max-width: 300px; /* Adjust the maximum width as needed */
   border-radius: 8px;
@@ -1674,9 +1673,18 @@ margin: 0;
     padding: 50px;
     border-radius: 20px;
     justify-content: center;
+    position: relative;
     @include tablet {
       display: flex;
       flex-direction: column;
+    }
+
+    .btn-success{
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 35px;
+      width: 75px;
     }
 
     
@@ -1722,13 +1730,13 @@ margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
-     button{
+
+    button{
       height: 50px;
       width: 100px;
-      margin-top: 5vh;
       align-self: center;
-     }
+      margin-top: 1vh;
+    }
     
     #address{
       height: 20vh;
