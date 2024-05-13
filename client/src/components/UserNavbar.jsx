@@ -66,14 +66,8 @@ function UserNavbar() {
             Dashboard
             </NavLink>
          </div>
-         <div className="instructors">
+         <div className="courses">
             <NavLink to={"courses"} style={({ isActive }) => isActive ? activeStyles : unActiveStyles}> <img src={teachers} alt="" />Courses</NavLink>
-         </div>
-         <div className="student">
-            <NavLink to={"adminstudents"}  style={({ isActive }) => isActive ? activeStyles : unActiveStyles}> <img src={student} alt="" />Students</NavLink>
-         </div>
-         <div className="cohorts">
-            <NavLink to={"admincohorts"} style={({ isActive }) => isActive ? activeStyles : unActiveStyles}> <img src={cohort} alt="" />Cohorts</NavLink>
          </div>
          <button className='logout-btn' onClick={() => logout()}> <img src={logoutIcon} alt="" />Logout</button>
       </nav>
