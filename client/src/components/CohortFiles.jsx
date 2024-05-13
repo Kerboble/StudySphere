@@ -28,7 +28,10 @@ function CohortFiles() {
   const tests = cohort ? cohort.cohortFiles.tests : null;
   const teacherID = cohort ? cohort.instructorID : null;
 
-  console.log(cohort)
+  useEffect(() => {
+    refreshData(prev => prev + 1)
+    console.log('refreshed')
+  }, [])
 
   useEffect(() => {
     const fetchTeacher = async () => {

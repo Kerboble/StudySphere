@@ -4,9 +4,13 @@ import user from "../img/user(2).png";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import transfer from "../img/transfer-file.gif"
+import { AuthContext } from '../context/authContext';
+import { useOutletContext } from 'react-router-dom';
 
 function EditStudent() {
-    const { student } = useContext(StudentContext);
+    const { student, setStudent } = useContext(StudentContext);
+    const [users, setRefreshData] = useOutletContext();
+    const {setCurrentUser} = useContext(AuthContext);
     const [avatar, setAvatar] = useState('');
     const [formData, setFormData] = useState({
         firstName: '',
@@ -51,6 +55,13 @@ function EditStudent() {
                 setTimeout(() => {
                     setTransferring(false)
                 }, 1000);
+                localStorage.removeItem('currentUser')
+                localStorage.removeItem('student')
+                localStorage.setItem('student', JSON.stringify(res.data.user))
+                localStorage.setItem('currentUser', JSON.stringify(res.data.user))
+                setStudent(res.data.user)
+                setCurrentUser(res.data.user)
+                refreshData(prev => prev + 1)
             } catch (error) {
                 console.error('Error updating user without profile picture:', error);
             }

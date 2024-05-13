@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { checkAndRenewToken } from '../utilities/checkToken'
 
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -9,6 +10,8 @@ const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(existingUser ? JSON.parse(existingUser) : null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const localRefreshToken = localStorage.getItem('refreshToken');
+
+  
   useEffect(() => {
     const fetchData = async () => {
       if (currentUser !== null) {
@@ -33,6 +36,8 @@ const AuthProvider = ({ children }) => {
 
     fetchData();
   }, [existingUser]);
+
+  console.log(currentUser)
 
   return (
     <AuthContext.Provider value={{ currentUser, setCurrentUser, setIsLoggedIn }}>

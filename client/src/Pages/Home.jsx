@@ -16,7 +16,7 @@ function Home() {
 
   console.log(refreshData);
 
-  //localStorage.clear();
+  
   useEffect(() => {
     // Fetch cohorts data
     const fetchCohorts = async () => {

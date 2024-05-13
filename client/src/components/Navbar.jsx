@@ -5,6 +5,8 @@ import bell from "../img/bell.png"
 function Navbar() {
     const {currentUser } = useContext(AuthContext)
 
+    
+
   return (
     <nav className='top-navbar'>
         <input type="text" placeholder='search here....' />

@@ -27,14 +27,14 @@ const App = () => {
   const { currentUser, setIsLoggedIn } = useContext(AuthContext);
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
-      return <Navigate to="/login" />;
+      return <Navigate to="/" />;
     }
     return children;
   };
 
   const SuperAdminRoute = ({ children }) => {
     if(currentUser.role !== 'SuperAdmin'){
-      return <Navigate to="/login"/>;
+      return <Navigate to="/"/>;
     }
     return children
   };
@@ -43,7 +43,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          <Route path="login" element={<LoginRegistration/>} />
+          <Route index element={<LoginRegistration/>} />
           <Route path="home" element={<ProtectedRoute><Home /></ProtectedRoute>}>
             <Route path="admindashboard" element={<SuperAdminRoute> <AdminDashboard /> </SuperAdminRoute>}/>  
             <Route path="adminstudents" element={<SuperAdminRoute><AdminStudents /></SuperAdminRoute>}/>

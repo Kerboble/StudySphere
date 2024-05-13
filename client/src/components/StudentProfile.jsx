@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { StudentContext } from '../context/studentContext';
 import { useOutletContext } from 'react-router-dom';
 import axios from 'axios'
@@ -23,6 +23,11 @@ function StudentProfile() {
     const listCohorts = cohorts ? cohorts.map(cohort => (
         <option key={cohort._id} value={cohort._id}>{cohort.cohortName}</option>
     )) : null;
+
+    useEffect(() => {
+        refreshData(prev => prev + 1)
+        console.log('refreshed')
+      }, [])
 
     const handleAddToCohort = async () => {
         try {
@@ -78,9 +83,7 @@ function StudentProfile() {
         console.log(course)
     }
 
-    
-    //<button className="btn btn-primary" onClick={openModal}>Add to Cohort</button>
-
+    console.log(student._id === currentUser._id)
   
     
     return (
@@ -108,7 +111,7 @@ function StudentProfile() {
                 </div>
                 <div style={{marginTop:"20px"}} className="add-to-cohort">
                     <button className="btn btn-primary" onClick={openModal}>Add to Cohort</button>
-                    {currentUser._id === student._id  || currentUser.role === "SuperAdmin" && 
+                    {(currentUser._id === student._id || currentUser.role === "SuperAdmin") && 
                     <button onClick={() => Navigate("../edit-student")} className='btn btn-secondary'>Edit</button>}
                     <button onClick={() => Navigate(-1)} className='btn btn-success'>Done</button>
                 </div>
@@ -141,6 +144,7 @@ function StudentProfile() {
                 </div>
             )}
         </div>
+
     );
 }
 
