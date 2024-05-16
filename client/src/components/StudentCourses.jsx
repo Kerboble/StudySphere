@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import Calendar from 'react-calendar'; // Import Calendar component
-import 'react-calendar/dist/Calendar.css'; // Import Calendar CSS
+import Calendar from 'react-calendar'; 
+import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import defaultCohortPhoto from "../img/coursephoto.jpg";
