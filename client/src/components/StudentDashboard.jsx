@@ -8,6 +8,8 @@ import tests from '../img/exam.png';
 import material from '../img/books.png';
 import assignments from '../img/book.png';
 import Calendar from 'react-calendar';
+import presentation from "../img/certification (1).png"
+import { useNavigate } from 'react-router-dom';
 
 function StudentDashboard() {
   const [users, refreshData, cohorts] = useOutletContext();
@@ -19,6 +21,7 @@ function StudentDashboard() {
   const { cohort } = useContext(CohortContext);
   const [calendarDate, setCalendarDate] = useState(new Date()); // State to manage calendar date
   const [activeButton, setActiveButton] = useState('Active'); // State to track active button
+  const Navigate = useNavigate();
 
   useEffect(() => {
     if (cohorts) {
@@ -90,7 +93,7 @@ function StudentDashboard() {
     <div className="student-dashboard-container">
       <div className="student-dashboard-wrapper">
         <div className="student-dashboard-wrapper-left">
-          <div className="resume-class">
+          {cohort && <div className="resume-class">
             <div className="course-photo">
               <img src={coursePhoto} alt="" />
             </div>
@@ -115,8 +118,8 @@ function StudentDashboard() {
                 {cohort.cohortFiles.tests.length}
               </div>
             </div>
-            <button className='btn btn-primary'>Resume</button>
-          </div>
+            <button onClick={() => Navigate('../cohortfiles')} className='btn btn-primary'>Resume</button>
+          </div>}
           <div className="course-statuses">
             <strong>Status</strong>
             <div className="lessons">
@@ -162,7 +165,10 @@ function StudentDashboard() {
             showFixedNumberOfWeeks={true} // Display a fixed number of weeks
             tileClassName={({ date }) => (date.getDay() === new Date().getDay() ? 'today' : '')} // Highlight today's date
           />
-          <div className="upcoming-assignemnts"></div>
+          <div className="find-courses">
+            <button className='btn btn-primary btn-lrg'>+ Course</button>
+            <img src={presentation} alt="" />
+          </div>
         </div>
       </div>
     </div>

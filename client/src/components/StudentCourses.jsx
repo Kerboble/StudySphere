@@ -149,17 +149,6 @@ function StudentCourses() {
         <div className="courses">{showMyCourses}</div>
       </div>
       <div className="right-side">
-        <h2>Calendar</h2>
-        <div className="calendar">
-        <Calendar
-            value={calendarDate}
-            onChange={setCalendarDate}
-            view={'week'} // Display only a week at a time
-            showFixedNumberOfWeeks={true} // Display a fixed number of weeks
-            tileClassName={({ date }) => (date.getDay() === new Date().getDay() ? 'today' : '')} // Highlight today's date
-        />
-
-        </div>
         <h2>Instructors</h2>
         <div className="teachers">
           {showMyInstructors}

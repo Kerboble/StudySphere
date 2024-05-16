@@ -1427,7 +1427,7 @@ margin: 0;
   .left-side {
     height: 100%;
     max-width: 70%; /* Specify a maximum width */
-    flex: 1; /* Adjust flex property */
+    flex: 2; /* Adjust flex property */
     display: flex;
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
@@ -1993,12 +1993,23 @@ margin: 0;
       }
     }
 
-    .upcoming-assignemnts{
+    .find-courses{
       background-color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 5vh;
       height: 40vh;
       width: 100%;
       box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;  
       border-radius: 10px;
+      justify-content: center;
+
+
+      img{
+        height: 45vh;
+        width: 45vh;
+        align-self: center;
+      }
     }
   }
 }
